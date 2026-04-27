@@ -20,6 +20,7 @@ DataPulse builds a knowledge graph from sales data and exposes two query modes �
 ## Tech Stack
 
 - **Python** &ge; 3.10
+- **uv** — package & environment manager
 - **pandas** — tabular data handling
 - **NetworkX** — in-memory knowledge graph
 - **neo4j** *(optional)* — persistent graph database backend
@@ -27,12 +28,14 @@ DataPulse builds a knowledge graph from sales data and exposes two query modes �
 
 ## Quick Start
 
+This project uses [`uv`](https://docs.astral.sh/uv/) as its package manager.
+
 ```bash
-# Install in editable mode
-pip install -e ".[dev]"
+# Sync dependencies (creates .venv and installs dev extras)
+uv sync --extra dev
 
 # Run tests
-pytest tests/
+uv run pytest tests/
 ```
 
 ## Project Structure

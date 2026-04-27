@@ -36,3 +36,5 @@ data/processed/*
 htmlcov/
 .coverage
 .coverage.*
+
+.pytest_cache
