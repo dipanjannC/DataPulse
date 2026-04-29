@@ -1,4 +1,4 @@
-"""Simple graph-traversal query resolver."""
+"""Rule-based graph-traversal query resolver."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from src.graph.store.networkx_store import NetworkXStore
 from src.query_engine.domain.query import Query, QueryResult
 
 
-class SimpleResolver:
+class RuleBasedResolver:
     """Resolves structured queries via direct graph traversal."""
 
     def __init__(self, store: NetworkXStore) -> None:
@@ -21,4 +21,4 @@ class SimpleResolver:
         Returns:
             QueryResult with matching data.
         """
-        raise NotImplementedError("SimpleResolver.resolve is not yet implemented.")
+        raise NotImplementedError("RuleBasedResolver.resolve is not yet implemented.")
