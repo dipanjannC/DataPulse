@@ -1,0 +1,96 @@
+{
+  "source": "data/metadata/kyc_complete.xlsx",
+  "row_count": 1000,
+  "target": "data/synthetic",
+  "model": {
+    "mode": "auto",
+    "model_id": null,
+    "prompt_path": "src/prompts/synthetic_mimesis.md",
+    "semantic_prompt_path": "src/prompts/semantic_value_list.md"
+  },
+  "generation": {
+    "seed": 42,
+    "mimesis_artifact_dir": "data/mimesis"
+  },
+  "validation": {
+    "enabled": true,
+    "report_path": "quality_report.json",
+    "fail_on_error": false
+  },
+  "controls": {
+    "value_distributions": {
+      "Customer.External_Identifier_Type": {
+        "SSN": 90,
+        "STATE_ID": 7,
+        "PASSPORT": 3
+      },
+      "Customer.Beneficiary_Type": {
+        "NOMINEE": 85,
+        "THIRD_PARTY": 15
+      },
+      "Name_Screening.Internal_External": {
+        "INTERNAL": 70,
+        "EXTERNAL": 30
+      }
+    },
+    "demographics": {
+      "country_distribution": {
+        "Customer.Country_of_Citizenship": {
+          "USA": 80,
+          "India": 10,
+          "UAE": 5,
+          "Singapore": 5
+        }
+      },
+      "age_distribution": {
+        "Customer.DOB": {
+          "18-30": 45,
+          "31-60": 55
+        },
+        "Nominee_details.nominee_dob": {
+          "0-17": 20,
+          "18-35": 30,
+          "36-60": 50
+        }
+      }
+    },
+    "semantic_values": {
+      "Customer.City": [
+        "New York",
+        "Mumbai",
+        "Dubai",
+        "Singapore",
+        "Madrid"
+      ],
+      "Customer.State": [
+        "NY",
+        "CA",
+        "TX",
+        "MH",
+        "DL"
+      ],
+      "Customer.occupation": [
+        "Engineer",
+        "Doctor",
+        "Teacher",
+        "Consultant",
+        "Analyst"
+      ]
+    },
+    "enum_allowed_values": {
+      "KYC.document_type": [
+        "PASSPORT",
+        "DRIVER_LICENSE",
+        "NATIONAL_ID",
+        "AADHAAR",
+        "PAN"
+      ],
+      "KYC.kyc_status": [
+        "PENDING",
+        "VERIFIED",
+        "REJECTED",
+        "UNDER_REVIEW"
+      ]
+    }
+  }
+}

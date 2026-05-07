@@ -38,3 +38,6 @@ htmlcov/
 .coverage.*
 
 .pytest_cache
+
+# Claude Code local config (do not commit)
+.claude/
