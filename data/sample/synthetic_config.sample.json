@@ -1,96 +1,35 @@
 {
-  "source": "data/metadata/kyc_complete.xlsx",
   "row_count": 1000,
-  "target": "data/synthetic",
-  "model": {
-    "mode": "auto",
-    "model_id": null,
-    "prompt_path": "src/prompts/synthetic_mimesis.md",
-    "semantic_prompt_path": "src/prompts/semantic_value_list.md"
-  },
+  "target": "data/raw/sales_1k.csv",
   "generation": {
     "seed": 42,
-    "mimesis_artifact_dir": "data/mimesis"
+    "catalog": {"n_customers": 120, "n_products_per_category": 8},
+    "date_range": {"start": "2024-01-01", "end": "2024-12-31"}
   },
   "validation": {
     "enabled": true,
-    "report_path": "quality_report.json",
-    "fail_on_error": false
+    "report_path": "data/raw/quality_report.json",
+    "fail_on_error": false,
+    "tolerances": {
+      "distribution_chi2_p_min": 0.01,
+      "band_violation_rate_max": 0.02
+    }
   },
   "controls": {
     "value_distributions": {
-      "Customer.External_Identifier_Type": {
-        "SSN": 90,
-        "STATE_ID": 7,
-        "PASSPORT": 3
-      },
-      "Customer.Beneficiary_Type": {
-        "NOMINEE": 85,
-        "THIRD_PARTY": 15
-      },
-      "Name_Screening.Internal_External": {
-        "INTERNAL": 70,
-        "EXTERNAL": 30
-      }
+      "region": {"North America": 50, "Europe": 30, "Asia Pacific": 20},
+      "channel": {"Online": 60, "Retail": 30, "Distributor": 10},
+      "category": {"Electronics": 50, "Stationery": 30, "Furniture": 20}
     },
-    "demographics": {
-      "country_distribution": {
-        "Customer.Country_of_Citizenship": {
-          "USA": 80,
-          "India": 10,
-          "UAE": 5,
-          "Singapore": 5
-        }
-      },
-      "age_distribution": {
-        "Customer.DOB": {
-          "18-30": 45,
-          "31-60": 55
-        },
-        "Nominee_details.nominee_dob": {
-          "0-17": 20,
-          "18-35": 30,
-          "36-60": 50
-        }
-      }
+    "price_bands": {
+      "Electronics": {"min": 15.0, "max": 500.0},
+      "Stationery": {"min": 1.5, "max": 25.0},
+      "Furniture": {"min": 30.0, "max": 800.0}
     },
-    "semantic_values": {
-      "Customer.City": [
-        "New York",
-        "Mumbai",
-        "Dubai",
-        "Singapore",
-        "Madrid"
-      ],
-      "Customer.State": [
-        "NY",
-        "CA",
-        "TX",
-        "MH",
-        "DL"
-      ],
-      "Customer.occupation": [
-        "Engineer",
-        "Doctor",
-        "Teacher",
-        "Consultant",
-        "Analyst"
-      ]
-    },
-    "enum_allowed_values": {
-      "KYC.document_type": [
-        "PASSPORT",
-        "DRIVER_LICENSE",
-        "NATIONAL_ID",
-        "AADHAAR",
-        "PAN"
-      ],
-      "KYC.kyc_status": [
-        "PENDING",
-        "VERIFIED",
-        "REJECTED",
-        "UNDER_REVIEW"
-      ]
+    "quantity_distribution": {
+      "Electronics": {"min": 1, "max": 5, "mean": 1.6},
+      "Stationery": {"min": 1, "max": 20, "mean": 6.0},
+      "Furniture": {"min": 1, "max": 3, "mean": 1.2}
     }
   }
 }

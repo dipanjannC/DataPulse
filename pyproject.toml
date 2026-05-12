@@ -1,6 +1,6 @@
 [build-system]
 requires = ["setuptools>=68.0", "wheel"]
-build-backend = "setuptools.backends._legacy:_Backend"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "datapulse"
@@ -8,8 +8,10 @@ version = "0.1.0"
 description = "Knowledge Graph Based Querying on Sales Data"
 requires-python = ">=3.10"
 dependencies = [
+    "faker>=40.15.0",
     "networkx>=3.0",
     "pandas>=2.0",
+    "scipy>=1.15.3",
 ]
 
 [project.optional-dependencies]
