@@ -28,6 +28,9 @@ data/raw/*
 data/processed/*
 !data/processed/.gitkeep
 
+# Real synthetic-pipeline config (only .sample.json is tracked)
+data/sample/synthetic_config.json
+
 # Environment
 .env
 .env.local
