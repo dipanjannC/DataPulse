@@ -46,7 +46,7 @@ def test_ask_invokes_runner_async(monkeypatch):
         captured["question"] = question
         return "stub answer"
 
-    with patch("src.query_engine.agent.adk_agent._ask_async", side_effect=fake_ask_async):
+    with patch("src.query_engine.agent.adk_agent.ask_async", side_effect=fake_ask_async):
         agent = adk_agent.build_agent(_FakeStore())
         out = adk_agent.ask(agent, "How many orders?")
     assert out == "stub answer"

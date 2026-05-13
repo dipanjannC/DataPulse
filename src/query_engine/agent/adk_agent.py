@@ -42,7 +42,7 @@ def build_agent(store: Any, *, model: str = "gemini-flash-latest", name: str = "
     )
 
 
-async def _ask_async(agent: Agent, question: str) -> str:
+async def ask_async(agent: Agent, question: str) -> str:
     runner = Runner(
         app_name=agent.name,
         agent=agent,
@@ -65,5 +65,9 @@ async def _ask_async(agent: Agent, question: str) -> str:
 
 
 def ask(agent: Agent, question: str) -> str:
-    """Synchronous wrapper around the agent's async runner."""
-    return asyncio.run(_ask_async(agent, question))
+    """Synchronous wrapper around the agent's async runner.
+
+    Inside a notebook (already-running event loop), prefer
+    ``await ask_async(agent, question)`` instead of this.
+    """
+    return asyncio.run(ask_async(agent, question))
