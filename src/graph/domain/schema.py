@@ -1,20 +1,25 @@
-"""Knowledge graph schema definitions."""
+"""Knowledge graph schema definitions.
+
+Enum values are the canonical Cypher strings: CamelCase for node labels,
+UPPER_SNAKE_CASE for relationship types. They are the source of truth for
+the Neo4j builder and the agent's schema card.
+"""
 
 from enum import Enum
 
 
 class NodeType(Enum):
-    CUSTOMER = "customer"
-    ORDER = "order"
-    PRODUCT = "product"
-    REGION = "region"
-    CHANNEL = "channel"
-    CATEGORY = "category"
+    CUSTOMER = "Customer"
+    ORDER = "Order"
+    PRODUCT = "Product"
+    REGION = "Region"
+    CHANNEL = "Channel"
+    CATEGORY = "Category"
 
 
 class EdgeType(Enum):
-    PLACED = "placed"           # Customer -> Order
-    CONTAINS = "contains"       # Order -> Product
-    IN_REGION = "in_region"     # Order -> Region
-    VIA_CHANNEL = "via_channel" # Order -> Channel
-    BELONGS_TO = "belongs_to"   # Product -> Category
+    PLACED = "PLACED"            # Customer -> Order
+    CONTAINS = "CONTAINS"        # Order -> Product
+    IN_REGION = "IN_REGION"      # Order -> Region
+    VIA_CHANNEL = "VIA_CHANNEL"  # Order -> Channel
+    BELONGS_TO = "BELONGS_TO"    # Product -> Category

@@ -9,14 +9,14 @@ description = "Knowledge Graph Based Querying on Sales Data"
 requires-python = ">=3.10"
 dependencies = [
     "faker>=40.15.0",
-    "networkx>=3.0",
+    "google-adk>=1.33.0",
+    "neo4j>=6.2.0",
     "pandas>=2.0",
+    "python-dotenv>=1.2.2",
     "scipy>=1.15.3",
 ]
 
 [project.optional-dependencies]
-neo4j = ["neo4j>=5.0"]
-gemini = ["google-genai>=1.0", "python-dotenv>=1.0"]
 dev = [
     "pytest>=7.0",
     "pytest-cov>=4.0",
