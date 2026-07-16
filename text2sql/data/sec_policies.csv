@@ -1,0 +1,21 @@
+policy_id,policy_name,category,effective_date,review_date,owner,status
+1,Acceptable Use Policy,Data Protection,2022-09-08,2026-01-12,Compliance Team,Active
+2,Remote Access Policy,Data Protection,2020-01-22,2026-01-03,CISO,Active
+3,Acceptable Use Policy,Incident Response,2023-10-04,2025-03-21,Compliance Team,Active
+4,Incident Response Plan,Access Control,2022-09-28,2025-11-21,Legal,Under Review
+5,BYOD Policy,Incident Response,2023-10-30,2025-01-17,IT Security,Active
+6,Incident Response Plan,Access Control,2022-05-03,2025-05-27,IT Security,Under Review
+7,Vulnerability Management Policy,Data Protection,2023-04-12,2026-05-24,IT Security,Active
+8,Password Policy,Incident Response,2020-09-22,2026-01-08,Compliance Team,Active
+9,Vulnerability Management Policy,Access Control,2022-11-07,2026-12-08,Legal,Under Review
+10,Access Control Policy,Access Control,2023-02-20,2026-11-12,IT Security,Active
+11,Cloud Security Policy,Access Control,2023-10-21,2025-05-28,CISO,Active
+12,BYOD Policy,Incident Response,2022-09-17,2024-10-11,Legal,Active
+13,Remote Access Policy,Access Control,2021-02-07,2025-09-11,Legal,Active
+14,Encryption Policy,Access Control,2023-04-17,2025-07-17,IT Security,Active
+15,Cloud Security Policy,Incident Response,2021-05-20,2026-06-11,Compliance Team,Active
+16,Encryption Policy,Compliance,2023-10-09,2024-03-20,Legal,Active
+17,Vulnerability Management Policy,Access Control,2023-04-02,2026-03-28,CISO,Active
+18,Acceptable Use Policy,Compliance,2023-05-06,2026-01-08,Compliance Team,Active
+19,Vulnerability Management Policy,Access Control,2021-04-01,2024-02-08,CISO,Under Review
+20,Access Control Policy,Compliance,2022-12-23,2025-10-17,IT Security,Active

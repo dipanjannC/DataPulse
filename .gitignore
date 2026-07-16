@@ -35,6 +35,9 @@ data/sample/synthetic_config.json
 .env
 .env.local
 
+# SQLite databases (regeneratable from CSVs)
+*.db
+
 # Coverage
 htmlcov/
 .coverage

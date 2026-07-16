@@ -1,0 +1,51 @@
+server_id,hostname,ip_address,os,cpu_cores,ram_gb,storage_gb,environment,status
+1,srv-ck74,10.1.181.111,Ubuntu 20.04,64,32,2048,DR,Running
+2,srv-wd85,192.168.50.87,CentOS 8,4,128,1024,Staging,Running
+3,srv-pa69,172.16.237.231,RHEL 9,16,64,512,DR,Running
+4,srv-in93,192.168.41.56,Windows Server 2022,32,128,1024,Production,Running
+5,srv-ua99,10.127.248.60,RHEL 9,8,128,2048,DR,Running
+6,srv-oe29,192.168.189.151,RHEL 9,32,16,4096,DR,Running
+7,srv-yp09,172.22.45.80,Ubuntu 20.04,16,128,4096,Staging,Running
+8,srv-xu27,10.102.74.66,RHEL 9,64,128,2048,DR,Running
+9,srv-se52,10.236.31.187,Ubuntu 22.04,32,32,2048,Staging,Stopped
+10,srv-rm73,172.21.168.251,RHEL 9,16,8,512,Production,Maintenance
+11,srv-ph78,192.168.81.139,RHEL 9,8,16,256,Staging,Running
+12,srv-ue37,10.208.12.172,Windows Server 2022,8,16,1024,Staging,Running
+13,srv-ye87,172.19.223.21,RHEL 9,4,8,4096,Development,Running
+14,srv-tb98,172.17.233.196,CentOS 8,64,32,4096,DR,Stopped
+15,srv-ux46,10.225.77.175,RHEL 9,8,8,1024,Production,Running
+16,srv-gj61,172.19.147.187,Ubuntu 20.04,4,32,512,Development,Running
+17,srv-aq25,172.23.199.55,Ubuntu 22.04,8,8,4096,Development,Running
+18,srv-qg73,172.18.94.199,RHEL 9,4,32,4096,Staging,Running
+19,srv-wp77,172.30.58.192,Ubuntu 20.04,8,16,512,Production,Running
+20,srv-sq57,192.168.18.77,Ubuntu 22.04,8,128,1024,Development,Maintenance
+21,srv-hs22,10.189.224.50,Ubuntu 20.04,4,32,256,Development,Stopped
+22,srv-ts95,172.21.16.208,CentOS 8,32,128,512,Development,Running
+23,srv-et94,172.20.241.46,Ubuntu 20.04,32,64,4096,Staging,Running
+24,srv-ms22,172.23.75.26,Windows Server 2022,4,16,256,Production,Running
+25,srv-lt03,10.132.210.218,CentOS 8,8,16,256,Staging,Running
+26,srv-vh58,172.21.115.255,CentOS 8,64,8,4096,Production,Running
+27,srv-lg52,172.28.24.102,Ubuntu 22.04,64,64,512,Development,Running
+28,srv-he72,10.194.126.161,RHEL 9,16,64,4096,DR,Stopped
+29,srv-vo01,172.20.205.134,Windows Server 2022,16,128,2048,DR,Decommissioned
+30,srv-xu49,10.182.135.92,Windows Server 2022,8,64,512,Development,Running
+31,srv-ko77,10.116.237.21,CentOS 8,8,16,2048,Staging,Running
+32,srv-qc35,172.26.139.99,Windows Server 2022,8,16,1024,Staging,Running
+33,srv-rj81,192.168.40.173,Ubuntu 22.04,32,128,4096,Staging,Running
+34,srv-kh07,10.93.136.215,Windows Server 2022,4,16,1024,Development,Running
+35,srv-st33,172.24.129.34,CentOS 8,64,16,4096,DR,Running
+36,srv-fv84,10.32.153.54,Windows Server 2022,32,64,2048,DR,Running
+37,srv-td28,10.244.94.88,RHEL 9,4,128,512,DR,Running
+38,srv-iy71,10.37.103.103,CentOS 8,32,8,512,Production,Running
+39,srv-hc37,10.51.34.239,Windows Server 2022,8,8,512,DR,Running
+40,srv-nm89,172.16.78.169,CentOS 8,8,8,1024,Staging,Running
+41,srv-hu96,172.22.59.202,Ubuntu 22.04,4,64,1024,Production,Running
+42,srv-wd99,10.208.120.112,Windows Server 2022,8,8,256,Production,Stopped
+43,srv-fo94,10.247.112.110,Ubuntu 22.04,16,32,1024,Staging,Running
+44,srv-pt84,172.23.247.252,CentOS 8,32,32,1024,DR,Running
+45,srv-rj54,192.168.225.77,Ubuntu 20.04,8,8,4096,DR,Running
+46,srv-fa12,172.31.14.99,Ubuntu 22.04,16,16,512,Staging,Maintenance
+47,srv-le72,172.19.6.179,CentOS 8,32,16,4096,DR,Stopped
+48,srv-or75,192.168.99.30,RHEL 9,4,8,256,Production,Running
+49,srv-nt13,192.168.241.153,Windows Server 2022,8,32,1024,DR,Running
+50,srv-nn14,192.168.165.196,CentOS 8,16,128,2048,Production,Running

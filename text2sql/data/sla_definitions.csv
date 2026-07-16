@@ -1,0 +1,13 @@
+sla_id,service_name,priority,response_time_hours,resolution_time_hours,uptime_pct_target
+1,Email,Low,24.0,72,99.0
+2,Email,Medium,8.0,24,99.0
+3,Email,High,4.0,8,99.0
+4,Email,Critical,1.0,4,99.0
+5,Core Network,High,2.0,6,99.9
+6,Core Network,Critical,0.5,2,99.9
+7,ERP System,High,4.0,12,99.5
+8,ERP System,Critical,1.0,4,99.5
+9,Helpdesk,Low,48.0,120,98.0
+10,Helpdesk,Medium,12.0,48,98.0
+11,Cloud Storage,High,2.0,8,99.99
+12,Cloud Storage,Critical,0.5,2,99.99

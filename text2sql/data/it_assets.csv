@@ -1,0 +1,201 @@
+asset_id,asset_name,asset_type,serial_number,purchase_date,purchase_cost,assigned_to,location,status
+1,Apple Close,Software,PM362-YA292-XU587,2019-07-09,4221.77,jeremy47,Remote,Active
+2,Dell World,Desktop,BK452-zW455-Aa574,2019-08-25,1958.51,abrown,In Storage,Active
+3,Apple Health,Server,bu274-BY033-yu445,2020-03-21,2390.45,laurenwilliamson,HQ Floor 2,Active
+4,Cisco Less,Server,cX411-Qy325-ST797,2022-04-09,4363.93,mwright,HQ Floor 2,Active
+5,HP Peace,Desktop,sh601-Ei054-Ve857,2020-01-17,1299.74,tiffany62,In Storage,Active
+6,Apple Tv,Laptop,uK294-IW938-Qq173,2023-12-07,2307.07,hannah21,Data Center,Active
+7,Dell Truth,Server,xv557-mR325-Tq737,2023-02-07,4720.64,cassandra02,In Storage,Active
+8,Cisco Call,Software,bK666-Bc708-GZ085,2021-08-06,1686.34,kristy74,Remote,Active
+9,Cisco Paper,Server,ZG511-fK918-DN182,2019-01-14,2403.4,karenwang,HQ Floor 2,Active
+10,Cisco Lawyer,Server,DH477-XS251-VB295,2021-04-03,260.1,moraleskelly,Remote,Active
+11,HP Price,Desktop,LR600-Xu356-ID243,2023-10-17,4963.86,kaylaandrews,HQ Floor 2,Active
+12,HP Hear,Software,IM923-cX234-iI210,2019-09-18,780.43,stephanie55,HQ Floor 2,Retired
+13,Apple Without,Network Device,Xw333-bi426-Ch433,2023-11-07,4800.26,vjohnson,HQ Floor 2,Active
+14,Lenovo Too,Network Device,Lh360-fl776-GL336,2019-10-01,2247.98,martinjason,HQ Floor 2,Active
+15,HP Yeah,Laptop,xE795-qG563-hD318,2020-09-05,3665.23,smithlinda,Data Center,Active
+16,Cisco Instead,Software,PP155-Zy416-Eb431,2019-12-07,3378.84,jessica50,HQ Floor 1,Retired
+17,Cisco Chance,Network Device,Wc329-dM028-Zn227,2019-03-08,4459.73,nathan62,In Storage,Active
+18,HP Kind,Laptop,Fn228-tz225-Ox120,2020-01-08,1171.45,christy00,Data Center,Active
+19,Lenovo Glass,Software,UH070-kk260-ga869,2023-07-20,3689.62,phyllis16,In Storage,Retired
+20,Apple Attorney,Laptop,tE177-Eq687-iu290,2019-08-19,4839.62,summer17,Data Center,In Storage
+21,Cisco Mind,Server,Vg932-Tz382-sN231,2019-07-20,939.3,wrightjohn,Data Center,Active
+22,Dell Show,Network Device,uB457-xQ988-jL942,2023-03-15,1328.19,adkinslauren,In Storage,Active
+23,Cisco Project,Laptop,ua032-KE020-Ew326,2020-09-20,2883.73,courtneymontoya,HQ Floor 2,In Repair
+24,Lenovo Participant,Software,Vr673-PX794-Gv871,2019-07-14,599.18,wendy24,Remote,Active
+25,Apple Growth,Server,BP787-bI158-ig415,2021-01-10,3742.94,theresagreer,In Storage,In Repair
+26,Lenovo Camera,Software,Gl842-zG547-mj681,2020-06-12,1001.22,kimberlygonzalez,In Storage,Active
+27,Apple Size,Desktop,xI589-oS298-Hk808,2019-08-02,1201.15,erik29,Remote,Active
+28,Cisco Draw,Server,yH289-AE634-Du064,2022-03-26,2583.41,jenniferevans,Remote,Active
+29,Cisco Bad,Software,ij484-Ek399-WZ106,2021-10-05,2485.96,petermoore,Data Center,Active
+30,Lenovo Kind,Software,zh693-UV351-LR342,2021-05-20,545.13,jamiethomas,Data Center,Active
+31,Lenovo Fact,Software,oQ501-Ct848-hI197,2019-05-30,3007.16,whernandez,HQ Floor 2,In Repair
+32,Apple Whether,Laptop,kT540-SY641-FW769,2022-01-26,3331.31,jeffrey11,Data Center,Active
+33,Cisco Sign,Desktop,Xr995-UU376-rq601,2020-01-29,1162.32,robert45,In Storage,Active
+34,Cisco Because,Network Device,Qr017-gX397-TF396,2019-08-24,1943.93,qobrien,HQ Floor 1,Active
+35,Dell Idea,Laptop,xL091-RT919-MA113,2020-04-03,3126.99,chiggins,Data Center,Active
+36,Dell Hand,Server,Kl779-bO806-vg603,2020-08-02,1080.46,samantha07,HQ Floor 2,Active
+37,Lenovo Time,Network Device,DS455-Oq534-XY705,2022-06-20,950.16,jasontownsend,HQ Floor 1,Active
+38,Apple Officer,Software,IV565-Zo271-ut559,2019-01-27,617.75,sloanchristopher,In Storage,In Storage
+39,Dell Into,Network Device,vZ597-Cx263-Wk475,2023-05-11,4132.51,marcusrodriguez,Data Center,In Repair
+40,Apple Party,Laptop,Se488-mf488-fT269,2020-09-30,4228.38,jphelps,In Storage,Active
+41,Dell Sense,Server,Kf585-uo626-Cc149,2021-09-12,1276.02,amycontreras,HQ Floor 1,Active
+42,Apple Eye,Software,as073-pb333-NE732,2021-02-19,2416.59,jperry,HQ Floor 2,Active
+43,HP Out,Laptop,TY362-xZ896-Zq964,2022-04-11,3442.81,pwood,HQ Floor 1,Active
+44,HP Front,Desktop,gY851-GT253-EI892,2021-07-27,1069.78,daniel93,Data Center,Active
+45,HP Service,Laptop,CF583-LB749-ek079,2021-01-15,2642.8,castroangelica,Remote,Active
+46,Cisco Art,Desktop,Ub572-TM151-FB494,2020-06-30,4573.62,valerielewis,In Storage,In Storage
+47,Dell Live,Server,XI484-RL539-ua862,2021-01-11,4592.03,josephmichael,Remote,Active
+48,HP Call,Network Device,XW191-ll862-bP339,2021-08-14,234.14,vchandler,HQ Floor 1,Active
+49,Lenovo Behind,Software,lg169-tw666-lT725,2019-07-16,4200.98,fkoch,Remote,Active
+50,HP Believe,Desktop,Wg246-Hq335-bM157,2023-02-04,4216.13,hendrixbrian,Remote,Active
+51,Apple Hour,Network Device,bZ120-KK800-xe564,2021-11-06,1833.59,jacoboliver,In Storage,Active
+52,Apple Court,Software,CT835-Xl129-Gj592,2021-05-10,3820.76,cjohnson,HQ Floor 1,Retired
+53,Apple Worry,Server,kg814-Fm415-Mj298,2022-10-11,3103.76,sharon86,HQ Floor 2,Retired
+54,Apple Step,Network Device,Fm718-Yz153-cw523,2021-09-07,4337.56,rangelsamantha,In Storage,Active
+55,HP Talk,Desktop,Hz918-WI158-Pm998,2023-10-18,2171.47,luke73,Data Center,Retired
+56,Dell Final,Desktop,uJ666-EN617-yt071,2021-02-22,1163.67,xgay,Remote,Active
+57,Cisco Field,Network Device,lP080-uV314-dI998,2023-12-18,4049.23,williamskevin,Data Center,Active
+58,Lenovo Cup,Server,RS580-cn688-gD285,2021-11-27,2333.36,patriciajoseph,Remote,Active
+59,Lenovo Baby,Software,Sh373-sa990-pQ063,2022-07-20,1472.37,tracey63,Remote,Active
+60,Lenovo Hot,Server,RK602-TO293-tn946,2023-09-21,3216.11,robert06,HQ Floor 2,Active
+61,Cisco Than,Server,cS664-XC374-iQ906,2023-11-04,1734.64,chadwilson,HQ Floor 1,Active
+62,HP Cold,Server,Is712-sK852-qg464,2019-02-18,3918.33,fosternicole,HQ Floor 2,Active
+63,HP Defense,Software,gh187-oc328-yl077,2022-08-18,226.69,farmerlindsay,Data Center,Active
+64,Apple Effort,Software,Xm695-Xn727-Uu908,2021-03-26,1711.14,carrollstacy,HQ Floor 2,Active
+65,Lenovo Growth,Server,sG425-eo730-lO662,2023-12-03,329.53,matthewgriffith,Remote,In Repair
+66,Lenovo Ago,Server,Ju713-dh984-Re822,2022-02-08,4361.12,bholmes,HQ Floor 1,In Repair
+67,Cisco Present,Software,aK255-dy021-XK306,2019-01-15,1998.07,vincentkathleen,In Storage,Active
+68,Apple Also,Server,yC981-Vp079-RF649,2021-04-05,2985.66,michael77,HQ Floor 2,Active
+69,Dell Wide,Desktop,qk278-xV532-bB426,2021-04-13,3084.01,douglas76,Data Center,In Storage
+70,Apple See,Laptop,DU836-CC253-yD666,2022-11-27,4610.26,matthew62,HQ Floor 1,Active
+71,Cisco Several,Desktop,DJ833-WY339-Ax395,2019-04-24,4844.43,jason27,Data Center,Active
+72,Dell Boy,Network Device,Jk874-Qy960-HB335,2020-03-23,1048.05,sherryjohnson,Data Center,In Repair
+73,Lenovo Design,Laptop,jA692-uD492-pV693,2019-04-04,4050.39,kathryntucker,HQ Floor 2,Active
+74,Apple Popular,Desktop,vf980-uw111-mV000,2023-11-16,2758.22,susanparker,In Storage,Active
+75,HP Attorney,Server,tg595-ZJ977-kj524,2021-03-19,2442.94,robertpatel,Remote,Active
+76,Cisco Present,Network Device,Cg628-Wc874-iy312,2023-03-07,379.25,kgray,HQ Floor 2,Retired
+77,HP Speak,Network Device,FQ095-Kw799-vf270,2020-02-07,4146.73,casey29,In Storage,Active
+78,Lenovo First,Laptop,ZF621-bN354-LA159,2020-11-18,3054.25,michaelking,HQ Floor 1,Active
+79,Apple Must,Server,qC480-Bv752-cr034,2023-08-03,4115.44,vhopkins,HQ Floor 1,Retired
+80,Dell Ok,Desktop,Ey029-yc090-SR463,2022-07-10,2548.32,heidi55,HQ Floor 1,Active
+81,Apple Suggest,Laptop,Fs866-rf525-CQ483,2022-10-28,4394.49,trujillorobin,Data Center,Active
+82,Lenovo Training,Software,ej810-KZ213-pX125,2020-06-21,3041.12,shieldsalec,Remote,Active
+83,Cisco Add,Desktop,hd591-Ti297-mV519,2021-11-27,1142.3,lopezjennifer,HQ Floor 2,Retired
+84,Dell Benefit,Network Device,mE063-mT301-FM658,2019-06-28,1465.21,taylordennis,HQ Floor 2,Retired
+85,Cisco Person,Server,jI072-Km801-Sh234,2020-07-06,3587.91,lopezmelinda,Remote,Active
+86,HP Something,Server,nB326-qw949-Vp684,2019-02-16,4740.02,penatammy,Data Center,Active
+87,HP Enter,Network Device,WB421-fR017-WT509,2019-03-06,1091.5,vsmith,Remote,Active
+88,Cisco Represent,Software,Cw159-VZ591-Ex945,2021-08-21,1803.78,fevans,Remote,Active
+89,Dell Form,Software,Du833-Yz920-DD567,2022-10-25,4723.2,vhernandez,HQ Floor 2,Active
+90,HP Social,Network Device,aB660-YQ256-lj265,2019-07-14,4340.94,jaysmith,In Storage,Active
+91,HP Marriage,Network Device,Jr245-om307-FM624,2021-08-03,1417.06,kreynolds,In Storage,Active
+92,Apple Method,Server,pH051-FZ157-nA942,2022-10-08,691.78,tsmith,HQ Floor 2,Retired
+93,HP Program,Network Device,Hs254-vU969-xZ192,2021-04-22,4688.84,mikewaller,Remote,Active
+94,Apple At,Laptop,OE075-Yr633-Jv535,2021-09-29,2978.14,holly25,HQ Floor 1,Active
+95,Cisco Station,Server,bu939-Gg933-yW797,2019-09-01,4454.95,cindymiller,Remote,Active
+96,Cisco Military,Laptop,xX794-dE176-po342,2021-07-20,2733.01,murphymallory,In Storage,Active
+97,Lenovo Meeting,Network Device,ZP824-mM575-Mh983,2021-12-23,3707.61,jessica38,In Storage,In Storage
+98,Dell Successful,Desktop,js843-bb660-PP443,2020-06-04,2684.21,dmiller,Data Center,Active
+99,Cisco Stand,Server,rD276-rm829-TM751,2022-09-13,1566.79,lmitchell,HQ Floor 1,Retired
+100,Lenovo Career,Software,uU501-yJ058-bO752,2019-09-22,2500.2,zlucas,In Storage,Active
+101,Dell Could,Desktop,dU590-TT459-iF908,2019-08-30,4360.98,mcintoshdonald,In Storage,Retired
+102,Apple Blue,Desktop,vW823-eF155-zI516,2023-06-10,3383.46,warrendarlene,Remote,In Repair
+103,Lenovo Individual,Desktop,pd281-PR372-Jb143,2023-02-23,4751.47,dayheidi,Remote,Active
+104,Apple Measure,Server,yW003-OQ322-zb855,2023-03-09,3196.04,travis68,Data Center,Retired
+105,Lenovo Author,Laptop,wS039-fL033-xG970,2022-02-02,2897.45,randyhernandez,In Storage,Retired
+106,Apple Account,Desktop,WM944-qv858-mu623,2019-02-19,1159.53,philip47,HQ Floor 2,In Storage
+107,Dell Air,Network Device,Zg798-Vn632-mW106,2022-07-06,4459.83,marissa39,Remote,Active
+108,Lenovo Television,Desktop,bt457-an039-lv438,2021-05-16,3172.71,victorcortez,HQ Floor 1,Active
+109,Lenovo Service,Desktop,sY576-Qp927-eN789,2020-02-28,4200.34,wilkersonmelissa,HQ Floor 1,Retired
+110,Apple President,Software,gd004-xn047-Pm692,2022-09-10,3187.76,xharmon,Remote,Active
+111,Dell Bag,Software,DZ460-nh401-OV424,2023-08-12,4479.36,beardsarah,HQ Floor 2,Active
+112,Cisco Contain,Server,bS011-KE379-eU844,2020-06-26,4851.46,jasonsanders,HQ Floor 2,Active
+113,Apple Huge,Software,cQ007-eX676-rT209,2019-08-29,4055.58,jennifer34,Data Center,In Repair
+114,Dell Agent,Desktop,SF433-Yo700-TV968,2022-10-30,2421.97,mitchellchristopher,HQ Floor 2,Active
+115,HP Hold,Software,uV778-Ow255-Al882,2021-01-01,1232.01,wwatson,In Storage,In Storage
+116,Lenovo Speak,Laptop,qi427-vw865-PD619,2019-02-15,1602.59,rmolina,HQ Floor 2,Active
+117,Apple Community,Desktop,iY058-nS295-zf829,2022-12-04,387.11,ggilmore,Remote,Retired
+118,HP Off,Laptop,RT081-Yv904-Fh823,2020-09-08,2736.06,jessica58,HQ Floor 1,In Repair
+119,Dell Write,Software,OP686-Dj395-SW613,2020-05-01,4568.23,jenniferbarry,HQ Floor 1,Retired
+120,Lenovo Mother,Server,IO172-gm143-bb643,2021-12-22,1581.85,phillipsjamie,Remote,Active
+121,Apple Their,Server,SM114-tv716-yx560,2021-06-27,3831.14,kevinharvey,Remote,Active
+122,HP Wide,Software,bq799-SE070-Zy755,2023-07-20,2722.09,hendersonbrenda,HQ Floor 2,Active
+123,Lenovo Up,Server,If570-fp607-UT174,2020-04-29,2726.08,gibsonkaitlyn,HQ Floor 1,Active
+124,Dell Effort,Software,Ag970-aR548-iL739,2019-11-18,2532.89,wallssean,HQ Floor 2,In Repair
+125,HP Morning,Network Device,hS274-HF968-lC049,2020-07-16,4289.37,melissa04,In Storage,Active
+126,Dell Plant,Software,ay561-XV213-ZP773,2020-12-04,1086.4,kelseywilliams,Data Center,Active
+127,Cisco Cover,Network Device,ii359-VM737-Kb112,2023-05-05,2733.76,ycrawford,In Storage,Active
+128,Dell Say,Server,rB608-JS581-Be670,2020-11-24,3040.39,millernatalie,HQ Floor 2,Active
+129,Apple Red,Laptop,fK576-lQ832-mC102,2022-03-23,2231.47,angela71,In Storage,Active
+130,Lenovo Strategy,Server,ti296-VS180-za332,2023-02-28,2608.68,brian01,Remote,Active
+131,Lenovo Network,Laptop,Zn498-mQ042-EE537,2023-08-16,3601.32,llewis,Data Center,Active
+132,Lenovo Important,Software,Ge881-Kk228-pO217,2023-02-23,752.62,xfranco,Data Center,Active
+133,Apple Writer,Software,mQ346-Ux060-zC560,2019-10-06,3341.15,kaitlynanderson,Data Center,Active
+134,Lenovo Possible,Laptop,BM862-bA398-eJ471,2020-05-01,4603.76,bushkimberly,HQ Floor 1,Active
+135,Cisco Spring,Software,Mu054-tE647-GF548,2021-01-09,1864.01,stodd,Data Center,Active
+136,HP Perform,Server,vI899-HN927-Oe517,2023-10-30,1796.68,crystal44,In Storage,Active
+137,Dell Phone,Software,mv835-HR539-Ar354,2023-03-30,3616.67,carla39,HQ Floor 2,Active
+138,Lenovo Voice,Server,LH243-lh588-UU537,2021-07-04,3884.67,danielle39,Remote,Active
+139,Cisco Strategy,Server,DI527-vj536-qM749,2021-02-01,2957.23,kingtammy,HQ Floor 2,Active
+140,Dell Tax,Desktop,Lr860-GK134-Am778,2020-03-20,2668.71,brent67,HQ Floor 2,Retired
+141,Apple Physical,Desktop,xW176-Zd651-ce221,2021-09-15,3061.45,daniel84,In Storage,Active
+142,Cisco Care,Laptop,NU163-rs090-Bp015,2022-12-26,1568.11,jeffreymunoz,Data Center,Retired
+143,Apple Society,Server,Wo485-kZ320-yn895,2022-01-26,4194.21,bestchristopher,In Storage,Active
+144,Cisco Sit,Network Device,DN947-kl113-or633,2020-06-27,4625.71,smithemily,HQ Floor 1,Active
+145,HP Learn,Desktop,TC996-Cj733-Vy116,2022-10-20,2905.47,wjohnson,Remote,Active
+146,Cisco Expert,Laptop,Ny376-CM855-nx078,2019-11-12,1783.48,jadeburke,In Storage,Active
+147,Dell Say,Desktop,pT626-so335-yM564,2023-05-10,2361.94,ryu,Remote,Active
+148,Dell Worry,Network Device,yb931-FB706-UC955,2020-09-08,794.84,qdavis,HQ Floor 2,Retired
+149,HP Happen,Network Device,PH345-MH472-Zm239,2019-10-30,3461.79,wernermichael,Remote,Active
+150,Dell Soon,Server,Hq312-Cj198-sj041,2023-08-01,1965.53,lramirez,HQ Floor 1,Active
+151,HP Drop,Server,KP642-YY813-Vl190,2019-07-31,2582.89,amy62,HQ Floor 1,Active
+152,Lenovo Eat,Server,hX039-DJ111-Wx428,2020-11-19,2867.28,ericfrederick,Data Center,Active
+153,Apple Else,Server,zi052-kd480-Ej880,2023-12-24,4187.74,johnlynch,Remote,In Repair
+154,Dell Hold,Network Device,OM947-Wc372-ey132,2022-02-17,4790.29,aaronmurray,HQ Floor 2,Active
+155,Cisco Successful,Network Device,YM768-KT868-Vz785,2021-04-29,2643.08,alexandra62,In Storage,In Repair
+156,Apple Most,Server,MA720-yy319-tx541,2023-04-03,237.34,edwardsjames,In Storage,Active
+157,Apple Admit,Network Device,jb362-oC792-qF463,2023-04-04,3644.19,dowens,Data Center,Active
+158,Cisco Hot,Laptop,xd372-wD603-yP214,2021-01-28,4571.44,smiller,Remote,Active
+159,HP Hear,Laptop,tG887-ka071-gj553,2022-07-05,3647.35,brian83,Remote,Active
+160,HP Professor,Network Device,Nu850-sx765-dZ975,2022-02-12,2041.83,stephensonkatherine,HQ Floor 1,In Repair
+161,Apple Lead,Desktop,QT808-CU981-UO265,2023-11-18,529.12,douglas31,Remote,Active
+162,Apple Practice,Software,mA646-Km300-AZ402,2021-11-02,2822.34,ronaldcarroll,HQ Floor 1,In Storage
+163,Dell Whom,Server,Dk301-RF204-hf713,2021-01-31,3992.27,vcain,In Storage,Active
+164,Dell Practice,Laptop,jQ574-RT988-LH558,2019-08-10,1973.24,linda33,HQ Floor 2,Active
+165,HP Teacher,Network Device,dL067-tZ458-qg476,2020-08-06,432.74,angelarichard,In Storage,Active
+166,HP Discuss,Desktop,AK372-vt188-fp566,2022-03-14,2280.46,cindyfry,Remote,Active
+167,HP Recognize,Laptop,bv150-xh666-tp267,2022-09-25,3411.73,fkoch,HQ Floor 2,Active
+168,Cisco Without,Software,Zk693-vk663-Mu439,2019-12-14,4729.46,gcastaneda,HQ Floor 1,Active
+169,Apple Beautiful,Desktop,aE102-lc867-is120,2021-12-17,1626.34,erika59,Remote,Active
+170,Cisco Begin,Network Device,Na024-mY510-kz910,2021-06-04,2140.07,lrodriguez,Data Center,Retired
+171,HP Film,Laptop,qk981-PX942-SG179,2022-01-18,1316.41,crawfordjeffrey,In Storage,Active
+172,HP Federal,Server,sP065-Tz277-AZ584,2020-01-17,3765.72,lauraboone,Remote,Active
+173,Cisco Reflect,Server,Lh533-jg722-Ci010,2019-11-01,3694.07,jennifercampbell,Remote,Active
+174,Dell Go,Server,tT593-nE766-Pc189,2021-08-06,3311.57,eric35,HQ Floor 2,In Repair
+175,HP Attorney,Network Device,Ci004-uV627-TB765,2022-05-12,4138.07,susan92,Remote,Active
+176,Apple Account,Server,pG246-MF175-rm202,2021-11-27,646.04,roberttownsend,In Storage,Active
+177,Lenovo Program,Server,mn559-jv550-RQ178,2022-06-02,2919.1,alyssa89,Data Center,Active
+178,Cisco Position,Laptop,WD936-cs079-vb848,2020-09-18,4674.87,ylawrence,Data Center,Active
+179,Apple At,Desktop,Cq767-tP993-co593,2023-06-13,2931.38,ralph08,Data Center,Active
+180,Lenovo Drop,Server,ZZ037-rI360-IA601,2023-07-13,2298.38,shawstephanie,Data Center,Active
+181,HP Study,Software,Xh490-py793-JU884,2020-07-25,249.14,gregory30,HQ Floor 2,Active
+182,Apple Reveal,Laptop,kQ615-sQ370-qA124,2023-10-01,2866.49,rebeccaharris,In Storage,In Repair
+183,Lenovo Common,Software,ha514-pe488-XX112,2021-03-06,2074.27,tammy17,In Storage,Active
+184,Dell Green,Software,Yf188-wY781-fw794,2020-01-08,4230.95,paullopez,In Storage,In Repair
+185,HP You,Desktop,HS409-Im112-EW252,2022-09-23,3906.13,anthony66,HQ Floor 2,Active
+186,Apple Body,Network Device,Vo863-QX239-FJ791,2019-10-09,1091.55,phughes,HQ Floor 1,Active
+187,HP Home,Desktop,Qx300-Pv730-AV950,2021-09-22,3593.61,montesmichelle,Data Center,Active
+188,Cisco Bed,Laptop,FJ219-JU881-Wv927,2020-02-22,2670.47,weberantonio,Remote,Retired
+189,Apple Thing,Server,tQ534-iS864-qy010,2021-10-12,2606.93,juanatkinson,HQ Floor 1,Retired
+190,Lenovo Bad,Server,su851-lT744-fi600,2022-04-11,2048.2,coxcody,Data Center,Active
+191,Cisco Everything,Network Device,dr551-tW293-JW913,2022-08-27,4133.34,cainana,Data Center,In Repair
+192,Cisco Participant,Software,fQ848-vr416-Vd046,2021-02-28,2895.79,caseyrush,HQ Floor 1,Active
+193,Lenovo Per,Server,qk017-LJ075-Yp681,2019-05-18,4278.7,cookjacob,HQ Floor 2,Retired
+194,Cisco Why,Network Device,Aa910-RH732-rK283,2020-06-18,3267.91,travisyoung,In Storage,Active
+195,Cisco Law,Desktop,LA396-Ls384-rp526,2019-12-06,2441.08,mannjonathan,Data Center,Active
+196,Lenovo Point,Network Device,lP701-Lh693-Qp429,2020-12-28,1125.84,jenniferhall,Data Center,In Repair
+197,HP Enjoy,Laptop,Pn016-Th234-Sa190,2019-05-06,1600.83,nrodriguez,HQ Floor 1,In Storage
+198,Apple Likely,Network Device,CQ221-mO556-jn684,2021-06-26,1400.29,qgomez,HQ Floor 1,Retired
+199,HP Toward,Laptop,Dk377-dY460-dV406,2020-05-26,1763.83,nwarren,In Storage,Active
+200,Apple Job,Server,YW142-He442-LD607,2022-10-05,4731.47,kevin37,HQ Floor 1,In Repair

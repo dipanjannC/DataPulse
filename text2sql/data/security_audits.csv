@@ -1,0 +1,31 @@
+audit_id,audit_type,auditor,start_date,end_date,scope,findings_count,status
+1,Penetration Test,Deloitte,2023-05-29,2024-12-21,Full Infrastructure,48,Report Issued
+2,External,Deloitte,2024-02-10,2025-06-04,Endpoints,25,Planned
+3,Internal,PwC,2021-08-26,2025-03-15,Cloud Environments,41,Completed
+4,Internal,Internal Security Team,2024-05-15,2024-11-19,Network Perimeter,18,Report Issued
+5,Compliance Audit,Deloitte,2021-09-13,2025-01-03,Full Infrastructure,47,In Progress
+6,External,NCC Group,2022-04-02,2024-11-11,Full Infrastructure,45,Report Issued
+7,Internal,NCC Group,2023-03-21,2024-12-15,Endpoints,20,Report Issued
+8,External,NCC Group,2022-07-07,2024-10-07,Endpoints,11,Report Issued
+9,Internal,Ernst & Young,2024-05-24,2024-10-22,Full Infrastructure,42,Planned
+10,Internal,Deloitte,2021-09-23,2025-04-09,Web Applications,4,Report Issued
+11,External,Ernst & Young,2021-04-11,2025-02-08,Network Perimeter,44,In Progress
+12,Compliance Audit,NCC Group,2021-01-27,2024-10-07,Web Applications,44,Report Issued
+13,Internal,Ernst & Young,2023-01-03,2024-11-07,Web Applications,10,Completed
+14,Internal,PwC,2022-05-11,2024-10-16,Web Applications,16,Completed
+15,Penetration Test,PwC,2023-01-12,2024-10-13,Web Applications,18,In Progress
+16,Compliance Audit,Internal Security Team,2022-09-23,2024-11-22,Full Infrastructure,2,In Progress
+17,Penetration Test,Internal Security Team,2024-02-26,2025-05-08,Full Infrastructure,49,Report Issued
+18,Penetration Test,NCC Group,2022-10-30,2024-12-03,Web Applications,24,Report Issued
+19,Compliance Audit,PwC,2024-05-03,2025-06-03,Endpoints,45,Completed
+20,External,KPMG,2023-02-26,2024-11-29,Full Infrastructure,37,Report Issued
+21,Penetration Test,Ernst & Young,2022-07-24,2025-02-24,Cloud Environments,10,Completed
+22,Compliance Audit,Ernst & Young,2024-08-01,2024-11-25,Cloud Environments,33,Completed
+23,External,PwC,2021-07-12,2025-04-10,Network Perimeter,46,Completed
+24,External,Ernst & Young,2021-06-14,2024-12-29,Network Perimeter,35,Completed
+25,Internal,KPMG,2024-07-16,2025-06-09,Full Infrastructure,4,Planned
+26,Compliance Audit,Ernst & Young,2024-02-24,2025-03-31,Full Infrastructure,36,In Progress
+27,Internal,Ernst & Young,2021-05-01,2025-02-15,Web Applications,37,Report Issued
+28,Compliance Audit,Ernst & Young,2021-11-18,2025-06-08,Full Infrastructure,28,Completed
+29,External,PwC,2022-03-21,2024-11-27,Network Perimeter,23,In Progress
+30,Internal,Deloitte,2023-01-30,2024-12-18,Network Perimeter,44,Planned

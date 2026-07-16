@@ -1,0 +1,11 @@
+segment_id,segment_name,criteria,customer_count,created_at,last_updated
+1,High-Value Customers,Total spend > $5000,493,2023-01-01,2024-06-01
+2,New Signups,Signup within last 30 days,228,2023-01-01,2024-12-01
+3,Churned Users,No purchase in 180 days,299,2023-03-01,2024-11-01
+4,Gold Tier Customers,loyalty_tier = Gold,1179,2023-01-01,2024-10-01
+5,Enterprise Accounts,Company size > 500 employees,139,2023-06-01,2024-09-01
+6,Webinar Attendees,Attended any webinar event,425,2023-07-01,2024-08-01
+7,Email Clickers,Clicked email link in 60 days,505,2023-02-01,2024-12-15
+8,Mobile Users,Primary device = Mobile,1770,2023-04-01,2024-11-30
+9,Discount Seekers,Purchased with discount > 15%,122,2023-05-01,2024-10-15
+10,Repeat Buyers,Order count >= 5,792,2023-01-01,2024-12-01

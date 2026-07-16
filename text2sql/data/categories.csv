@@ -1,0 +1,10 @@
+category_id,category_name,parent_category_id,description
+1,Electronics,,Consumer electronics and gadgets
+2,Clothing,,Apparel and fashion items
+3,Home & Garden,,Home furnishings and garden supplies
+4,Sports,,Sports and outdoor equipment
+5,Books,,Books and digital media
+6,Laptops,1.0,Portable personal computers
+7,Smartphones,1.0,Mobile phones and accessories
+8,Men's Clothing,2.0,Men's apparel
+9,Women's Clothing,2.0,Women's apparel

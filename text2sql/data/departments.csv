@@ -1,0 +1,11 @@
+department_id,department_name,location,budget,head_employee_id
+1,Engineering,San Francisco,1973529.68,
+2,Finance,Remote,3425526.12,
+3,Human Resources,Austin,1748121.74,
+4,Marketing,New York,2226990.83,
+5,Sales,New York,3452553.28,
+6,Operations,Remote,843989.41,
+7,Legal,Chicago,684142.58,
+8,Product,Remote,3126291.42,
+9,Customer Success,Austin,4968338.76,
+10,Data & Analytics,Austin,240262.79,

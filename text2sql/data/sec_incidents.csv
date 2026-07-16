@@ -1,0 +1,101 @@
+incident_id,title,severity,category,detected_at,resolved_at,status,assigned_to
+1,Data Breach Attempt — Southern,Medium,Data Breach,2022-03-14 03:52:00,2022-06-25 13:53:00,Open,IR Team
+2,DDoS Attempt — Six,Medium,Phishing,2022-02-28 01:45:00,2022-05-16 04:47:00,Closed,CISO
+3,Insider Threat Attempt — Every,Critical,Data Breach,2024-04-15 05:02:00,2025-01-03 07:51:00,Closed,CISO
+4,Phishing Attempt — Generation,Medium,DDoS,2023-12-11 01:03:00,2022-05-22 07:04:00,Closed,External Vendor
+5,Phishing Attempt — Pass,High,Data Breach,2022-04-20 03:08:00,2023-02-24 04:30:00,Open,CISO
+6,Ransomware Attempt — Series,Critical,Phishing,2023-09-27 12:24:00,2022-09-02 04:39:00,Closed,CISO
+7,Phishing Attempt — Consider,Low,Data Breach,2024-03-17 18:59:00,2024-08-23 22:04:00,Closed,CISO
+8,Insider Threat Attempt — Defense,Medium,DDoS,2022-09-24 02:17:00,2024-02-29 14:47:00,Contained,External Vendor
+9,Data Breach Attempt — Control,Critical,Insider Threat,2022-09-08 21:22:00,2022-08-11 17:40:00,Closed,CISO
+10,Data Breach Attempt — Talk,Low,Phishing,2024-10-15 12:40:00,,Investigating,External Vendor
+11,DDoS Attempt — Hope,Medium,DDoS,2024-04-28 14:53:00,2023-05-31 18:49:00,Closed,External Vendor
+12,Ransomware Attempt — Room,Medium,Insider Threat,2022-12-11 12:22:00,2022-09-06 03:30:00,Closed,External Vendor
+13,Ransomware Attempt — Name,Medium,Phishing,2024-09-22 19:11:00,2023-03-24 22:34:00,Closed,CISO
+14,Data Breach Attempt — Arrive,Critical,Ransomware,2024-02-02 16:24:00,2023-03-10 17:01:00,Closed,External Vendor
+15,DDoS Attempt — So,High,Ransomware,2022-09-19 03:00:00,2024-12-13 14:15:00,Closed,IR Team
+16,Ransomware Attempt — Course,Low,Data Breach,2023-09-26 07:51:00,2024-05-23 09:32:00,Open,IR Team
+17,Phishing Attempt — Fight,Medium,Insider Threat,2023-03-26 01:53:00,2024-03-10 09:14:00,Closed,External Vendor
+18,Ransomware Attempt — Hand,High,Insider Threat,2022-11-26 05:18:00,2023-07-28 08:08:00,Closed,CISO
+19,Ransomware Attempt — From,Low,Phishing,2023-01-21 00:54:00,2022-01-05 00:40:00,Contained,SOC Team
+20,Ransomware Attempt — Think,Low,Data Breach,2024-12-18 13:39:00,2022-02-12 09:38:00,Closed,External Vendor
+21,Data Breach Attempt — Money,Critical,Data Breach,2022-11-23 14:02:00,2022-12-13 00:12:00,Closed,SOC Team
+22,Ransomware Attempt — Bank,Medium,Ransomware,2024-03-29 07:36:00,2024-10-27 08:58:00,Closed,CISO
+23,Data Breach Attempt — Whose,Medium,Ransomware,2022-05-04 00:35:00,2023-07-09 02:14:00,Closed,CISO
+24,Insider Threat Attempt — Blue,High,Ransomware,2024-11-08 18:45:00,2022-02-06 17:22:00,Open,SOC Team
+25,Phishing Attempt — Space,Low,DDoS,2022-07-20 23:38:00,2024-03-12 10:29:00,Closed,SOC Team
+26,Phishing Attempt — Identify,Low,Phishing,2023-01-21 03:37:00,2022-06-20 02:07:00,Closed,SOC Team
+27,DDoS Attempt — Country,Low,DDoS,2022-10-17 04:54:00,2023-11-13 10:18:00,Closed,External Vendor
+28,Insider Threat Attempt — Talk,Medium,Data Breach,2024-08-08 12:30:00,2022-03-10 22:40:00,Closed,CISO
+29,Data Breach Attempt — Scene,High,Phishing,2023-07-11 09:19:00,2023-06-23 01:30:00,Closed,IR Team
+30,Data Breach Attempt — Make,Medium,Phishing,2024-02-12 03:36:00,2024-11-17 20:19:00,Closed,CISO
+31,Ransomware Attempt — Expect,High,Ransomware,2025-01-12 15:43:00,2024-07-14 06:43:00,Closed,IR Team
+32,Ransomware Attempt — Spend,Medium,Phishing,2024-11-08 09:55:00,2022-07-16 04:08:00,Investigating,SOC Team
+33,DDoS Attempt — Despite,High,Data Breach,2022-07-18 23:58:00,2022-03-12 23:52:00,Closed,IR Team
+34,Ransomware Attempt — Go,Medium,Ransomware,2023-01-06 12:56:00,2023-03-23 03:27:00,Closed,IR Team
+35,Phishing Attempt — Board,Medium,Insider Threat,2023-06-26 09:15:00,,Closed,IR Team
+36,Data Breach Attempt — Whether,High,DDoS,2024-07-18 04:32:00,,Investigating,External Vendor
+37,Phishing Attempt — Step,Low,Ransomware,2024-11-13 08:22:00,2022-07-10 03:22:00,Closed,External Vendor
+38,Phishing Attempt — Fear,Medium,Phishing,2023-06-22 17:44:00,2023-01-23 19:33:00,Closed,SOC Team
+39,Phishing Attempt — Picture,Low,DDoS,2024-03-18 01:19:00,2022-07-24 11:59:00,Closed,CISO
+40,DDoS Attempt — Car,Medium,DDoS,2025-01-06 02:33:00,,Closed,External Vendor
+41,Data Breach Attempt — My,Medium,Ransomware,2023-05-08 23:29:00,,Contained,External Vendor
+42,Data Breach Attempt — Term,Low,Ransomware,2023-04-15 06:19:00,2023-07-14 02:07:00,Closed,CISO
+43,Data Breach Attempt — Its,Low,Phishing,2023-07-27 17:25:00,2023-05-29 00:50:00,Investigating,IR Team
+44,DDoS Attempt — Deep,High,Ransomware,2022-10-19 00:47:00,2024-06-16 05:33:00,Closed,CISO
+45,DDoS Attempt — Center,Low,Ransomware,2023-12-19 17:24:00,2022-10-05 03:15:00,Closed,IR Team
+46,Phishing Attempt — Mission,Low,DDoS,2022-03-23 23:30:00,2024-07-01 17:03:00,Closed,External Vendor
+47,Data Breach Attempt — School,Medium,Data Breach,2023-09-09 02:31:00,2023-01-01 06:18:00,Closed,IR Team
+48,Phishing Attempt — Around,Low,Ransomware,2024-10-30 13:07:00,2023-10-13 13:20:00,Open,CISO
+49,DDoS Attempt — Class,Low,Ransomware,2024-04-01 04:47:00,,Closed,External Vendor
+50,Phishing Attempt — Describe,Medium,Data Breach,2023-03-27 08:33:00,2022-12-04 00:49:00,Closed,IR Team
+51,Insider Threat Attempt — Black,Low,Phishing,2025-01-10 10:18:00,2022-05-31 21:08:00,Contained,IR Team
+52,Insider Threat Attempt — Majority,Medium,Data Breach,2023-03-09 01:01:00,2023-11-23 22:01:00,Closed,CISO
+53,Data Breach Attempt — Establish,High,Ransomware,2023-01-02 08:19:00,2022-11-06 18:43:00,Closed,IR Team
+54,Insider Threat Attempt — Protect,Low,DDoS,2024-07-30 17:24:00,2022-08-22 04:35:00,Closed,SOC Team
+55,Phishing Attempt — Weight,High,Ransomware,2022-12-09 20:10:00,2022-09-25 08:59:00,Closed,External Vendor
+56,Insider Threat Attempt — Along,Medium,Insider Threat,2024-03-15 22:54:00,2023-04-12 00:15:00,Closed,External Vendor
+57,Ransomware Attempt — Carry,High,Phishing,2024-05-21 05:44:00,2023-07-26 05:04:00,Closed,External Vendor
+58,Phishing Attempt — Network,Medium,Insider Threat,2024-06-06 01:00:00,2022-01-17 20:19:00,Open,CISO
+59,DDoS Attempt — Six,High,Insider Threat,2024-04-13 12:25:00,2024-03-14 01:32:00,Closed,IR Team
+60,Data Breach Attempt — Bad,Medium,DDoS,2023-02-12 20:30:00,2022-04-05 06:21:00,Closed,IR Team
+61,Data Breach Attempt — Another,High,Insider Threat,2024-10-13 20:36:00,2023-04-30 09:07:00,Closed,SOC Team
+62,Data Breach Attempt — Husband,Medium,Data Breach,2022-10-11 18:07:00,2022-09-05 07:53:00,Closed,IR Team
+63,DDoS Attempt — Able,Medium,Insider Threat,2022-02-26 08:13:00,2022-03-16 17:01:00,Closed,External Vendor
+64,DDoS Attempt — Statement,Low,DDoS,2022-05-08 01:51:00,2024-10-25 17:40:00,Closed,IR Team
+65,Insider Threat Attempt — Program,Medium,Ransomware,2023-02-06 23:17:00,2024-01-31 18:32:00,Closed,SOC Team
+66,Insider Threat Attempt — Tonight,High,Insider Threat,2023-11-03 22:10:00,2024-05-24 19:14:00,Closed,IR Team
+67,Phishing Attempt — Memory,High,Phishing,2023-10-25 05:37:00,2023-07-23 05:25:00,Closed,CISO
+68,Data Breach Attempt — Important,Low,Data Breach,2025-01-23 13:07:00,2024-07-29 12:04:00,Closed,IR Team
+69,Phishing Attempt — Each,Critical,Ransomware,2024-10-22 16:00:00,,Investigating,SOC Team
+70,DDoS Attempt — Then,Medium,Data Breach,2024-01-04 06:55:00,2022-01-03 12:29:00,Closed,CISO
+71,Ransomware Attempt — Fine,Medium,Ransomware,2022-01-26 12:36:00,2023-09-18 20:10:00,Investigating,SOC Team
+72,Phishing Attempt — Eye,Low,Ransomware,2023-10-05 02:08:00,2023-03-28 15:51:00,Open,External Vendor
+73,DDoS Attempt — Despite,Low,Phishing,2023-03-06 01:10:00,2022-12-07 14:36:00,Closed,SOC Team
+74,Insider Threat Attempt — Despite,Medium,Ransomware,2023-07-24 02:32:00,,Closed,IR Team
+75,Insider Threat Attempt — Far,Low,DDoS,2023-09-26 23:04:00,2022-10-11 07:22:00,Closed,CISO
+76,DDoS Attempt — Response,Critical,Ransomware,2022-05-31 04:47:00,2023-02-28 16:30:00,Closed,SOC Team
+77,Insider Threat Attempt — Just,Medium,Ransomware,2022-08-13 09:01:00,2025-01-04 08:38:00,Closed,SOC Team
+78,DDoS Attempt — Able,High,Ransomware,2023-03-13 15:10:00,2024-07-04 09:22:00,Closed,CISO
+79,Data Breach Attempt — Course,Medium,Insider Threat,2022-10-29 18:19:00,2022-03-15 08:40:00,Closed,External Vendor
+80,Ransomware Attempt — Rate,High,Phishing,2022-06-01 05:01:00,2023-07-26 08:58:00,Closed,IR Team
+81,Ransomware Attempt — Various,Medium,Insider Threat,2025-01-31 17:23:00,2022-03-03 03:08:00,Closed,CISO
+82,DDoS Attempt — Small,Medium,Insider Threat,2023-06-23 10:53:00,2024-09-22 17:33:00,Closed,SOC Team
+83,Data Breach Attempt — How,Low,Phishing,2024-12-07 00:56:00,2024-06-25 01:05:00,Investigating,SOC Team
+84,Data Breach Attempt — Detail,Low,DDoS,2022-03-13 13:10:00,2024-07-10 05:36:00,Closed,SOC Team
+85,Ransomware Attempt — Else,Medium,DDoS,2022-11-07 05:10:00,2023-01-08 07:10:00,Investigating,CISO
+86,Phishing Attempt — Shake,Medium,Insider Threat,2022-04-25 22:05:00,2024-03-02 17:48:00,Closed,SOC Team
+87,Ransomware Attempt — Hit,High,Ransomware,2023-01-31 14:16:00,2023-04-05 13:46:00,Closed,CISO
+88,Ransomware Attempt — Information,Low,DDoS,2023-01-18 15:03:00,,Closed,IR Team
+89,Ransomware Attempt — Fall,Low,Insider Threat,2022-12-12 08:08:00,2023-01-24 09:46:00,Closed,SOC Team
+90,Insider Threat Attempt — Back,Medium,Ransomware,2022-12-10 14:30:00,2024-12-20 16:54:00,Closed,SOC Team
+91,Data Breach Attempt — See,High,Insider Threat,2023-11-22 07:43:00,2023-06-23 14:38:00,Closed,CISO
+92,Ransomware Attempt — International,Medium,Data Breach,2022-04-10 08:48:00,2024-01-09 13:21:00,Closed,IR Team
+93,DDoS Attempt — Pull,Medium,Insider Threat,2024-09-07 18:08:00,2022-05-09 17:39:00,Closed,IR Team
+94,Insider Threat Attempt — Country,High,Ransomware,2022-09-05 00:30:00,2024-09-09 18:04:00,Closed,CISO
+95,Insider Threat Attempt — Person,Medium,Phishing,2024-08-30 01:05:00,2024-05-11 07:51:00,Contained,SOC Team
+96,Phishing Attempt — Support,Low,Insider Threat,2023-12-31 21:10:00,2024-07-02 16:11:00,Closed,External Vendor
+97,Data Breach Attempt — Officer,High,DDoS,2023-07-10 16:10:00,2022-06-02 20:24:00,Closed,CISO
+98,Phishing Attempt — Record,High,DDoS,2023-12-28 03:24:00,2022-08-17 16:16:00,Closed,CISO
+99,Data Breach Attempt — Yes,High,Data Breach,2024-01-29 15:53:00,2025-02-26 03:55:00,Closed,IR Team
+100,Ransomware Attempt — Mission,Medium,Ransomware,2024-08-27 09:56:00,2023-07-26 10:23:00,Closed,SOC Team

@@ -1,0 +1,9 @@
+channel_id,channel_name,channel_type,cost_per_click,cost_per_impression,monthly_budget
+1,Google Ads,Paid,1.85,3.5,20000
+2,Facebook Ads,Paid,0.95,1.2,15000
+3,LinkedIn,Social,5.5,8.0,10000
+4,Email,Email,0.1,,2000
+5,SEO / Organic,Organic,,,5000
+6,Instagram,Social,1.2,2.0,8000
+7,Twitter/X,Social,0.6,0.9,5000
+8,Events,Events,,,30000

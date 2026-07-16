@@ -1,0 +1,501 @@
+ticket_id,incident_id,ticket_type,raised_by,assigned_team,priority,status,created_at,closed_at
+1,56.0,Problem,odavis,Desktop Support,Medium,Closed,2023-12-18 04:54:00,2024-12-07 10:26:00
+2,,Incident,shannon31,Database,High,Open,2023-09-13 01:23:00,2024-04-11 17:03:00
+3,,Incident,michelle63,Desktop Support,Critical,Pending,2023-10-18 19:18:00,2024-09-11 02:32:00
+4,,Problem,wcarroll,Database,Medium,Resolved,2023-06-23 00:58:00,2023-12-03 03:17:00
+5,,Service Request,kristy11,Cloud Ops,Critical,In Progress,2023-04-02 07:25:00,2024-02-24 11:28:00
+6,,Service Request,zroberts,Desktop Support,Medium,Closed,2024-12-21 12:06:00,2024-11-03 10:42:00
+7,289.0,Problem,kellermary,Network,Medium,Resolved,2024-07-29 08:37:00,2023-07-15 21:54:00
+8,,Service Request,thomaswhite,Security,Critical,Resolved,2024-02-24 12:04:00,2023-09-02 17:34:00
+9,,Service Request,wyattamy,Security,Low,Closed,2023-02-04 22:57:00,2023-04-04 22:23:00
+10,,Problem,pbarajas,Cloud Ops,Critical,Resolved,2023-05-26 06:36:00,2025-01-30 11:59:00
+11,,Incident,vortiz,Cloud Ops,Low,Closed,2024-08-16 09:05:00,
+12,,Service Request,kennethboyd,Cloud Ops,Low,Resolved,2023-12-02 21:14:00,2024-12-24 16:31:00
+13,,Service Request,qaguirre,Desktop Support,Low,Closed,2023-01-30 07:59:00,2023-08-09 17:35:00
+14,35.0,Incident,montoyafelicia,Network,Critical,Pending,2024-05-03 13:14:00,2023-01-19 06:41:00
+15,,Service Request,johnsondaniel,Security,Medium,Closed,2024-01-20 11:26:00,2024-04-17 20:06:00
+16,,Problem,uhaley,Network,High,Resolved,2023-11-30 15:51:00,2023-07-19 18:26:00
+17,,Incident,matthewbrennan,Security,High,Pending,2024-04-06 06:38:00,2024-02-07 08:46:00
+18,,Problem,robert40,Security,High,Closed,2024-07-16 20:34:00,2023-09-05 22:42:00
+19,182.0,Problem,tabitha03,Database,Critical,Resolved,2023-03-01 05:21:00,2023-04-08 04:37:00
+20,,Service Request,taylortina,Cloud Ops,Medium,Pending,2024-05-22 16:57:00,
+21,168.0,Problem,bakertommy,Network,High,Open,2023-04-03 09:24:00,
+22,,Service Request,robertpeck,Network,Low,Open,2024-08-16 21:03:00,2023-02-06 14:13:00
+23,,Service Request,bakerjonathon,Security,Critical,Resolved,2024-12-27 07:40:00,2024-05-24 09:15:00
+24,,Problem,shawn89,Desktop Support,Low,Resolved,2023-10-10 03:13:00,
+25,,Problem,brittanybauer,Cloud Ops,Critical,Open,2023-08-13 04:06:00,2023-01-15 11:18:00
+26,278.0,Problem,johnstonbarbara,Security,Medium,Pending,2023-03-11 03:05:00,2024-08-20 20:02:00
+27,181.0,Problem,barnesrichard,Security,Low,Resolved,2023-06-20 21:36:00,2023-07-06 10:36:00
+28,,Problem,hudsonglen,Database,Low,Closed,2023-08-22 04:15:00,2024-12-28 14:43:00
+29,,Service Request,sheena87,Cloud Ops,Critical,Open,2024-10-09 12:53:00,
+30,,Problem,monica51,Security,Low,Closed,2023-11-14 00:41:00,2024-09-19 15:35:00
+31,237.0,Service Request,mariahwang,Security,Medium,Open,2023-04-13 16:12:00,2023-06-15 22:48:00
+32,,Incident,ftaylor,Database,Critical,Closed,2023-07-04 12:48:00,2024-06-07 05:56:00
+33,63.0,Service Request,chavezpamela,Security,Low,Resolved,2023-05-01 07:14:00,2023-04-19 02:52:00
+34,,Service Request,mayroger,Network,High,Resolved,2024-04-04 12:53:00,2023-03-16 18:08:00
+35,,Problem,mccormickkatherine,Database,Medium,Closed,2023-08-22 01:58:00,
+36,,Service Request,kimberly03,Security,Critical,In Progress,2024-01-02 16:39:00,2023-07-11 07:43:00
+37,,Incident,stacey98,Cloud Ops,Low,Pending,2024-05-15 16:30:00,
+38,,Incident,hunterjamie,Security,Critical,Closed,2023-06-29 12:20:00,2024-04-22 02:12:00
+39,,Service Request,vramos,Database,Critical,Resolved,2023-09-22 22:23:00,
+40,,Service Request,suzanne33,Desktop Support,Critical,Pending,2023-07-01 11:28:00,2023-11-02 21:51:00
+41,,Problem,richardjuarez,Database,Medium,Closed,2023-11-27 04:46:00,2024-09-11 18:03:00
+42,,Problem,qsmith,Security,Low,Closed,2023-04-16 03:20:00,2024-05-03 07:50:00
+43,177.0,Incident,hallalan,Security,Critical,Resolved,2024-03-06 15:02:00,2023-03-04 21:26:00
+44,,Problem,deandaniel,Network,Medium,Resolved,2023-08-03 02:55:00,2023-09-24 13:20:00
+45,,Incident,james60,Cloud Ops,High,Resolved,2024-03-14 01:15:00,2023-11-04 23:47:00
+46,,Service Request,amyfoster,Desktop Support,Medium,Closed,2024-07-07 18:09:00,2024-10-01 11:08:00
+47,165.0,Service Request,joseph20,Network,High,Open,2023-12-12 23:30:00,2024-10-16 04:25:00
+48,279.0,Incident,carlos23,Desktop Support,Medium,Closed,2024-11-24 23:55:00,2024-04-21 02:24:00
+49,269.0,Problem,carrjennifer,Cloud Ops,Medium,Closed,2024-12-05 16:58:00,2024-08-17 14:47:00
+50,214.0,Problem,shannon20,Desktop Support,Medium,Resolved,2023-01-26 06:43:00,2024-10-30 08:30:00
+51,,Service Request,katherine10,Desktop Support,Critical,Resolved,2024-08-07 06:58:00,
+52,,Incident,zimmermantroy,Database,High,Open,2024-12-30 05:59:00,2023-08-18 04:32:00
+53,,Incident,cory32,Cloud Ops,Medium,Pending,2024-12-02 18:16:00,2023-04-09 16:23:00
+54,189.0,Service Request,nathan38,Network,Medium,Pending,2024-06-26 07:05:00,2023-01-05 01:56:00
+55,206.0,Incident,browntimothy,Network,Medium,Closed,2023-06-12 16:09:00,2023-07-16 10:42:00
+56,,Problem,corey22,Network,High,Closed,2024-08-16 17:24:00,2023-04-14 13:53:00
+57,,Problem,amy70,Cloud Ops,Medium,Open,2023-06-01 23:50:00,2024-06-22 13:11:00
+58,,Service Request,yhernandez,Database,High,Pending,2024-10-02 06:19:00,2023-02-22 21:43:00
+59,,Problem,michelle96,Desktop Support,Medium,Open,2023-06-24 11:34:00,2024-06-18 19:50:00
+60,,Service Request,isaacbrooks,Cloud Ops,Critical,Closed,2024-11-11 06:25:00,2024-02-12 06:15:00
+61,284.0,Service Request,ywilkinson,Cloud Ops,Low,In Progress,2023-06-11 23:25:00,2023-06-06 16:49:00
+62,107.0,Problem,jacobsmith,Cloud Ops,High,Resolved,2024-06-11 09:50:00,2024-05-27 09:36:00
+63,47.0,Service Request,geraldgarcia,Desktop Support,High,Closed,2024-12-25 07:54:00,2023-02-06 07:06:00
+64,51.0,Service Request,johnsonkevin,Cloud Ops,Medium,Closed,2024-03-17 05:48:00,2024-06-21 08:23:00
+65,,Service Request,ygarcia,Network,High,Closed,2024-06-30 20:21:00,2024-01-24 04:10:00
+66,,Service Request,brentsmith,Network,Low,Resolved,2024-06-07 09:33:00,2023-02-08 12:46:00
+67,,Service Request,pwest,Network,Low,In Progress,2024-02-03 00:18:00,2023-01-20 20:06:00
+68,,Problem,brianconrad,Security,Medium,Resolved,2024-10-11 19:06:00,2025-01-07 12:57:00
+69,,Service Request,johnsonmatthew,Security,Low,Closed,2024-03-02 12:40:00,2024-07-12 09:20:00
+70,,Incident,peterlang,Desktop Support,Low,Resolved,2023-02-27 05:58:00,2023-06-07 06:49:00
+71,,Incident,chadward,Security,High,Closed,2023-01-15 14:04:00,2024-10-20 00:43:00
+72,,Incident,lmullen,Database,High,Open,2023-09-07 21:42:00,
+73,,Problem,smithsteven,Network,Critical,Resolved,2023-04-07 08:34:00,2023-08-17 21:12:00
+74,,Service Request,anthony17,Network,High,Resolved,2023-11-21 11:16:00,2023-03-10 05:36:00
+75,,Problem,derrickmoses,Desktop Support,High,Closed,2024-08-15 05:10:00,
+76,,Problem,johnsonsteven,Database,Low,Pending,2024-10-31 05:03:00,2024-11-28 11:08:00
+77,226.0,Service Request,wdavis,Database,Low,In Progress,2023-06-11 13:38:00,2023-12-10 01:54:00
+78,,Incident,penageorge,Cloud Ops,Medium,Closed,2023-05-20 08:47:00,2023-03-07 07:56:00
+79,,Incident,rodriguezamber,Network,Medium,Closed,2024-12-05 05:23:00,
+80,,Service Request,vknight,Security,Critical,Closed,2023-09-03 17:14:00,2023-10-17 09:03:00
+81,,Problem,pwilkerson,Desktop Support,Critical,Resolved,2023-12-30 08:13:00,2024-08-30 08:09:00
+82,,Problem,lsimpson,Security,Low,In Progress,2023-01-27 16:26:00,2023-04-10 09:35:00
+83,,Incident,johnsonmadison,Desktop Support,Low,Resolved,2023-01-21 10:03:00,2023-10-07 21:32:00
+84,,Problem,molly46,Network,High,Resolved,2023-11-19 03:35:00,
+85,250.0,Incident,lutzdaniel,Network,Low,Resolved,2024-05-09 08:18:00,2024-08-10 22:14:00
+86,,Problem,amyhaney,Network,Critical,In Progress,2023-09-15 22:00:00,
+87,,Service Request,wellsadam,Cloud Ops,High,Closed,2024-06-26 12:21:00,2024-05-14 06:30:00
+88,143.0,Problem,kirk60,Cloud Ops,Critical,Pending,2023-01-06 14:08:00,2024-01-24 23:03:00
+89,,Service Request,mandymalone,Security,Low,In Progress,2024-07-25 03:34:00,
+90,,Problem,melissa22,Desktop Support,Medium,Pending,2023-05-16 17:43:00,2024-10-03 09:00:00
+91,,Problem,douglas60,Desktop Support,High,In Progress,2023-01-19 04:25:00,2024-12-27 10:30:00
+92,,Service Request,matthewlewis,Desktop Support,Critical,Resolved,2023-10-24 17:59:00,
+93,,Incident,karina20,Cloud Ops,Medium,Resolved,2024-06-19 02:29:00,2023-09-26 20:35:00
+94,174.0,Incident,kevin77,Cloud Ops,Critical,Closed,2023-06-10 19:53:00,2024-06-12 07:48:00
+95,,Incident,nicholasjohnson,Desktop Support,High,In Progress,2024-01-11 04:47:00,2024-02-12 01:33:00
+96,,Service Request,robertgarrett,Desktop Support,Medium,Resolved,2024-07-26 14:56:00,2024-12-23 00:05:00
+97,251.0,Problem,cody27,Security,Critical,Closed,2023-10-06 23:31:00,2024-11-01 14:54:00
+98,,Service Request,dmiller,Database,Low,Resolved,2024-03-03 14:34:00,
+99,,Service Request,jennifer02,Security,Critical,Closed,2023-08-27 19:24:00,
+100,,Problem,stacy59,Desktop Support,High,Open,2024-04-26 06:58:00,2024-07-09 23:37:00
+101,27.0,Problem,daniel02,Network,High,Closed,2024-12-23 21:31:00,2023-11-19 13:39:00
+102,,Incident,rodriguezelizabeth,Network,Critical,Closed,2023-06-15 03:57:00,2024-11-08 16:29:00
+103,,Incident,stephanie89,Cloud Ops,Low,Pending,2024-06-02 14:11:00,2023-09-12 09:48:00
+104,17.0,Service Request,jacksonrussell,Database,High,Resolved,2024-07-23 22:26:00,2023-04-25 04:24:00
+105,,Service Request,sholder,Desktop Support,Low,Resolved,2023-05-28 18:53:00,
+106,,Problem,jessica86,Database,High,Closed,2023-06-18 08:36:00,2024-08-20 02:39:00
+107,,Incident,timothy68,Database,High,Open,2024-12-13 11:43:00,2023-12-10 11:12:00
+108,,Incident,dmartinez,Network,High,In Progress,2024-03-02 06:07:00,2024-01-14 18:25:00
+109,,Incident,akidd,Cloud Ops,Low,Resolved,2024-09-29 08:16:00,2023-04-09 08:47:00
+110,,Incident,larry40,Network,High,Open,2024-03-31 11:26:00,
+111,63.0,Incident,samuelsandoval,Cloud Ops,High,Closed,2023-02-11 14:49:00,2024-05-13 05:37:00
+112,,Problem,daviladaniel,Desktop Support,Medium,Closed,2024-05-30 21:57:00,2023-11-10 04:29:00
+113,,Problem,henrychristine,Security,High,Closed,2024-12-29 15:36:00,2024-09-06 04:57:00
+114,,Incident,christopherturner,Database,Critical,Closed,2024-02-25 13:40:00,2023-11-27 08:28:00
+115,,Service Request,powelljillian,Database,Critical,Closed,2024-12-20 21:46:00,2024-11-14 15:58:00
+116,31.0,Problem,philliphayden,Security,Medium,Closed,2024-12-13 04:22:00,2024-08-28 01:50:00
+117,,Service Request,marthafloyd,Cloud Ops,Low,Resolved,2023-07-19 22:25:00,
+118,,Service Request,joshuaadams,Security,Medium,Closed,2023-09-21 01:59:00,
+119,,Incident,cnelson,Network,High,In Progress,2023-04-12 13:43:00,2024-05-22 14:22:00
+120,1.0,Service Request,davidandrews,Network,Medium,Closed,2024-08-12 22:47:00,2023-04-17 14:27:00
+121,167.0,Incident,bflores,Cloud Ops,High,In Progress,2024-12-14 14:10:00,2024-09-15 00:44:00
+122,263.0,Problem,earlfoley,Network,Critical,Closed,2024-02-21 14:25:00,
+123,,Service Request,cameronjackson,Network,Medium,Closed,2023-11-16 07:04:00,2023-08-27 18:04:00
+124,,Service Request,vparks,Cloud Ops,High,Closed,2023-05-10 10:26:00,
+125,240.0,Problem,michellehoward,Desktop Support,Low,Closed,2024-03-22 19:01:00,2023-04-22 10:45:00
+126,,Service Request,aaron33,Network,Medium,Pending,2023-03-08 07:16:00,
+127,,Service Request,brownandrew,Desktop Support,Low,Closed,2023-06-08 21:03:00,2024-12-31 13:24:00
+128,,Service Request,swright,Security,High,Closed,2023-11-29 07:47:00,2023-10-13 05:40:00
+129,,Incident,lchavez,Cloud Ops,High,In Progress,2023-08-18 22:10:00,2024-05-28 23:27:00
+130,,Service Request,salazaraaron,Database,Low,Pending,2023-03-11 07:33:00,
+131,,Incident,martinezdavid,Desktop Support,Low,In Progress,2024-03-30 17:48:00,2024-11-01 17:24:00
+132,171.0,Service Request,johnsonstephanie,Desktop Support,Critical,In Progress,2023-05-03 00:28:00,
+133,,Problem,cruzkaren,Security,Critical,Open,2023-06-10 19:23:00,
+134,,Service Request,loritaylor,Security,High,Open,2023-07-15 10:59:00,2024-08-20 22:34:00
+135,,Problem,dharris,Desktop Support,High,Resolved,2024-09-03 04:55:00,2023-11-19 13:01:00
+136,96.0,Service Request,nsingh,Security,Low,Pending,2024-05-09 18:55:00,2024-12-13 11:04:00
+137,,Incident,priceamber,Cloud Ops,High,Resolved,2023-08-12 02:53:00,2024-04-11 06:17:00
+138,,Service Request,kevin18,Security,Low,Closed,2024-10-01 15:27:00,2023-04-26 06:17:00
+139,,Incident,qcastillo,Cloud Ops,High,Closed,2023-03-20 10:09:00,2024-03-18 10:15:00
+140,73.0,Incident,dsanchez,Security,Critical,Open,2024-11-23 16:06:00,2023-01-04 03:17:00
+141,,Incident,morselisa,Desktop Support,Critical,Open,2024-07-25 17:17:00,
+142,,Problem,gabrielle36,Security,Medium,Resolved,2023-11-06 17:42:00,2024-10-26 23:52:00
+143,,Incident,zamorajennifer,Desktop Support,Critical,Resolved,2024-05-14 19:15:00,
+144,10.0,Service Request,stephaniemiller,Database,Low,Pending,2024-11-01 16:02:00,2023-10-03 00:12:00
+145,13.0,Service Request,millschristopher,Network,Low,Closed,2023-02-19 10:24:00,2024-12-29 07:21:00
+146,,Problem,batesangela,Cloud Ops,Low,Resolved,2023-04-19 07:04:00,
+147,,Problem,heather58,Security,Critical,Open,2023-05-21 20:04:00,
+148,,Service Request,katherinemccarty,Cloud Ops,Critical,Closed,2023-09-22 04:32:00,
+149,,Problem,edward03,Security,Medium,Pending,2023-06-12 01:29:00,2023-10-02 19:32:00
+150,,Service Request,linda01,Database,High,Resolved,2023-06-26 12:00:00,2023-06-03 00:15:00
+151,133.0,Problem,james34,Cloud Ops,High,Resolved,2024-12-04 11:31:00,2023-05-04 13:25:00
+152,,Problem,cjenkins,Network,Medium,Open,2024-08-11 19:22:00,2023-11-08 07:59:00
+153,,Problem,nicholas99,Cloud Ops,High,Resolved,2024-02-12 08:22:00,
+154,,Problem,justin46,Database,High,In Progress,2023-05-14 04:54:00,2024-04-29 04:17:00
+155,,Problem,talexander,Cloud Ops,Critical,In Progress,2023-07-10 13:06:00,2024-11-17 18:23:00
+156,,Service Request,davisandrea,Cloud Ops,High,Pending,2024-02-11 03:32:00,2024-12-06 10:54:00
+157,,Problem,nicole02,Desktop Support,High,Closed,2023-02-07 16:14:00,2024-10-11 08:53:00
+158,243.0,Problem,barkeredwin,Database,High,Resolved,2024-06-06 03:37:00,
+159,,Service Request,denisepalmer,Security,Critical,Resolved,2023-07-02 11:42:00,2024-03-01 04:29:00
+160,,Incident,tammy26,Desktop Support,Medium,Resolved,2023-08-30 02:51:00,
+161,,Service Request,arthurreed,Network,Medium,Resolved,2024-09-13 22:48:00,2023-12-15 20:30:00
+162,,Problem,crawfordhaley,Network,Medium,Closed,2023-05-18 16:01:00,
+163,,Incident,taylorclarke,Network,Critical,In Progress,2023-10-31 11:55:00,2023-05-18 23:24:00
+164,,Problem,dana36,Security,High,Resolved,2024-01-09 21:13:00,2024-10-20 09:44:00
+165,38.0,Incident,ernest35,Desktop Support,Medium,Closed,2024-12-18 03:52:00,2024-11-10 23:27:00
+166,,Problem,ssmith,Network,Critical,Resolved,2024-05-13 23:16:00,2024-10-24 20:08:00
+167,,Problem,moorecody,Network,Low,Closed,2023-03-04 09:00:00,2024-06-06 08:15:00
+168,,Problem,andrearivera,Desktop Support,Critical,Open,2023-03-28 20:34:00,2024-12-30 15:50:00
+169,,Service Request,parksshawna,Desktop Support,Medium,Closed,2023-10-17 04:08:00,2024-08-29 07:39:00
+170,136.0,Incident,kristievillegas,Security,Critical,Resolved,2023-07-05 14:29:00,2024-04-02 21:21:00
+171,55.0,Problem,anne46,Database,High,In Progress,2023-04-13 09:33:00,2023-02-06 07:45:00
+172,,Problem,warebruce,Desktop Support,Critical,Closed,2024-07-01 15:34:00,2023-11-02 05:51:00
+173,,Problem,jefferybaker,Security,Critical,Pending,2024-12-05 20:44:00,2024-07-28 07:23:00
+174,,Problem,fjohnson,Security,Critical,Closed,2023-02-27 12:36:00,2025-01-10 07:43:00
+175,,Problem,annaboyd,Security,Medium,In Progress,2024-10-16 01:09:00,2023-11-22 09:26:00
+176,215.0,Problem,fmiller,Cloud Ops,High,Resolved,2024-03-31 20:28:00,2023-03-12 16:48:00
+177,,Service Request,jamesstrong,Desktop Support,Critical,Closed,2023-03-22 07:55:00,2024-09-26 22:18:00
+178,,Service Request,fjones,Database,Medium,Closed,2023-03-08 03:45:00,2024-03-25 05:14:00
+179,,Service Request,anthonyconway,Network,Low,Resolved,2024-04-16 06:31:00,2024-03-09 04:25:00
+180,,Problem,alexander66,Database,Critical,Closed,2023-12-28 09:49:00,2024-09-30 15:43:00
+181,,Incident,jeffrey44,Cloud Ops,Medium,Closed,2023-05-19 00:02:00,2024-10-23 03:01:00
+182,,Incident,tswanson,Security,Medium,Resolved,2024-02-22 21:26:00,2024-02-10 05:20:00
+183,251.0,Service Request,patriciagood,Database,High,In Progress,2024-08-19 01:36:00,2024-04-01 03:40:00
+184,,Problem,ohuerta,Network,Low,Open,2023-09-29 20:22:00,2024-05-11 05:17:00
+185,90.0,Service Request,patrick01,Security,Critical,Resolved,2024-12-21 21:08:00,2024-06-13 06:54:00
+186,177.0,Incident,cookadam,Cloud Ops,Low,Resolved,2023-06-09 23:21:00,
+187,,Service Request,zball,Desktop Support,Medium,Pending,2024-03-18 14:23:00,2024-11-28 15:31:00
+188,,Service Request,tamaraparker,Desktop Support,Critical,Closed,2023-12-09 17:54:00,2023-02-20 06:42:00
+189,154.0,Problem,jordanbailey,Database,Critical,Resolved,2023-09-20 00:30:00,2023-03-19 20:57:00
+190,,Incident,amiller,Database,Low,Closed,2024-02-27 02:42:00,2024-09-03 01:30:00
+191,,Service Request,frankstewart,Cloud Ops,Critical,Resolved,2024-05-24 21:17:00,2023-04-04 14:07:00
+192,,Incident,bradydavid,Security,Medium,Pending,2024-03-09 16:42:00,2025-01-23 01:13:00
+193,101.0,Service Request,lbarnett,Database,High,Closed,2024-01-07 10:34:00,2025-01-24 12:31:00
+194,6.0,Service Request,achavez,Database,Low,Closed,2024-11-08 15:11:00,2023-08-19 20:38:00
+195,237.0,Service Request,tboone,Security,Critical,Closed,2023-03-15 05:43:00,2023-09-25 19:44:00
+196,,Problem,sdonovan,Desktop Support,Critical,Closed,2023-08-31 03:49:00,2023-07-01 14:21:00
+197,,Service Request,icisneros,Security,Medium,Resolved,2023-02-09 18:20:00,
+198,,Service Request,tonya97,Cloud Ops,Critical,In Progress,2023-01-17 01:41:00,2024-02-05 04:45:00
+199,,Incident,cphelps,Security,Low,Pending,2023-02-27 14:32:00,2025-01-29 22:54:00
+200,,Service Request,kristy47,Database,Low,Open,2024-10-31 11:48:00,2023-07-21 22:46:00
+201,,Problem,qgallegos,Desktop Support,Critical,Pending,2023-06-13 15:59:00,2023-06-18 19:20:00
+202,,Problem,belindafowler,Cloud Ops,Critical,Resolved,2024-12-14 01:21:00,2024-06-14 18:37:00
+203,,Incident,alexis61,Cloud Ops,Low,Closed,2024-12-11 18:58:00,2024-09-16 19:59:00
+204,150.0,Problem,vincent74,Database,Medium,Closed,2024-05-04 00:03:00,2024-08-11 07:13:00
+205,,Incident,davidedwards,Desktop Support,Medium,Pending,2024-08-08 06:30:00,2024-03-07 00:10:00
+206,223.0,Problem,lisa40,Database,High,Open,2024-05-26 15:05:00,2025-01-30 19:04:00
+207,,Incident,jessica68,Security,Low,Closed,2023-12-28 13:48:00,
+208,,Service Request,staceyhernandez,Security,Medium,In Progress,2024-12-10 11:23:00,2024-12-09 17:20:00
+209,,Problem,krystal64,Network,Critical,In Progress,2024-11-13 04:49:00,
+210,,Problem,frank49,Desktop Support,Medium,Closed,2024-01-01 04:34:00,2024-06-24 19:31:00
+211,100.0,Service Request,andreross,Database,Critical,Pending,2023-06-10 13:33:00,2025-01-26 15:17:00
+212,,Problem,laurie11,Security,High,Open,2024-12-01 04:57:00,2023-04-17 00:59:00
+213,,Problem,lambertcheyenne,Security,Low,Resolved,2023-02-20 17:30:00,2025-01-28 09:52:00
+214,,Service Request,amymiller,Network,High,Resolved,2024-10-28 00:20:00,2023-04-23 00:35:00
+215,,Problem,stevensmith,Cloud Ops,Critical,Resolved,2023-09-24 08:31:00,2024-08-26 06:28:00
+216,,Problem,ohall,Database,Critical,Pending,2024-01-29 20:18:00,2023-12-06 07:59:00
+217,154.0,Service Request,erica48,Cloud Ops,High,Closed,2024-02-23 07:12:00,2024-08-15 04:09:00
+218,,Problem,jenniferrice,Cloud Ops,Medium,Resolved,2024-09-22 02:22:00,
+219,149.0,Incident,brenda68,Database,Critical,In Progress,2023-11-17 01:20:00,2023-04-30 19:18:00
+220,2.0,Service Request,kaiserrichard,Cloud Ops,Medium,Closed,2023-01-28 19:30:00,2024-10-19 18:27:00
+221,39.0,Service Request,reedcorey,Security,Critical,Resolved,2024-02-24 12:01:00,2025-01-30 10:37:00
+222,286.0,Incident,kaiserhunter,Cloud Ops,High,Resolved,2023-08-26 12:27:00,2024-09-21 14:41:00
+223,,Service Request,lisawatson,Database,Critical,Closed,2024-06-02 23:38:00,2023-12-22 20:55:00
+224,,Incident,dianaramirez,Desktop Support,Low,Closed,2024-09-18 17:16:00,2023-09-29 23:38:00
+225,,Incident,johnjohnson,Cloud Ops,Medium,Closed,2023-11-24 05:21:00,2024-05-04 15:30:00
+226,225.0,Problem,nwilliams,Desktop Support,Low,In Progress,2024-06-03 08:32:00,2024-01-15 12:57:00
+227,,Problem,psmith,Network,Critical,Pending,2024-05-19 18:55:00,2023-08-16 04:46:00
+228,21.0,Problem,tthomas,Network,Low,Pending,2023-01-13 10:18:00,2023-04-28 14:14:00
+229,,Problem,dbrown,Security,High,Open,2024-08-03 02:36:00,2023-11-08 05:18:00
+230,,Problem,frankkey,Cloud Ops,Low,Closed,2023-07-12 19:14:00,2023-02-27 13:21:00
+231,191.0,Incident,danielgriffin,Security,Critical,Pending,2024-08-22 21:34:00,
+232,,Incident,millerlindsey,Database,Medium,Closed,2023-05-03 19:25:00,2024-06-22 15:35:00
+233,,Problem,maysjason,Security,Critical,Resolved,2024-07-19 04:49:00,2024-05-03 06:29:00
+234,,Service Request,pli,Desktop Support,Low,Resolved,2024-04-25 14:14:00,2024-06-12 23:15:00
+235,,Service Request,christensentyler,Cloud Ops,Low,Resolved,2024-11-04 18:31:00,2023-12-01 10:00:00
+236,,Incident,lawrencesteven,Security,High,Closed,2024-11-08 01:28:00,2024-09-08 12:10:00
+237,,Problem,vwilliams,Network,Low,Open,2024-03-28 19:14:00,2024-12-08 04:25:00
+238,,Service Request,wilkersonkatherine,Database,Medium,Pending,2024-01-31 07:01:00,2023-11-09 21:05:00
+239,,Service Request,kathleencase,Cloud Ops,Low,Open,2024-03-28 10:13:00,2025-01-13 14:10:00
+240,162.0,Problem,bowenjonathan,Network,Critical,Closed,2024-06-02 21:32:00,2024-05-22 10:45:00
+241,,Incident,megan78,Database,Low,Pending,2024-02-06 10:39:00,2023-05-27 13:33:00
+242,190.0,Incident,michelle01,Cloud Ops,Low,Pending,2023-07-14 01:26:00,2024-04-05 05:04:00
+243,,Problem,harrissamuel,Network,High,Pending,2023-09-06 17:28:00,2023-07-08 15:55:00
+244,,Service Request,matthewmartin,Desktop Support,Critical,Resolved,2024-07-24 04:07:00,2025-01-13 18:10:00
+245,,Incident,johnsonsandra,Cloud Ops,Low,Resolved,2023-01-03 13:44:00,
+246,271.0,Service Request,amills,Database,Medium,Open,2024-07-26 08:43:00,2023-07-30 13:49:00
+247,,Problem,dtaylor,Network,Critical,Resolved,2023-07-23 17:25:00,2024-11-14 13:02:00
+248,,Service Request,espinozataylor,Cloud Ops,High,Closed,2023-12-25 18:22:00,2023-09-08 23:58:00
+249,,Service Request,brodriguez,Security,Low,Closed,2023-11-23 23:48:00,2024-03-29 15:57:00
+250,,Service Request,maxwelltheodore,Network,High,Open,2023-12-03 22:52:00,2024-06-30 20:39:00
+251,,Problem,davidharris,Network,Low,Resolved,2023-11-24 10:33:00,2023-08-06 10:31:00
+252,,Service Request,fking,Cloud Ops,Medium,Open,2023-01-22 04:18:00,2023-01-18 09:05:00
+253,,Service Request,nicholstodd,Security,Medium,In Progress,2024-01-24 00:33:00,2024-03-15 21:52:00
+254,176.0,Problem,billyjohns,Security,Critical,Closed,2023-04-02 07:41:00,2024-12-23 08:28:00
+255,,Service Request,yoderadam,Network,Low,Open,2023-11-16 10:35:00,2024-10-19 17:37:00
+256,245.0,Incident,amy85,Cloud Ops,Low,Closed,2024-01-29 09:38:00,2024-10-01 07:21:00
+257,,Service Request,steven80,Database,Low,Closed,2023-08-19 20:25:00,2023-08-12 12:18:00
+258,,Incident,jacksonjonathan,Security,High,Pending,2024-06-06 23:06:00,2024-06-21 23:14:00
+259,34.0,Service Request,james23,Desktop Support,High,In Progress,2024-10-13 19:40:00,2024-02-22 12:44:00
+260,19.0,Incident,kmaynard,Network,High,Pending,2024-08-28 22:35:00,
+261,,Problem,myersbenjamin,Database,Critical,Resolved,2023-06-19 10:06:00,2024-12-05 18:24:00
+262,225.0,Incident,wmorrison,Database,Critical,In Progress,2024-05-24 00:37:00,2023-04-30 12:26:00
+263,,Problem,darnold,Network,Medium,Closed,2023-08-24 20:34:00,2024-09-10 03:43:00
+264,50.0,Service Request,raymond70,Network,Low,Pending,2023-11-30 08:59:00,2023-06-08 11:28:00
+265,80.0,Service Request,rowen,Desktop Support,Critical,In Progress,2024-03-27 12:37:00,2024-02-10 05:49:00
+266,,Problem,carl91,Security,Critical,Closed,2024-10-16 18:19:00,2024-01-09 01:35:00
+267,289.0,Problem,belindahaas,Database,Critical,In Progress,2023-08-26 20:14:00,
+268,,Service Request,heidi21,Network,Critical,Open,2023-10-12 05:24:00,2023-03-27 08:53:00
+269,,Service Request,brian16,Cloud Ops,Low,Closed,2023-12-07 01:54:00,2023-04-19 11:11:00
+270,,Service Request,madeline61,Security,Medium,Resolved,2024-02-29 23:38:00,2024-01-14 08:05:00
+271,,Problem,castilloalec,Network,Medium,Closed,2024-04-19 17:02:00,2024-06-03 15:53:00
+272,,Incident,michaelkrause,Database,Medium,Closed,2023-07-16 14:15:00,2023-12-01 23:10:00
+273,,Incident,patricia24,Cloud Ops,Critical,Open,2024-05-12 09:42:00,2023-11-16 13:16:00
+274,,Service Request,jacquelineneal,Network,Medium,Resolved,2023-05-07 06:22:00,
+275,181.0,Service Request,beckyroberts,Cloud Ops,Low,Resolved,2023-05-27 13:46:00,
+276,274.0,Service Request,wesley30,Network,High,Pending,2023-01-10 18:42:00,2023-05-17 20:23:00
+277,,Service Request,turnerdaniel,Security,Low,Pending,2024-07-08 16:40:00,
+278,,Problem,zburke,Database,Medium,Closed,2024-03-25 05:30:00,
+279,,Incident,cervantesleslie,Security,Low,Closed,2023-07-08 21:39:00,2024-06-27 03:46:00
+280,,Incident,brandongarcia,Cloud Ops,Critical,In Progress,2023-09-11 07:09:00,2023-05-10 14:28:00
+281,,Service Request,bennettjennifer,Cloud Ops,High,Resolved,2024-09-21 10:58:00,2024-06-05 03:37:00
+282,,Service Request,zwolfe,Cloud Ops,Critical,Resolved,2024-04-13 09:37:00,2024-08-12 09:17:00
+283,,Incident,jerryparrish,Network,Medium,Resolved,2023-12-21 20:56:00,2025-01-16 12:26:00
+284,,Problem,jesse81,Database,Low,Closed,2023-12-05 07:25:00,2024-03-26 20:32:00
+285,96.0,Incident,smithandre,Desktop Support,Low,Pending,2024-12-31 22:49:00,2023-04-21 15:28:00
+286,,Service Request,gilmorejoshua,Desktop Support,High,Open,2023-08-01 17:43:00,2023-07-14 06:06:00
+287,,Problem,xfisher,Network,Low,In Progress,2024-02-17 08:34:00,2023-06-12 07:27:00
+288,30.0,Incident,tracywilkins,Database,Medium,Resolved,2024-12-10 23:58:00,2024-01-11 06:04:00
+289,142.0,Problem,hfoley,Desktop Support,Critical,Resolved,2023-04-07 11:31:00,2023-03-31 10:37:00
+290,,Incident,thomas85,Cloud Ops,Critical,Open,2024-03-06 05:15:00,2023-12-29 01:18:00
+291,,Incident,julie12,Cloud Ops,Medium,Closed,2023-11-15 15:35:00,2023-05-16 04:59:00
+292,,Service Request,bullockrebecca,Network,Medium,Closed,2024-03-12 20:06:00,2023-09-09 10:02:00
+293,,Incident,lindsay23,Network,Low,Resolved,2023-02-03 02:20:00,2024-09-21 18:31:00
+294,,Incident,kathy78,Cloud Ops,Medium,Closed,2024-06-20 02:02:00,2024-09-19 15:41:00
+295,,Service Request,petersonjordan,Database,Critical,Resolved,2024-01-19 01:34:00,2024-07-20 02:48:00
+296,,Problem,odickerson,Desktop Support,Low,In Progress,2024-03-29 07:30:00,2023-02-26 16:43:00
+297,,Incident,farmerlisa,Security,Medium,Resolved,2023-07-19 19:00:00,2023-06-09 00:58:00
+298,201.0,Incident,umartin,Cloud Ops,Low,Resolved,2024-10-09 05:41:00,2024-05-20 09:32:00
+299,,Problem,ssmith,Cloud Ops,Medium,Open,2023-06-22 14:14:00,2023-12-06 05:09:00
+300,,Incident,ryan54,Desktop Support,Medium,Resolved,2024-11-17 21:11:00,2023-12-03 08:02:00
+301,128.0,Problem,dmejia,Security,Critical,Closed,2024-01-12 09:15:00,2024-06-03 17:25:00
+302,,Service Request,benjaminbrown,Database,High,Resolved,2023-02-23 01:30:00,2024-08-11 05:47:00
+303,,Service Request,johnsonjames,Desktop Support,Critical,Resolved,2024-09-05 16:15:00,2023-12-26 11:40:00
+304,,Problem,ymartinez,Network,High,Closed,2023-12-11 17:15:00,2024-01-06 01:00:00
+305,,Service Request,karen78,Cloud Ops,Low,Resolved,2023-02-25 23:12:00,
+306,,Incident,timothysharp,Network,Medium,Closed,2024-08-24 22:32:00,
+307,122.0,Incident,connorstewart,Security,Critical,Resolved,2023-09-28 00:07:00,
+308,,Incident,alyssaparsons,Network,Medium,Closed,2023-08-02 10:11:00,
+309,,Incident,ephillips,Desktop Support,Critical,Open,2024-08-03 06:04:00,2025-02-01 08:08:00
+310,,Service Request,wesley57,Desktop Support,Medium,In Progress,2023-04-07 09:03:00,2023-06-10 06:06:00
+311,244.0,Incident,patrickmartin,Cloud Ops,Low,Resolved,2024-08-19 09:20:00,2025-01-27 08:02:00
+312,,Incident,martintownsend,Database,High,Open,2023-03-17 19:57:00,2023-01-07 10:26:00
+313,,Incident,zjennings,Security,Medium,Closed,2023-08-20 11:38:00,2024-04-29 13:15:00
+314,,Service Request,patricialopez,Network,Medium,Closed,2023-01-29 04:45:00,
+315,,Problem,wendy76,Cloud Ops,Critical,Closed,2023-02-25 12:26:00,2024-03-10 00:10:00
+316,86.0,Incident,aking,Security,Critical,Resolved,2023-10-22 02:42:00,2023-02-15 11:30:00
+317,173.0,Incident,ydelgado,Desktop Support,Medium,Closed,2024-11-29 19:59:00,2024-05-21 22:50:00
+318,,Service Request,douglasdougherty,Desktop Support,Critical,Closed,2023-11-20 16:29:00,2024-06-20 19:45:00
+319,,Problem,sherryclark,Database,Low,Resolved,2024-07-21 07:06:00,2023-04-20 10:55:00
+320,,Incident,salvarez,Network,High,In Progress,2023-09-27 03:10:00,2024-05-28 09:23:00
+321,,Service Request,michaelmartinez,Cloud Ops,Medium,Open,2024-11-19 06:28:00,
+322,,Problem,ebowen,Security,Low,Resolved,2023-01-01 21:26:00,2023-11-26 09:57:00
+323,,Problem,russellemily,Network,High,Resolved,2023-01-06 06:16:00,
+324,47.0,Service Request,salinaszachary,Cloud Ops,Low,Resolved,2024-02-01 03:13:00,2023-02-08 03:06:00
+325,,Service Request,ogarza,Desktop Support,Medium,Closed,2024-11-11 16:40:00,2023-04-01 14:10:00
+326,126.0,Service Request,briancook,Cloud Ops,Critical,Pending,2024-03-08 08:00:00,
+327,,Problem,kimberly40,Security,High,Closed,2024-02-13 23:03:00,2024-03-25 17:52:00
+328,,Service Request,kristina89,Network,Low,Resolved,2023-10-14 06:17:00,2023-06-27 09:42:00
+329,,Incident,thomaslane,Network,High,Closed,2024-04-29 10:56:00,2024-02-11 13:09:00
+330,271.0,Incident,kruegermark,Desktop Support,Medium,Closed,2023-03-05 20:27:00,2023-10-29 04:47:00
+331,41.0,Service Request,qpatterson,Database,High,Resolved,2023-08-18 16:51:00,2024-09-04 11:06:00
+332,,Service Request,edwardserin,Database,Medium,In Progress,2024-12-06 13:25:00,2023-03-09 15:18:00
+333,,Service Request,robert07,Desktop Support,Medium,Open,2024-03-19 08:37:00,2023-01-11 13:02:00
+334,,Problem,vporter,Security,Low,Open,2023-08-07 15:59:00,2023-08-19 20:43:00
+335,218.0,Problem,jonathan61,Desktop Support,Low,Closed,2023-01-13 15:34:00,2024-12-02 01:40:00
+336,,Service Request,allenkimberly,Database,High,Resolved,2024-01-20 01:07:00,2024-06-24 07:00:00
+337,166.0,Problem,dylan27,Security,High,Resolved,2024-05-25 07:15:00,2023-08-18 11:41:00
+338,,Problem,michellebrady,Cloud Ops,Medium,Resolved,2024-09-09 15:02:00,
+339,,Service Request,stanleyclark,Desktop Support,High,Closed,2023-03-20 21:51:00,2024-05-11 10:03:00
+340,3.0,Problem,mccarthygregory,Desktop Support,Critical,Open,2023-04-29 16:20:00,2024-07-25 18:44:00
+341,,Problem,timothyrodriguez,Network,High,In Progress,2023-01-22 10:46:00,2023-12-30 01:38:00
+342,,Problem,huffmaria,Desktop Support,Low,Resolved,2024-04-02 23:09:00,2024-06-02 01:25:00
+343,,Problem,hsimmons,Database,Medium,In Progress,2024-03-12 20:06:00,
+344,,Service Request,krodriguez,Network,Critical,In Progress,2024-05-14 16:41:00,2024-09-19 00:32:00
+345,,Problem,chaneric,Network,Critical,Resolved,2023-07-26 02:48:00,
+346,,Incident,daniel48,Cloud Ops,High,Resolved,2024-07-21 04:49:00,2023-06-15 06:15:00
+347,,Incident,oray,Security,Critical,Resolved,2023-05-21 11:00:00,2024-12-27 06:33:00
+348,,Service Request,brooksshelby,Network,Critical,In Progress,2024-04-16 22:07:00,2023-09-26 02:12:00
+349,90.0,Service Request,amoses,Cloud Ops,Medium,In Progress,2023-11-20 20:31:00,2024-05-17 08:11:00
+350,,Incident,breannadrake,Security,Medium,Open,2023-09-16 05:02:00,2023-09-03 15:16:00
+351,261.0,Service Request,anthonywhite,Network,High,In Progress,2023-02-21 21:21:00,2023-05-21 21:54:00
+352,,Incident,kcooley,Network,High,Pending,2024-12-01 17:31:00,2024-12-25 19:14:00
+353,,Problem,davistiffany,Desktop Support,Critical,In Progress,2024-08-22 11:29:00,
+354,,Problem,jack64,Network,Critical,Closed,2023-03-15 04:37:00,
+355,54.0,Incident,dpoole,Network,Medium,Closed,2023-02-21 03:01:00,2023-07-13 11:48:00
+356,,Incident,epayne,Security,Critical,Closed,2023-10-13 16:53:00,2023-10-24 22:46:00
+357,,Incident,wmarshall,Desktop Support,Medium,Closed,2023-05-10 05:14:00,2023-02-05 17:30:00
+358,,Problem,dorseylinda,Security,Critical,Open,2024-08-12 09:13:00,2023-04-19 07:30:00
+359,270.0,Service Request,rossjames,Database,Critical,Closed,2023-07-30 15:39:00,
+360,58.0,Service Request,beasleygina,Database,Medium,In Progress,2024-10-27 01:33:00,
+361,,Problem,carterjames,Desktop Support,Critical,Open,2023-04-20 19:14:00,
+362,,Problem,robertellis,Security,High,Closed,2024-07-11 17:50:00,2023-09-11 17:00:00
+363,143.0,Problem,sabrina69,Cloud Ops,Medium,Resolved,2023-04-09 07:50:00,2023-03-05 21:16:00
+364,,Service Request,melissaroy,Desktop Support,High,Closed,2023-11-17 09:01:00,2024-05-15 00:00:00
+365,,Incident,rmoore,Security,High,Closed,2024-06-03 16:08:00,2023-09-29 17:46:00
+366,64.0,Problem,phamilton,Network,Medium,Resolved,2023-08-26 16:20:00,
+367,,Problem,fernandezsusan,Database,High,Resolved,2024-08-28 17:48:00,
+368,,Service Request,figueroakatelyn,Security,Medium,Resolved,2024-01-16 13:49:00,2023-11-26 07:13:00
+369,,Service Request,jordan25,Network,Critical,Resolved,2024-11-28 15:03:00,2024-11-10 22:25:00
+370,120.0,Incident,daniel93,Network,Low,Closed,2024-12-14 02:06:00,2024-08-28 10:21:00
+371,,Incident,davidhaynes,Database,Medium,Resolved,2023-04-27 06:16:00,2023-08-25 15:31:00
+372,,Service Request,fwhite,Network,Medium,Resolved,2024-10-08 20:13:00,
+373,276.0,Problem,patriciawilson,Desktop Support,Low,Closed,2023-10-21 11:33:00,
+374,,Incident,pwalker,Cloud Ops,Medium,Closed,2024-04-04 22:19:00,
+375,,Service Request,evanskelsey,Cloud Ops,Medium,In Progress,2023-11-25 01:49:00,2023-12-04 04:36:00
+376,,Incident,bbrown,Security,Medium,Pending,2024-03-27 19:40:00,
+377,231.0,Incident,pchavez,Network,High,Resolved,2024-11-08 19:01:00,2023-11-19 22:44:00
+378,,Problem,madison72,Network,Critical,Resolved,2023-09-27 08:20:00,2024-12-22 14:47:00
+379,,Problem,michael39,Network,Critical,In Progress,2023-07-09 01:20:00,2024-10-14 11:57:00
+380,190.0,Problem,vbaker,Security,Critical,Resolved,2023-10-15 00:36:00,2023-02-20 03:46:00
+381,,Service Request,andrew08,Security,Medium,Open,2023-01-25 02:14:00,2024-10-05 02:19:00
+382,,Service Request,aturner,Database,Low,Pending,2024-05-05 00:36:00,
+383,140.0,Service Request,xgoodman,Security,High,Resolved,2023-01-06 01:00:00,
+384,12.0,Service Request,bmathis,Cloud Ops,High,Closed,2023-09-15 19:29:00,2023-08-06 09:46:00
+385,,Service Request,bradleysmith,Security,Medium,Pending,2023-01-20 09:57:00,2024-09-12 04:55:00
+386,218.0,Incident,cunninghammegan,Security,Critical,Resolved,2023-03-27 06:33:00,
+387,,Service Request,brookemartin,Network,Low,Closed,2023-04-25 05:42:00,2024-01-30 11:11:00
+388,,Service Request,strongkimberly,Network,Low,Pending,2023-12-04 19:01:00,2023-04-23 10:01:00
+389,,Incident,nicole39,Cloud Ops,High,Open,2024-03-19 21:17:00,2024-05-11 23:42:00
+390,,Incident,ramirezamy,Network,Low,Closed,2023-08-23 05:44:00,2024-08-21 14:25:00
+391,,Incident,richardsglenn,Security,High,Closed,2023-04-13 13:32:00,2023-10-28 08:24:00
+392,,Service Request,michaellee,Security,Medium,In Progress,2023-11-12 02:42:00,2023-07-10 16:57:00
+393,,Incident,glennbernard,Desktop Support,Critical,Resolved,2023-10-06 23:43:00,2024-05-20 22:38:00
+394,,Incident,michaelwilliams,Database,Critical,Closed,2023-11-29 18:05:00,2023-10-01 09:33:00
+395,,Problem,rebecca55,Security,Low,Closed,2024-08-11 21:19:00,2024-07-12 08:57:00
+396,,Problem,wilsonnicole,Desktop Support,High,Resolved,2024-05-30 15:35:00,
+397,,Incident,veronicacampbell,Cloud Ops,Critical,Closed,2024-11-20 15:26:00,2024-08-09 15:59:00
+398,272.0,Incident,perezrichard,Security,Medium,In Progress,2023-06-01 11:07:00,2024-07-05 14:07:00
+399,,Problem,heather39,Database,Critical,Pending,2024-03-21 14:27:00,2024-02-15 01:44:00
+400,,Problem,karisanchez,Network,Medium,Closed,2023-06-17 12:53:00,2023-12-18 18:42:00
+401,,Incident,kellysanchez,Network,Critical,Resolved,2024-08-16 15:54:00,2023-01-17 16:50:00
+402,,Service Request,brittanyanderson,Security,Low,Open,2024-01-19 20:27:00,2023-08-07 23:37:00
+403,,Service Request,reedjulie,Cloud Ops,Low,Closed,2023-10-12 14:30:00,2023-04-25 08:02:00
+404,,Service Request,daviddecker,Cloud Ops,Low,In Progress,2024-01-09 23:01:00,2024-01-05 11:18:00
+405,145.0,Incident,karen12,Database,High,Resolved,2023-11-28 04:23:00,2024-10-08 06:31:00
+406,137.0,Problem,wallacemathew,Database,High,Pending,2023-12-11 22:42:00,2024-02-05 21:26:00
+407,174.0,Problem,nedwards,Security,Medium,Open,2023-12-08 00:36:00,2023-08-10 00:43:00
+408,,Service Request,stephaniewilson,Cloud Ops,Medium,Resolved,2024-12-24 22:49:00,
+409,,Service Request,tammymorales,Database,Critical,Open,2024-07-22 18:17:00,2023-06-12 23:56:00
+410,,Service Request,castillokyle,Cloud Ops,Low,In Progress,2024-03-09 19:34:00,
+411,,Service Request,joshua10,Cloud Ops,High,In Progress,2023-06-26 20:57:00,2023-10-21 06:44:00
+412,,Incident,xwhite,Cloud Ops,Critical,Closed,2024-03-18 11:14:00,2024-04-24 21:33:00
+413,143.0,Service Request,danielle93,Network,Critical,Closed,2024-07-31 02:37:00,
+414,220.0,Problem,ypeterson,Security,Low,Closed,2024-12-04 15:51:00,
+415,,Service Request,willishenry,Network,Low,Pending,2023-03-17 11:27:00,2024-06-27 01:30:00
+416,,Incident,ojones,Desktop Support,Low,Resolved,2023-02-17 00:33:00,
+417,158.0,Problem,olsonjesse,Database,Low,In Progress,2024-05-06 09:14:00,
+418,,Problem,banderson,Desktop Support,High,Resolved,2023-04-11 17:00:00,
+419,,Problem,thomas28,Security,Low,In Progress,2024-12-11 05:36:00,2024-03-07 08:02:00
+420,55.0,Problem,gking,Desktop Support,Critical,Closed,2023-04-07 08:27:00,2024-08-28 11:06:00
+421,,Problem,jacquelinezamora,Desktop Support,Low,Closed,2023-08-25 18:52:00,2023-03-03 11:38:00
+422,,Service Request,zmartinez,Cloud Ops,High,In Progress,2024-08-10 09:52:00,
+423,,Problem,anthonyduncan,Cloud Ops,High,Closed,2024-11-23 23:56:00,2023-06-13 16:32:00
+424,125.0,Service Request,donnasuarez,Cloud Ops,Medium,Pending,2024-07-17 20:49:00,2025-01-23 07:00:00
+425,,Problem,leslie24,Desktop Support,Critical,Resolved,2023-05-20 21:50:00,
+426,,Incident,leejanet,Network,Critical,In Progress,2023-02-17 10:22:00,
+427,,Problem,gomezjerry,Database,Medium,In Progress,2024-11-01 20:19:00,2024-12-21 16:15:00
+428,,Incident,michael51,Cloud Ops,Critical,Closed,2024-05-14 18:56:00,2024-06-07 21:33:00
+429,,Service Request,jason21,Database,Low,Closed,2024-06-23 13:28:00,
+430,,Service Request,evanselizabeth,Cloud Ops,Critical,Closed,2023-03-27 01:18:00,
+431,,Incident,holmesscott,Database,Critical,Closed,2024-01-26 10:11:00,2023-10-17 03:47:00
+432,,Incident,qlittle,Network,Low,In Progress,2023-10-20 00:16:00,
+433,,Service Request,ijacobs,Network,Low,In Progress,2023-10-14 07:50:00,2024-04-13 01:59:00
+434,187.0,Service Request,heather42,Database,Low,In Progress,2024-02-10 07:51:00,2023-02-01 02:37:00
+435,108.0,Incident,tarashaw,Network,Low,Closed,2023-11-28 16:19:00,2024-03-30 07:56:00
+436,113.0,Service Request,jeanking,Network,Low,Closed,2023-03-09 21:44:00,2024-08-04 06:05:00
+437,,Service Request,isabella81,Security,Critical,Closed,2024-05-26 07:00:00,
+438,228.0,Incident,jillcosta,Cloud Ops,Medium,In Progress,2024-09-01 15:51:00,2023-02-16 02:53:00
+439,,Incident,kelsey77,Network,High,Resolved,2024-02-28 05:04:00,2024-07-19 19:54:00
+440,82.0,Problem,reynoldscynthia,Security,Low,Closed,2024-03-01 02:13:00,2023-12-10 08:54:00
+441,,Service Request,suzannegilmore,Cloud Ops,Low,In Progress,2024-10-27 10:54:00,
+442,,Incident,briannaandersen,Security,Low,Closed,2024-04-27 02:04:00,2024-12-30 00:50:00
+443,156.0,Service Request,wgomez,Network,Low,Closed,2023-09-06 02:45:00,
+444,,Problem,martintanner,Cloud Ops,Low,Closed,2023-06-04 15:25:00,2023-07-16 22:55:00
+445,254.0,Service Request,susan40,Database,Critical,Resolved,2023-12-02 08:58:00,2023-12-08 12:09:00
+446,,Service Request,dana58,Network,High,In Progress,2023-11-14 12:55:00,2023-03-01 12:37:00
+447,,Problem,mariaweaver,Database,Critical,Closed,2024-05-18 10:54:00,2023-04-20 23:33:00
+448,256.0,Incident,holly72,Network,High,Resolved,2023-04-10 12:03:00,2024-07-24 00:04:00
+449,,Problem,bkramer,Security,High,Closed,2023-02-13 17:10:00,2025-01-26 17:24:00
+450,,Service Request,raymond29,Network,High,In Progress,2023-10-24 02:57:00,2023-10-14 23:08:00
+451,,Service Request,michaelbradshaw,Desktop Support,Critical,Resolved,2024-10-06 00:33:00,2024-12-18 11:54:00
+452,169.0,Incident,jillian19,Desktop Support,Critical,Closed,2024-11-04 13:49:00,2024-02-26 16:16:00
+453,,Service Request,kjackson,Network,High,In Progress,2023-03-06 13:46:00,2024-06-02 03:18:00
+454,3.0,Service Request,isaiahbell,Cloud Ops,Low,Resolved,2023-01-11 01:27:00,2023-09-30 07:27:00
+455,,Service Request,fergusonmichael,Desktop Support,Medium,Resolved,2024-10-28 14:25:00,2023-04-19 21:03:00
+456,,Incident,tjackson,Cloud Ops,Low,Pending,2023-01-30 15:27:00,
+457,,Service Request,ajackson,Security,Low,Closed,2024-07-03 00:00:00,2024-04-30 17:16:00
+458,146.0,Service Request,briannaking,Security,Critical,Resolved,2024-06-26 20:27:00,2024-05-09 01:27:00
+459,,Incident,debbiedavis,Network,Medium,Closed,2023-07-01 17:48:00,2024-08-24 03:16:00
+460,78.0,Incident,laurasanchez,Security,Medium,Resolved,2023-06-30 23:23:00,2024-07-02 07:12:00
+461,,Service Request,christopher99,Security,Low,Closed,2024-11-25 18:06:00,
+462,,Service Request,brookefrench,Database,High,Closed,2024-12-05 14:40:00,2024-02-06 18:47:00
+463,,Problem,sfoster,Network,Low,In Progress,2023-06-19 10:48:00,2023-05-14 01:34:00
+464,50.0,Problem,awilliams,Network,Low,In Progress,2024-05-17 21:02:00,2024-02-19 20:10:00
+465,,Problem,vsmith,Cloud Ops,Medium,Resolved,2023-08-20 11:59:00,2023-12-28 19:06:00
+466,,Service Request,mccartymichael,Cloud Ops,Critical,Closed,2024-03-22 22:26:00,
+467,,Service Request,jacobwoods,Database,Critical,Closed,2023-07-17 12:54:00,2023-05-17 11:15:00
+468,,Service Request,deborah03,Database,Critical,In Progress,2023-05-28 01:39:00,
+469,,Service Request,williamskathleen,Security,Low,Closed,2023-01-21 12:39:00,2024-09-20 14:35:00
+470,,Service Request,johnhines,Desktop Support,Critical,Closed,2024-07-02 06:40:00,2023-05-02 01:03:00
+471,,Service Request,dennisevans,Cloud Ops,High,Resolved,2024-06-11 09:15:00,2024-08-01 07:01:00
+472,,Service Request,ldavis,Cloud Ops,Low,In Progress,2023-11-17 20:45:00,2024-12-27 17:38:00
+473,,Problem,patricksmith,Cloud Ops,Low,Pending,2024-08-01 21:15:00,2024-10-01 00:18:00
+474,27.0,Problem,barnesandrew,Security,Medium,Open,2024-04-26 00:08:00,2024-06-27 18:01:00
+475,234.0,Service Request,stevenhopkins,Security,High,In Progress,2023-07-12 00:43:00,2023-02-19 10:58:00
+476,,Incident,ricardo61,Network,High,Closed,2023-12-03 09:30:00,2024-07-10 16:49:00
+477,145.0,Incident,dguerra,Cloud Ops,High,Open,2023-06-13 16:10:00,2023-01-04 14:10:00
+478,,Incident,icantrell,Desktop Support,Low,Pending,2023-05-24 17:23:00,
+479,,Incident,tcampbell,Network,Medium,Pending,2023-09-16 14:05:00,
+480,,Problem,alex95,Cloud Ops,High,Open,2024-01-06 03:13:00,2024-09-30 23:44:00
+481,272.0,Problem,stevengonzalez,Security,Low,Resolved,2024-01-03 23:05:00,2023-04-16 04:01:00
+482,,Incident,bdavis,Cloud Ops,High,Resolved,2023-02-12 08:47:00,2023-03-12 10:27:00
+483,,Incident,meredithnunez,Desktop Support,Medium,Resolved,2024-12-17 19:09:00,2024-01-28 17:36:00
+484,,Problem,tonyamercado,Security,Critical,In Progress,2024-04-21 19:12:00,
+485,,Problem,pwilson,Security,Medium,Closed,2024-09-09 01:24:00,2024-01-12 13:12:00
+486,,Incident,justin16,Cloud Ops,Low,In Progress,2023-05-07 06:30:00,2023-11-02 19:05:00
+487,161.0,Problem,derrick31,Network,Medium,Closed,2024-02-03 18:18:00,2024-03-18 09:13:00
+488,,Service Request,sbailey,Desktop Support,Low,Closed,2023-11-19 22:38:00,2023-10-15 11:26:00
+489,,Incident,sextonjames,Security,Low,Closed,2024-08-20 10:06:00,2024-01-27 22:14:00
+490,,Incident,stevenbarrett,Database,Critical,Resolved,2024-08-15 15:56:00,2023-08-23 07:43:00
+491,,Incident,emills,Desktop Support,Low,In Progress,2023-08-04 07:52:00,2024-06-15 16:40:00
+492,,Incident,wshannon,Database,Critical,Open,2023-05-29 10:01:00,2025-01-01 21:09:00
+493,,Service Request,hendersonheather,Network,Low,Closed,2023-09-09 17:58:00,2024-01-25 13:32:00
+494,,Incident,cassandra29,Cloud Ops,Medium,Pending,2023-06-14 14:20:00,2024-06-03 19:26:00
+495,,Incident,fuentesnichole,Cloud Ops,Low,Pending,2024-05-12 06:33:00,
+496,,Problem,kennedymichele,Desktop Support,Medium,In Progress,2023-02-14 18:29:00,
+497,,Problem,huntscott,Database,Medium,In Progress,2024-05-26 01:40:00,2024-01-07 03:33:00
+498,,Service Request,hufftroy,Desktop Support,Low,Open,2024-06-03 21:40:00,2024-11-03 13:53:00
+499,236.0,Problem,geraldterry,Desktop Support,Low,Closed,2024-07-11 18:24:00,
+500,,Service Request,khanjustin,Database,Low,Closed,2023-06-13 15:37:00,

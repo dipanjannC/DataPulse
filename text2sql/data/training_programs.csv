@@ -1,0 +1,401 @@
+training_id,employee_id,program_name,provider,start_date,completion_date,status,cost
+1,58,SQL Bootcamp,Udemy,2023-02-26,2023-09-12,In Progress,2748.03
+2,19,Design Thinking,Udemy,2023-12-10,2024-07-08,Completed,2221.22
+3,59,Project Management Professional,Udemy,2023-05-19,2023-03-27,Completed,2009.72
+4,224,Communication Skills,Internal,2023-10-16,2024-02-04,Completed,2841.23
+5,137,Project Management Professional,Pluralsight,2024-06-04,2024-11-19,In Progress,1601.56
+6,263,Excel Advanced,LinkedIn Learning,2024-05-27,2024-06-18,In Progress,2644.17
+7,239,Design Thinking,Internal,2023-03-29,,Enrolled,305.48
+8,151,Communication Skills,Coursera,2023-02-25,2024-09-26,In Progress,2823.17
+9,116,Design Thinking,LinkedIn Learning,2023-04-09,,Enrolled,2890.09
+10,105,AWS Cloud Practitioner,Internal,2024-06-13,2024-03-08,Completed,1305.69
+11,293,SQL Bootcamp,LinkedIn Learning,2023-05-30,,Completed,2829.09
+12,170,Python for Data Science,Udemy,2023-02-20,2023-06-24,Completed,335.09
+13,87,Python for Data Science,Internal,2024-02-21,2023-05-09,Dropped,707.72
+14,173,AWS Cloud Practitioner,Pluralsight,2023-10-17,2024-06-02,Completed,783.69
+15,292,Communication Skills,Coursera,2023-02-01,2024-11-09,In Progress,535.53
+16,245,Python for Data Science,LinkedIn Learning,2023-11-21,2024-04-10,Completed,1225.37
+17,74,Design Thinking,Internal,2024-02-26,2023-07-06,Completed,1928.2
+18,101,Cybersecurity Awareness,LinkedIn Learning,2023-11-25,2023-04-11,Dropped,2177.71
+19,62,Cybersecurity Awareness,Udemy,2024-06-08,2025-01-01,Enrolled,1697.49
+20,296,Design Thinking,LinkedIn Learning,2023-09-08,2023-04-09,Completed,2955.1
+21,26,Python for Data Science,Pluralsight,2023-12-06,2023-03-16,Completed,2918.51
+22,16,AWS Cloud Practitioner,LinkedIn Learning,2023-04-17,2024-05-07,Completed,1243.14
+23,129,AWS Cloud Practitioner,Udemy,2024-05-17,2023-09-11,Completed,931.87
+24,77,Excel Advanced,Coursera,2023-10-27,2024-04-26,Completed,1562.1
+25,247,Communication Skills,Udemy,2023-03-18,2024-05-26,In Progress,2784.82
+26,151,AWS Cloud Practitioner,Pluralsight,2023-07-01,,Enrolled,1510.28
+27,254,Excel Advanced,Pluralsight,2023-05-17,,Completed,306.34
+28,246,Cybersecurity Awareness,Coursera,2024-05-17,2024-04-07,Completed,713.49
+29,141,Python for Data Science,LinkedIn Learning,2024-02-03,2024-10-30,Enrolled,2112.33
+30,164,Leadership Essentials,Pluralsight,2024-02-10,2024-06-07,Completed,1085.16
+31,27,Communication Skills,LinkedIn Learning,2024-06-28,2024-04-19,In Progress,1335.83
+32,110,Project Management Professional,Pluralsight,2024-01-16,2024-05-05,Completed,2044.48
+33,238,Leadership Essentials,Udemy,2023-03-09,2024-09-07,Dropped,2570.1
+34,45,Project Management Professional,Internal,2024-05-04,,Enrolled,2942.65
+35,6,Python for Data Science,Udemy,2023-06-25,2024-09-14,Enrolled,2335.86
+36,142,Excel Advanced,LinkedIn Learning,2023-07-07,2023-11-25,Dropped,50.23
+37,6,Agile & Scrum Fundamentals,Pluralsight,2024-05-23,2023-03-13,Completed,2360.13
+38,147,Communication Skills,LinkedIn Learning,2023-11-11,2023-05-01,In Progress,2573.28
+39,213,SQL Bootcamp,LinkedIn Learning,2024-06-07,2023-11-06,In Progress,620.56
+40,92,Python for Data Science,Udemy,2023-05-25,,Completed,2797.86
+41,257,Project Management Professional,Coursera,2023-07-31,2024-02-17,Dropped,2226.77
+42,252,SQL Bootcamp,LinkedIn Learning,2023-10-21,2024-03-02,Enrolled,682.37
+43,297,AWS Cloud Practitioner,LinkedIn Learning,2024-03-04,2023-02-19,Enrolled,379.29
+44,67,AWS Cloud Practitioner,Udemy,2023-12-21,2024-02-15,Completed,274.27
+45,84,Communication Skills,Internal,2023-11-10,2024-02-18,In Progress,58.92
+46,144,Cybersecurity Awareness,LinkedIn Learning,2024-03-30,2023-11-21,In Progress,494.54
+47,218,Communication Skills,Udemy,2023-05-29,2023-10-18,Completed,1313.99
+48,104,SQL Bootcamp,Udemy,2024-05-29,,Dropped,229.54
+49,74,Excel Advanced,LinkedIn Learning,2024-06-22,2024-07-25,In Progress,1314.3
+50,58,Project Management Professional,Pluralsight,2023-09-03,2024-03-05,In Progress,1828.98
+51,115,Design Thinking,Udemy,2023-09-09,2023-08-20,Completed,2465.86
+52,284,SQL Bootcamp,Udemy,2024-02-13,2024-07-27,Completed,1562.54
+53,230,Agile & Scrum Fundamentals,Pluralsight,2024-03-20,2023-05-16,Enrolled,1167.73
+54,93,AWS Cloud Practitioner,Udemy,2023-12-07,,Enrolled,1923.19
+55,121,Project Management Professional,Pluralsight,2024-05-17,2024-11-08,Completed,386.32
+56,268,Python for Data Science,Internal,2024-06-12,2024-10-04,Completed,2017.34
+57,107,Excel Advanced,Udemy,2023-12-26,,Completed,504.2
+58,79,Communication Skills,Internal,2023-07-09,2023-03-30,Completed,1349.08
+59,228,SQL Bootcamp,Internal,2024-03-29,2023-09-23,In Progress,1472.34
+60,273,Leadership Essentials,Pluralsight,2023-02-16,2024-09-13,Completed,2726.77
+61,257,Design Thinking,Pluralsight,2023-08-22,2024-02-06,Completed,1483.43
+62,22,Communication Skills,Udemy,2023-09-20,,Completed,2142.1
+63,124,AWS Cloud Practitioner,LinkedIn Learning,2024-04-28,2024-03-05,Completed,1608.05
+64,141,Design Thinking,Coursera,2024-02-23,2023-04-25,Completed,1761.95
+65,11,Communication Skills,Udemy,2024-01-09,2023-08-06,Completed,1238.72
+66,105,Design Thinking,Pluralsight,2023-12-23,2023-07-01,Enrolled,1998.53
+67,268,Cybersecurity Awareness,Coursera,2023-01-12,2024-08-20,Dropped,2135.39
+68,117,SQL Bootcamp,LinkedIn Learning,2024-06-21,2023-02-09,Completed,1884.65
+69,262,Communication Skills,Internal,2023-06-14,2023-11-02,In Progress,2635.68
+70,161,Python for Data Science,LinkedIn Learning,2023-03-08,2024-10-24,Completed,1534.5
+71,240,Agile & Scrum Fundamentals,LinkedIn Learning,2024-05-14,2023-09-20,Enrolled,2856.37
+72,165,Agile & Scrum Fundamentals,Internal,2023-10-28,2024-03-08,Completed,231.42
+73,256,Design Thinking,Pluralsight,2024-03-31,2023-07-04,Completed,2108.02
+74,158,Communication Skills,Coursera,2023-11-28,2023-10-01,Dropped,80.91
+75,255,Python for Data Science,Udemy,2024-04-16,2023-04-03,Enrolled,1454.95
+76,215,Design Thinking,Internal,2024-03-23,2023-10-08,Enrolled,2091.05
+77,164,Leadership Essentials,LinkedIn Learning,2024-01-02,2024-08-21,Completed,1803.29
+78,6,Leadership Essentials,Internal,2024-06-12,2023-04-14,Completed,2871.9
+79,20,Project Management Professional,LinkedIn Learning,2023-01-07,,Completed,2583.08
+80,42,Cybersecurity Awareness,LinkedIn Learning,2024-06-26,2024-01-21,Dropped,696.18
+81,300,AWS Cloud Practitioner,Udemy,2023-09-22,2024-01-31,Dropped,1049.22
+82,109,AWS Cloud Practitioner,Udemy,2023-04-09,2024-08-02,Dropped,961.97
+83,43,Agile & Scrum Fundamentals,Pluralsight,2024-01-18,2024-05-03,Completed,1819.11
+84,107,Python for Data Science,Udemy,2023-03-23,2024-09-20,Completed,2740.88
+85,247,Python for Data Science,LinkedIn Learning,2024-03-21,2023-04-08,Completed,1322.58
+86,107,Communication Skills,Coursera,2023-03-07,2024-07-16,Enrolled,909.24
+87,258,Leadership Essentials,Coursera,2024-04-09,2023-02-26,In Progress,1754.82
+88,118,SQL Bootcamp,Udemy,2023-03-12,2023-06-16,Completed,2673.04
+89,266,Design Thinking,Pluralsight,2024-02-11,,Completed,2820.57
+90,4,AWS Cloud Practitioner,Pluralsight,2023-10-21,,Completed,1532.25
+91,25,Cybersecurity Awareness,Internal,2023-02-23,2023-08-14,In Progress,1734.32
+92,77,Communication Skills,Coursera,2023-09-26,2024-08-13,Completed,2996.52
+93,291,Communication Skills,LinkedIn Learning,2023-09-27,2024-08-18,Completed,2921.16
+94,140,Python for Data Science,Pluralsight,2023-09-05,2024-04-14,Completed,958.16
+95,36,Design Thinking,Udemy,2024-05-26,2023-03-25,In Progress,1149.64
+96,262,Project Management Professional,LinkedIn Learning,2024-06-26,2024-01-11,Completed,501.87
+97,15,Python for Data Science,LinkedIn Learning,2024-02-06,2024-09-21,In Progress,960.76
+98,201,Leadership Essentials,LinkedIn Learning,2023-01-11,2023-06-22,Enrolled,2728.16
+99,114,Cybersecurity Awareness,Coursera,2024-03-03,2024-02-19,Enrolled,1326.66
+100,29,Cybersecurity Awareness,Coursera,2023-12-24,2024-07-08,Enrolled,1949.56
+101,235,Communication Skills,LinkedIn Learning,2024-05-11,2024-09-11,Completed,2423.06
+102,294,Agile & Scrum Fundamentals,Pluralsight,2023-04-09,2023-12-13,Completed,715.97
+103,78,Design Thinking,Pluralsight,2023-02-12,2023-12-31,Enrolled,293.81
+104,291,Communication Skills,Coursera,2023-05-08,,Completed,2724.23
+105,140,Project Management Professional,Coursera,2023-11-12,,In Progress,722.24
+106,42,Leadership Essentials,Coursera,2023-02-20,,In Progress,2297.65
+107,69,Agile & Scrum Fundamentals,Internal,2024-04-05,,In Progress,1679.04
+108,113,Agile & Scrum Fundamentals,Coursera,2023-09-07,,Completed,2935.8
+109,128,Project Management Professional,Pluralsight,2023-01-14,2024-03-02,Completed,628.46
+110,93,SQL Bootcamp,Internal,2023-09-28,2024-02-09,Completed,1240.06
+111,283,Communication Skills,Internal,2024-06-28,,In Progress,1034.3
+112,284,Python for Data Science,Coursera,2023-02-20,2024-08-23,Completed,1081.54
+113,111,SQL Bootcamp,Coursera,2023-12-02,2024-02-17,Enrolled,206.75
+114,48,Cybersecurity Awareness,LinkedIn Learning,2023-08-15,2024-01-08,Completed,364.28
+115,26,Project Management Professional,Internal,2023-10-08,2023-05-21,In Progress,2645.74
+116,267,Leadership Essentials,LinkedIn Learning,2023-04-27,2023-11-05,Completed,323.34
+117,175,Excel Advanced,Coursera,2024-04-10,,Completed,2514.91
+118,187,Communication Skills,Udemy,2024-02-10,2024-08-03,Completed,906.96
+119,161,Cybersecurity Awareness,Udemy,2024-02-13,2024-06-23,Completed,1113.7
+120,181,Design Thinking,Pluralsight,2023-02-16,,Completed,880.64
+121,68,Agile & Scrum Fundamentals,Pluralsight,2023-04-15,2023-08-05,Completed,1315.67
+122,138,SQL Bootcamp,LinkedIn Learning,2023-04-21,2024-03-08,Completed,1185.54
+123,83,SQL Bootcamp,Pluralsight,2023-08-28,2024-01-10,Completed,226.42
+124,192,Agile & Scrum Fundamentals,Udemy,2023-03-30,2023-04-26,In Progress,277.84
+125,101,Cybersecurity Awareness,Internal,2023-04-27,2024-04-30,Enrolled,533.37
+126,260,Excel Advanced,Internal,2023-07-12,2024-05-13,Dropped,1754.03
+127,99,Project Management Professional,Udemy,2023-06-29,2024-10-28,Enrolled,2254.24
+128,248,Communication Skills,Coursera,2024-02-22,2023-07-25,Completed,1661.54
+129,268,Excel Advanced,Udemy,2023-05-04,2023-12-19,In Progress,2058.37
+130,156,Python for Data Science,Pluralsight,2024-04-03,2023-11-08,Completed,1382.29
+131,245,AWS Cloud Practitioner,Pluralsight,2024-03-05,,Completed,1251.61
+132,225,Project Management Professional,Pluralsight,2023-02-26,2024-07-03,Enrolled,2235.28
+133,135,AWS Cloud Practitioner,LinkedIn Learning,2023-05-08,,Completed,982.96
+134,171,Cybersecurity Awareness,Coursera,2023-05-10,2024-02-13,Dropped,1565.92
+135,222,Agile & Scrum Fundamentals,LinkedIn Learning,2023-09-15,,Dropped,2542.45
+136,45,Project Management Professional,Coursera,2024-01-25,2023-06-01,Completed,1010.0
+137,126,Project Management Professional,LinkedIn Learning,2023-07-03,,Enrolled,1174.45
+138,49,Excel Advanced,Internal,2023-04-22,2023-12-03,Dropped,1084.57
+139,243,Agile & Scrum Fundamentals,Udemy,2024-05-01,2024-07-15,Completed,2185.31
+140,46,Agile & Scrum Fundamentals,LinkedIn Learning,2023-03-15,2024-07-03,Completed,1875.01
+141,250,Leadership Essentials,Pluralsight,2024-01-19,2023-05-16,In Progress,932.32
+142,177,Leadership Essentials,LinkedIn Learning,2024-01-03,,Completed,2087.19
+143,184,Cybersecurity Awareness,Pluralsight,2023-07-13,2023-09-06,Completed,157.03
+144,240,AWS Cloud Practitioner,Pluralsight,2024-02-08,2023-04-21,Enrolled,1576.51
+145,274,Excel Advanced,Udemy,2024-06-16,2023-04-12,Completed,1645.59
+146,272,AWS Cloud Practitioner,Internal,2023-06-23,2024-11-29,Enrolled,2478.38
+147,17,Project Management Professional,Coursera,2023-11-16,2024-03-01,Completed,1054.14
+148,121,Python for Data Science,Coursera,2024-01-22,2023-10-26,Completed,2184.99
+149,25,SQL Bootcamp,Coursera,2024-06-09,2023-09-05,Completed,573.18
+150,194,Agile & Scrum Fundamentals,Udemy,2024-04-12,,Completed,1513.93
+151,219,Design Thinking,LinkedIn Learning,2023-03-02,2023-09-01,Completed,1964.51
+152,23,Cybersecurity Awareness,Pluralsight,2023-02-19,2023-09-28,Completed,1015.75
+153,73,AWS Cloud Practitioner,Internal,2024-01-10,2023-08-30,Completed,2391.73
+154,177,Agile & Scrum Fundamentals,Pluralsight,2024-04-24,2023-12-10,Enrolled,334.82
+155,178,Design Thinking,Pluralsight,2024-03-20,2024-04-06,Completed,1170.54
+156,32,Python for Data Science,Pluralsight,2024-04-14,,Completed,82.66
+157,161,Leadership Essentials,LinkedIn Learning,2023-09-06,,Enrolled,908.33
+158,36,Design Thinking,Pluralsight,2023-04-02,2024-04-20,Completed,965.89
+159,26,AWS Cloud Practitioner,LinkedIn Learning,2023-10-23,2023-07-28,Completed,174.34
+160,66,SQL Bootcamp,Pluralsight,2023-07-07,,Completed,650.75
+161,237,Design Thinking,Pluralsight,2023-07-12,2024-10-04,Completed,1740.72
+162,189,SQL Bootcamp,Pluralsight,2023-06-21,,Completed,1473.63
+163,249,Cybersecurity Awareness,Udemy,2023-10-05,2024-05-15,Completed,1130.34
+164,53,AWS Cloud Practitioner,Pluralsight,2024-06-09,2024-10-25,In Progress,2985.96
+165,104,SQL Bootcamp,Udemy,2024-03-14,2024-04-09,Completed,1389.49
+166,108,Leadership Essentials,Coursera,2023-03-22,,In Progress,773.9
+167,265,Project Management Professional,LinkedIn Learning,2023-08-04,2024-12-28,In Progress,576.74
+168,155,Excel Advanced,Pluralsight,2023-08-08,2024-01-10,Completed,2337.76
+169,170,Project Management Professional,LinkedIn Learning,2024-06-02,2024-11-05,Completed,1303.6
+170,267,Agile & Scrum Fundamentals,Pluralsight,2023-05-11,2024-02-16,Enrolled,684.63
+171,99,Cybersecurity Awareness,Udemy,2023-12-14,,Completed,236.36
+172,101,Excel Advanced,Internal,2024-03-06,2023-02-22,Dropped,1326.03
+173,273,Design Thinking,Pluralsight,2023-06-05,2023-10-20,Completed,2889.33
+174,244,Cybersecurity Awareness,Internal,2023-04-18,,Completed,2734.51
+175,20,Agile & Scrum Fundamentals,Coursera,2023-06-16,,Completed,462.65
+176,299,Cybersecurity Awareness,LinkedIn Learning,2023-04-20,,Enrolled,1281.69
+177,263,Agile & Scrum Fundamentals,Udemy,2023-07-15,,Completed,815.12
+178,135,AWS Cloud Practitioner,Udemy,2024-02-24,2024-11-04,Completed,2244.27
+179,66,Leadership Essentials,LinkedIn Learning,2023-09-28,2024-06-01,Completed,1955.71
+180,137,Cybersecurity Awareness,Coursera,2024-02-07,2024-04-27,Completed,1525.12
+181,17,Leadership Essentials,Coursera,2023-12-28,2023-05-14,Completed,1297.02
+182,153,AWS Cloud Practitioner,Udemy,2023-06-29,2024-03-09,Completed,1098.23
+183,138,Communication Skills,Pluralsight,2023-02-11,2024-03-03,Enrolled,1709.76
+184,97,Leadership Essentials,Coursera,2023-12-16,2024-09-04,Completed,569.17
+185,281,Leadership Essentials,LinkedIn Learning,2023-10-28,2023-06-21,Completed,2964.61
+186,287,Project Management Professional,Internal,2023-06-15,2023-02-07,Enrolled,2642.58
+187,169,Communication Skills,LinkedIn Learning,2023-01-23,2024-09-20,Completed,1886.48
+188,274,Communication Skills,Pluralsight,2023-03-22,2024-02-18,Completed,2102.8
+189,224,Project Management Professional,Pluralsight,2024-02-06,2024-10-14,Completed,2020.25
+190,56,Design Thinking,Coursera,2023-10-25,2024-12-30,Completed,1196.89
+191,89,Agile & Scrum Fundamentals,Coursera,2023-01-09,,Completed,1118.75
+192,58,Project Management Professional,LinkedIn Learning,2024-06-16,2023-09-11,Enrolled,2767.94
+193,108,Cybersecurity Awareness,Udemy,2023-07-27,,Completed,435.17
+194,206,Communication Skills,Internal,2024-05-28,2024-07-30,Completed,1641.05
+195,138,Agile & Scrum Fundamentals,Coursera,2023-04-02,2023-04-10,Completed,2030.17
+196,208,Cybersecurity Awareness,Coursera,2023-11-09,2023-10-18,Enrolled,659.9
+197,207,Cybersecurity Awareness,LinkedIn Learning,2023-07-25,,Completed,1344.89
+198,34,Python for Data Science,Udemy,2023-02-26,2023-06-28,Completed,1741.15
+199,22,SQL Bootcamp,Pluralsight,2023-12-05,2024-10-17,Completed,607.7
+200,170,SQL Bootcamp,LinkedIn Learning,2023-07-28,2023-07-15,Completed,822.15
+201,142,Cybersecurity Awareness,Udemy,2023-04-14,,In Progress,2897.53
+202,281,Communication Skills,Coursera,2024-03-10,,Dropped,64.44
+203,263,Leadership Essentials,Pluralsight,2023-02-15,2023-03-21,In Progress,2624.76
+204,300,Leadership Essentials,LinkedIn Learning,2023-05-08,2023-12-07,In Progress,910.84
+205,184,Python for Data Science,Pluralsight,2023-12-24,,Completed,764.3
+206,137,Project Management Professional,LinkedIn Learning,2023-06-15,2024-03-18,Enrolled,2361.61
+207,131,Leadership Essentials,Udemy,2023-06-25,2023-12-08,Completed,994.79
+208,137,Agile & Scrum Fundamentals,Pluralsight,2023-07-02,2023-09-05,Completed,2185.5
+209,7,Excel Advanced,Udemy,2023-09-17,,Dropped,1387.97
+210,142,AWS Cloud Practitioner,LinkedIn Learning,2023-08-31,2024-03-16,Completed,1045.39
+211,96,Project Management Professional,Internal,2024-05-30,2023-02-20,Completed,1666.85
+212,282,Leadership Essentials,Udemy,2023-06-06,2024-02-29,Completed,2810.45
+213,82,SQL Bootcamp,Coursera,2024-05-14,,Completed,2297.46
+214,240,Design Thinking,Coursera,2024-03-21,2024-02-02,Enrolled,349.47
+215,163,Design Thinking,Coursera,2023-03-18,2024-11-26,Completed,396.03
+216,29,AWS Cloud Practitioner,LinkedIn Learning,2023-07-28,2024-10-05,Completed,1617.58
+217,27,Excel Advanced,Udemy,2024-04-23,2024-01-20,Completed,581.21
+218,189,Agile & Scrum Fundamentals,Internal,2023-03-30,2023-03-09,In Progress,1003.83
+219,123,Agile & Scrum Fundamentals,Coursera,2023-01-08,,Enrolled,1043.16
+220,196,Design Thinking,Internal,2023-10-06,2023-10-16,Enrolled,248.09
+221,121,Leadership Essentials,Coursera,2024-01-01,,Completed,719.07
+222,149,SQL Bootcamp,LinkedIn Learning,2023-06-11,,In Progress,632.62
+223,189,Excel Advanced,Udemy,2023-01-19,2024-10-22,Completed,658.72
+224,160,Design Thinking,Coursera,2023-09-10,,Enrolled,1939.75
+225,101,Communication Skills,Internal,2024-05-23,,Completed,1285.21
+226,101,Cybersecurity Awareness,Coursera,2023-11-05,2023-08-08,Completed,1934.79
+227,109,AWS Cloud Practitioner,LinkedIn Learning,2023-08-10,2024-07-08,In Progress,2189.27
+228,229,Design Thinking,Pluralsight,2023-08-05,2024-10-03,Enrolled,1098.09
+229,225,Project Management Professional,LinkedIn Learning,2023-09-03,2023-09-15,Completed,401.89
+230,255,Python for Data Science,Internal,2023-10-29,,Completed,310.59
+231,101,Leadership Essentials,LinkedIn Learning,2023-10-15,,Completed,2940.88
+232,258,Agile & Scrum Fundamentals,Coursera,2024-04-08,2023-02-15,Completed,630.64
+233,255,Python for Data Science,Udemy,2023-10-03,2023-10-17,Completed,98.72
+234,178,AWS Cloud Practitioner,Internal,2024-02-11,2024-03-30,Dropped,543.04
+235,79,Leadership Essentials,Udemy,2024-02-20,2023-10-26,In Progress,2826.37
+236,104,Communication Skills,Internal,2024-03-04,2024-06-07,In Progress,1328.82
+237,157,Communication Skills,Internal,2023-07-10,2024-07-11,Completed,623.72
+238,46,Agile & Scrum Fundamentals,Udemy,2023-08-14,,In Progress,1704.78
+239,282,AWS Cloud Practitioner,Coursera,2024-04-08,,In Progress,1280.25
+240,248,Leadership Essentials,Pluralsight,2024-01-30,,Enrolled,885.19
+241,49,SQL Bootcamp,LinkedIn Learning,2023-05-03,2024-05-16,Completed,2855.1
+242,213,Python for Data Science,Udemy,2023-10-17,2024-01-01,Dropped,493.19
+243,15,Communication Skills,Pluralsight,2023-07-08,2024-06-28,Completed,974.49
+244,207,Leadership Essentials,LinkedIn Learning,2023-03-28,2024-09-02,Enrolled,1178.48
+245,189,Design Thinking,Udemy,2023-07-14,,Completed,2850.44
+246,271,Design Thinking,Coursera,2024-05-31,2023-03-17,Completed,94.05
+247,29,Agile & Scrum Fundamentals,LinkedIn Learning,2024-05-09,2023-04-14,Completed,195.34
+248,241,Agile & Scrum Fundamentals,Coursera,2023-05-23,2024-07-25,In Progress,2880.92
+249,294,Cybersecurity Awareness,Coursera,2023-05-23,2023-07-08,Dropped,153.82
+250,79,AWS Cloud Practitioner,Udemy,2023-02-16,2023-10-07,Completed,1682.67
+251,114,Agile & Scrum Fundamentals,Pluralsight,2024-01-03,,In Progress,2874.06
+252,299,Project Management Professional,Internal,2023-09-07,2024-12-09,Completed,514.14
+253,283,Project Management Professional,Internal,2024-03-24,2023-07-11,Completed,72.68
+254,283,Excel Advanced,Udemy,2023-05-14,2024-02-28,Enrolled,2286.01
+255,209,Cybersecurity Awareness,Coursera,2023-11-08,2023-10-25,In Progress,1161.57
+256,236,Excel Advanced,Udemy,2023-01-25,2023-07-09,Enrolled,1177.27
+257,34,Excel Advanced,Pluralsight,2023-11-02,2024-10-22,In Progress,1783.44
+258,225,AWS Cloud Practitioner,Coursera,2023-06-27,2024-07-11,Completed,665.03
+259,3,SQL Bootcamp,LinkedIn Learning,2023-09-01,2023-09-12,Completed,2999.05
+260,44,Design Thinking,Pluralsight,2023-04-29,2023-04-19,In Progress,1917.27
+261,211,Agile & Scrum Fundamentals,Udemy,2023-01-22,2023-02-02,Dropped,2271.47
+262,144,Design Thinking,LinkedIn Learning,2023-02-24,2023-11-17,Completed,2626.3
+263,226,Leadership Essentials,Pluralsight,2023-06-20,2024-11-27,Dropped,469.15
+264,267,Excel Advanced,LinkedIn Learning,2023-04-25,2024-03-26,Completed,1164.41
+265,110,Communication Skills,Udemy,2023-10-07,2024-07-17,In Progress,2311.75
+266,59,Communication Skills,Udemy,2023-05-16,2023-05-18,Completed,91.15
+267,164,Project Management Professional,LinkedIn Learning,2023-03-20,,Completed,2785.24
+268,90,Communication Skills,LinkedIn Learning,2023-10-02,,Completed,1112.37
+269,274,Agile & Scrum Fundamentals,Pluralsight,2023-12-25,,Completed,978.72
+270,265,Leadership Essentials,Coursera,2024-02-26,2023-11-12,In Progress,1261.1
+271,257,Excel Advanced,Internal,2023-04-19,2023-07-25,In Progress,1878.32
+272,52,Python for Data Science,Udemy,2023-04-14,2024-07-18,In Progress,2774.97
+273,175,Leadership Essentials,Coursera,2024-01-12,2023-06-04,Enrolled,206.88
+274,147,Communication Skills,Coursera,2023-05-15,,In Progress,787.45
+275,173,Design Thinking,Internal,2024-06-05,,Completed,337.26
+276,139,Python for Data Science,Pluralsight,2023-04-27,2023-10-07,Completed,722.03
+277,42,Communication Skills,Internal,2024-01-27,2023-06-27,Completed,1221.28
+278,299,AWS Cloud Practitioner,Internal,2024-06-25,2024-08-22,Completed,2618.92
+279,263,Project Management Professional,Coursera,2023-03-20,2023-08-23,Enrolled,1618.77
+280,158,Project Management Professional,Internal,2023-02-16,2023-05-02,Completed,2463.26
+281,131,Project Management Professional,Udemy,2023-01-02,2024-08-22,Completed,2993.69
+282,85,Leadership Essentials,Udemy,2023-04-27,2023-12-03,Enrolled,559.46
+283,48,Excel Advanced,Udemy,2023-01-22,2023-11-30,Completed,1722.9
+284,273,Design Thinking,LinkedIn Learning,2023-05-31,2024-08-30,Completed,935.95
+285,9,Python for Data Science,Coursera,2024-04-07,2024-10-16,Completed,866.44
+286,4,Python for Data Science,LinkedIn Learning,2023-04-17,2023-05-03,In Progress,634.42
+287,23,Agile & Scrum Fundamentals,Coursera,2024-03-29,2024-03-06,Completed,62.26
+288,55,Communication Skills,Internal,2023-10-02,2023-12-16,In Progress,1638.48
+289,70,Python for Data Science,Pluralsight,2024-06-18,2024-07-28,Completed,1593.62
+290,37,SQL Bootcamp,Coursera,2024-02-03,2024-10-11,Completed,2353.19
+291,131,Excel Advanced,Coursera,2023-12-01,2023-06-26,Enrolled,961.81
+292,237,AWS Cloud Practitioner,Coursera,2023-08-16,2024-03-26,Enrolled,1967.87
+293,207,AWS Cloud Practitioner,Coursera,2023-03-18,2024-12-08,Dropped,1773.43
+294,151,Leadership Essentials,Internal,2023-06-11,2023-04-11,Enrolled,134.3
+295,225,Python for Data Science,Internal,2024-03-09,2024-07-24,Dropped,766.21
+296,225,AWS Cloud Practitioner,Coursera,2024-01-07,2024-09-12,Completed,1070.18
+297,129,Python for Data Science,LinkedIn Learning,2024-05-07,,Enrolled,1130.25
+298,234,Leadership Essentials,Udemy,2024-03-02,2024-01-21,Completed,2725.19
+299,143,Leadership Essentials,Internal,2023-11-20,2024-04-05,Completed,1038.75
+300,58,Leadership Essentials,Coursera,2023-05-24,,Completed,358.47
+301,10,Cybersecurity Awareness,Pluralsight,2023-07-16,2024-09-06,Completed,1911.88
+302,96,Communication Skills,Udemy,2024-01-06,2024-01-14,Completed,1408.26
+303,41,Cybersecurity Awareness,Coursera,2023-09-01,,Enrolled,1841.83
+304,263,Excel Advanced,Pluralsight,2023-02-18,2024-04-03,Completed,1321.79
+305,265,Agile & Scrum Fundamentals,Coursera,2023-09-16,2023-06-29,Completed,1828.6
+306,254,SQL Bootcamp,LinkedIn Learning,2023-08-11,,Enrolled,2088.27
+307,2,Leadership Essentials,Udemy,2023-08-13,2024-08-11,Completed,690.78
+308,290,Python for Data Science,LinkedIn Learning,2023-01-08,,Completed,2449.05
+309,216,Cybersecurity Awareness,Pluralsight,2023-11-13,2024-12-04,Completed,2506.79
+310,55,Excel Advanced,Coursera,2023-12-14,2023-02-01,Completed,1088.24
+311,281,Project Management Professional,Coursera,2023-02-17,2024-10-18,Completed,2062.48
+312,237,Design Thinking,Pluralsight,2023-01-08,2023-08-17,Completed,2583.29
+313,295,Leadership Essentials,Pluralsight,2023-07-17,2024-04-06,Enrolled,1615.36
+314,277,Agile & Scrum Fundamentals,Internal,2023-05-17,2024-03-31,Completed,2116.39
+315,200,Project Management Professional,Internal,2023-03-10,2024-05-14,Completed,1813.29
+316,293,Excel Advanced,Udemy,2024-01-29,2024-02-02,Enrolled,2136.58
+317,237,SQL Bootcamp,Pluralsight,2023-04-01,2023-10-30,Completed,457.86
+318,168,AWS Cloud Practitioner,Internal,2024-04-28,,Completed,1623.0
+319,242,Cybersecurity Awareness,LinkedIn Learning,2023-02-11,2023-07-17,Completed,2535.65
+320,274,Leadership Essentials,Pluralsight,2024-06-29,2024-03-01,Completed,2884.75
+321,189,Python for Data Science,Coursera,2023-08-20,2023-05-27,Dropped,642.66
+322,237,Python for Data Science,Internal,2023-10-13,2023-04-24,Completed,546.31
+323,52,Agile & Scrum Fundamentals,LinkedIn Learning,2023-11-14,2023-07-29,Completed,2304.59
+324,39,Excel Advanced,Coursera,2023-10-27,2023-12-17,Completed,1340.52
+325,101,Cybersecurity Awareness,Internal,2023-07-09,2024-12-11,Completed,2751.27
+326,120,Python for Data Science,Pluralsight,2023-01-12,2023-12-24,In Progress,964.16
+327,257,Excel Advanced,Udemy,2023-07-02,2023-03-16,Enrolled,1801.91
+328,152,Design Thinking,Internal,2024-03-04,,Completed,2167.96
+329,97,Python for Data Science,Internal,2023-01-04,2023-04-19,In Progress,2177.37
+330,257,Excel Advanced,Internal,2024-04-01,2024-05-22,Completed,1744.09
+331,61,Leadership Essentials,Coursera,2023-08-09,2024-01-26,Completed,2910.14
+332,164,Project Management Professional,Internal,2023-05-17,,Dropped,2192.35
+333,18,AWS Cloud Practitioner,Pluralsight,2023-01-27,2024-09-27,Dropped,1063.12
+334,12,Python for Data Science,Coursera,2023-09-20,2023-04-17,Completed,2561.77
+335,196,Agile & Scrum Fundamentals,Coursera,2024-01-19,2023-07-11,Completed,1329.72
+336,96,Python for Data Science,Udemy,2023-04-27,2024-08-07,Completed,2476.01
+337,288,Agile & Scrum Fundamentals,Pluralsight,2023-01-23,2024-05-16,Completed,2245.64
+338,245,Communication Skills,Coursera,2024-04-12,,In Progress,688.8
+339,143,SQL Bootcamp,Pluralsight,2023-07-17,2023-06-25,Completed,1423.25
+340,247,Cybersecurity Awareness,Internal,2024-05-18,2023-11-05,Dropped,1194.5
+341,280,Cybersecurity Awareness,Udemy,2023-07-10,2023-11-28,Completed,510.82
+342,288,Design Thinking,Pluralsight,2023-02-06,2024-04-27,Completed,2611.26
+343,147,Communication Skills,LinkedIn Learning,2024-06-26,2024-04-25,Completed,1213.71
+344,154,Cybersecurity Awareness,Coursera,2023-07-03,2024-05-05,Completed,832.83
+345,276,AWS Cloud Practitioner,Pluralsight,2024-01-07,,Completed,591.59
+346,267,Project Management Professional,Udemy,2023-12-01,,Completed,1467.6
+347,202,Agile & Scrum Fundamentals,LinkedIn Learning,2023-03-11,2024-08-27,Enrolled,2012.16
+348,226,Excel Advanced,Internal,2024-02-22,2024-09-21,Completed,2177.13
+349,10,Agile & Scrum Fundamentals,Coursera,2024-06-20,2023-08-03,Completed,2627.33
+350,215,Python for Data Science,Internal,2024-06-01,2024-12-17,Completed,2019.47
+351,145,AWS Cloud Practitioner,Coursera,2023-12-05,2023-03-04,In Progress,2531.98
+352,241,SQL Bootcamp,LinkedIn Learning,2024-02-18,,Enrolled,1245.49
+353,135,Communication Skills,LinkedIn Learning,2023-04-05,2024-03-21,Enrolled,2327.1
+354,178,Agile & Scrum Fundamentals,Coursera,2023-05-16,,Enrolled,2046.14
+355,120,SQL Bootcamp,Udemy,2024-05-28,2024-06-10,In Progress,1618.36
+356,221,SQL Bootcamp,Internal,2023-11-19,2024-11-16,Completed,2522.45
+357,28,Leadership Essentials,Internal,2023-01-15,2024-01-25,Completed,1861.54
+358,238,Python for Data Science,Coursera,2023-12-09,2023-07-19,Completed,959.32
+359,69,Excel Advanced,Internal,2024-01-19,2024-12-05,Dropped,1823.23
+360,249,SQL Bootcamp,Internal,2023-07-20,2023-05-29,Completed,753.53
+361,3,AWS Cloud Practitioner,Udemy,2024-04-19,2023-04-26,Completed,288.15
+362,26,Python for Data Science,Udemy,2023-03-26,2024-10-08,Completed,144.03
+363,274,Excel Advanced,Internal,2023-11-19,2024-01-07,Completed,2069.1
+364,127,Excel Advanced,Udemy,2023-06-03,2023-09-23,Enrolled,251.46
+365,66,Leadership Essentials,Pluralsight,2023-09-04,2024-09-17,Enrolled,2977.67
+366,265,Agile & Scrum Fundamentals,LinkedIn Learning,2024-06-09,2024-07-21,Completed,1821.25
+367,255,Agile & Scrum Fundamentals,Udemy,2024-04-09,2024-07-07,Completed,1037.96
+368,73,Project Management Professional,Coursera,2023-07-14,2024-11-02,Completed,2748.56
+369,201,Design Thinking,Pluralsight,2023-10-11,2024-08-08,Dropped,2192.5
+370,32,Communication Skills,Internal,2023-01-29,2024-05-24,Completed,2922.26
+371,214,AWS Cloud Practitioner,Internal,2023-10-25,2024-01-06,Completed,1619.16
+372,290,Design Thinking,Pluralsight,2024-05-26,,Completed,2289.48
+373,200,Agile & Scrum Fundamentals,Coursera,2023-05-26,2025-01-01,Completed,462.38
+374,22,Design Thinking,Udemy,2024-04-14,2023-10-10,In Progress,2490.27
+375,265,Leadership Essentials,Coursera,2023-05-27,,Completed,2268.09
+376,175,Leadership Essentials,Udemy,2024-06-03,2023-09-04,Completed,872.72
+377,167,Excel Advanced,Coursera,2024-02-02,2023-07-20,Dropped,1491.24
+378,1,SQL Bootcamp,Internal,2024-05-25,2023-04-21,In Progress,2265.16
+379,106,AWS Cloud Practitioner,Udemy,2024-03-17,,Completed,2292.4
+380,238,SQL Bootcamp,LinkedIn Learning,2023-09-03,,Completed,806.93
+381,273,Excel Advanced,Internal,2023-10-06,2023-09-13,Completed,232.5
+382,107,AWS Cloud Practitioner,Udemy,2023-08-26,2024-12-11,Enrolled,2442.45
+383,125,Project Management Professional,Internal,2024-05-07,2024-01-31,Completed,1637.28
+384,40,Design Thinking,Internal,2023-10-12,2024-10-09,Dropped,1287.72
+385,77,AWS Cloud Practitioner,LinkedIn Learning,2023-07-30,,Completed,2012.64
+386,41,AWS Cloud Practitioner,LinkedIn Learning,2024-01-10,2024-06-28,In Progress,626.57
+387,87,Agile & Scrum Fundamentals,Coursera,2024-05-03,2023-11-01,Completed,2773.25
+388,169,Project Management Professional,Coursera,2024-02-27,2023-04-01,Completed,2503.26
+389,96,Excel Advanced,LinkedIn Learning,2023-12-18,2024-05-26,Completed,1827.34
+390,225,Leadership Essentials,Coursera,2023-08-25,2024-02-18,Enrolled,2095.43
+391,213,SQL Bootcamp,Internal,2023-08-04,,Completed,930.52
+392,199,Excel Advanced,LinkedIn Learning,2024-03-15,2024-09-08,Dropped,2900.88
+393,271,Excel Advanced,LinkedIn Learning,2024-06-09,2023-05-13,Enrolled,2410.93
+394,8,Agile & Scrum Fundamentals,LinkedIn Learning,2023-12-20,2024-06-02,Completed,611.69
+395,96,Project Management Professional,LinkedIn Learning,2023-02-05,2024-06-17,In Progress,1837.52
+396,200,Excel Advanced,Udemy,2023-04-24,2023-07-28,Completed,2354.67
+397,84,SQL Bootcamp,Pluralsight,2023-02-01,2024-04-21,Dropped,2804.63
+398,158,Design Thinking,Internal,2023-02-12,2024-11-01,Enrolled,1757.49
+399,2,Leadership Essentials,Pluralsight,2024-02-19,2023-11-01,Completed,2003.17
+400,123,Cybersecurity Awareness,Internal,2023-05-27,,Completed,128.53

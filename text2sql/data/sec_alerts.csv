@@ -1,0 +1,501 @@
+alert_id,alert_type,source,severity,message,triggered_at,acknowledged_at,status,asset_id
+1,Policy Violation,EDR,High,Specific former behind.,2024-08-31 13:06:00,2024-10-09 00:52:00,New,48
+2,Data Exfiltration,IDS,High,Especially policy road water.,2024-05-21 22:50:00,2024-10-01 04:35:00,Closed,18
+3,Anomalous Login,DLP,Medium,Little power protect type.,2024-10-02 11:19:00,2024-06-26 10:01:00,Closed,14
+4,Anomalous Login,DLP,Low,Analysis room some find hair home.,2024-11-26 19:50:00,2024-05-23 16:51:00,New,49
+5,Intrusion Detection,WAF,Medium,State yard free pretty.,2024-12-02 19:46:00,2024-05-23 22:16:00,Closed,89
+6,Malware,DLP,High,Theory either through until.,2024-02-14 17:08:00,,Closed,77
+7,Intrusion Detection,EDR,Low,Sort to animal if baby break.,2024-10-06 23:18:00,2024-09-16 22:58:00,Closed,1
+8,Policy Violation,EDR,Low,Party above half most page.,2024-04-11 08:31:00,2024-09-07 19:49:00,Closed,73
+9,Data Exfiltration,DLP,High,Hair play cultural appear man sell industry.,2024-09-18 13:09:00,2024-09-22 06:04:00,Closed,5
+10,Policy Violation,SIEM,Low,Despite hand group dream have.,2024-08-14 03:17:00,2024-08-13 01:15:00,Closed,80
+11,Malware,DLP,Medium,As show news third partner sing father.,2024-11-17 18:46:00,2024-05-04 10:12:00,Acknowledged,18
+12,Malware,DLP,Medium,Oil amount them respond major where.,2024-08-26 10:03:00,2025-01-10 23:57:00,Closed,89
+13,Policy Violation,IDS,Low,Traditional about perhaps same call.,2024-03-30 22:58:00,2024-07-07 08:36:00,Closed,33
+14,Intrusion Detection,DLP,Medium,Home official eye fight lay training ago lawyer.,2024-09-16 23:46:00,2024-04-12 18:04:00,Acknowledged,50
+15,Data Exfiltration,WAF,Medium,Administration include stuff get follow organization.,2024-05-11 21:54:00,2024-11-28 08:24:00,Closed,10
+16,Data Exfiltration,SIEM,Critical,Plant section population follow value test market smile.,2024-08-11 09:20:00,2025-01-15 15:13:00,Investigating,81
+17,Policy Violation,SIEM,Critical,Clearly college consider edge.,2024-04-16 09:45:00,2025-01-06 12:37:00,Investigating,50
+18,Anomalous Login,EDR,Medium,Article dream ask.,2024-05-11 11:03:00,,New,58
+19,Data Exfiltration,WAF,Low,Test step system light.,2024-07-10 04:56:00,,Acknowledged,74
+20,Policy Violation,EDR,Low,School east serve future.,2024-02-03 03:20:00,,Closed,52
+21,Anomalous Login,EDR,Critical,Seven someone before feeling.,2024-11-19 08:06:00,,Closed,49
+22,Data Exfiltration,IDS,Medium,Street wish child huge.,2024-12-07 06:01:00,2024-12-04 20:16:00,Investigating,71
+23,Data Exfiltration,DLP,Medium,Staff describe network quickly.,2024-05-30 20:52:00,2024-08-14 13:32:00,Investigating,11
+24,Policy Violation,IDS,Low,Especially respond capital explain.,2024-03-16 18:35:00,2024-08-10 06:11:00,Closed,10
+25,Intrusion Detection,IDS,Medium,Fear certainly scene choose expert against.,2024-03-22 20:36:00,2024-09-22 07:32:00,New,90
+26,Anomalous Login,SIEM,Medium,Reality similar argue agree course.,2024-11-15 06:29:00,2025-01-18 19:28:00,New,56
+27,Malware,IDS,Medium,Money page name public enter dog article.,2024-07-20 23:31:00,2024-05-16 18:14:00,Acknowledged,75
+28,Data Exfiltration,EDR,High,Structure note research do discover class follow herself.,2024-03-19 15:50:00,2024-02-20 08:58:00,Closed,16
+29,Data Exfiltration,IDS,High,Young contain exactly say mind impact major.,2024-03-17 17:15:00,,Closed,54
+30,Data Exfiltration,DLP,High,Experience tonight Mr whom team than.,2024-09-25 16:21:00,2024-11-17 17:56:00,Acknowledged,82
+31,Intrusion Detection,EDR,Medium,Oil guy heavy toward about country politics.,2024-12-21 12:11:00,2024-05-31 20:00:00,Closed,97
+32,Malware,SIEM,Medium,Our hot to.,2024-12-28 13:50:00,2024-11-27 14:06:00,Closed,36
+33,Malware,DLP,Low,Heavy can way travel return.,2024-08-01 04:19:00,2024-03-08 19:43:00,Acknowledged,73
+34,Anomalous Login,IDS,High,Institution style clearly attention second trial.,2024-12-20 14:48:00,,Closed,41
+35,Malware,IDS,Low,Investment onto factor speech protect.,2024-06-26 23:31:00,2024-05-25 17:07:00,Closed,8
+36,Malware,SIEM,Medium,Likely late lawyer name scientist reality create.,2024-05-24 00:21:00,2024-09-10 21:39:00,Closed,36
+37,Intrusion Detection,EDR,Low,Choose evidence coach civil control civil morning.,2025-01-10 17:43:00,2024-10-27 01:22:00,Investigating,31
+38,Policy Violation,SIEM,Medium,Culture result bar matter until.,2024-01-10 09:23:00,2024-07-10 04:26:00,Investigating,50
+39,Intrusion Detection,WAF,Medium,Return design over agreement.,2024-04-01 13:32:00,2024-04-28 07:18:00,Closed,68
+40,Intrusion Detection,DLP,Medium,Magazine agree ok relate.,2024-11-11 13:15:00,,Investigating,52
+41,Data Exfiltration,EDR,Medium,There reach your.,2024-12-01 06:28:00,2024-07-24 21:51:00,Closed,39
+42,Data Exfiltration,DLP,Medium,Avoid find under control would.,2024-02-28 07:14:00,2024-01-04 15:19:00,Investigating,67
+43,Data Exfiltration,DLP,High,Specific hold push mission station.,2024-01-29 10:55:00,,Closed,94
+44,Policy Violation,IDS,Low,Determine relationship toward recently give evidence training.,2024-09-13 22:30:00,2024-07-21 06:56:00,Acknowledged,56
+45,Intrusion Detection,DLP,Medium,Reality cultural west everything good culture garden standard.,2024-08-11 08:41:00,,Closed,32
+46,Data Exfiltration,WAF,Medium,Debate mission meet wall half.,2024-01-18 22:16:00,,Acknowledged,52
+47,Intrusion Detection,IDS,Low,Bag town unit against drug allow police environmental.,2024-11-30 21:21:00,,New,8
+48,Anomalous Login,WAF,Medium,Lot now arrive record continue speak local.,2024-04-24 08:52:00,2024-12-21 05:04:00,Closed,38
+49,Policy Violation,DLP,Medium,Consider recently course accept above.,2024-05-18 10:52:00,2024-10-18 10:25:00,New,54
+50,Intrusion Detection,WAF,High,Them audience job spend me fear.,2024-08-12 02:48:00,,Closed,24
+51,Anomalous Login,IDS,Low,Expect rest send collection people especially economic.,2024-06-12 03:11:00,2024-04-30 05:08:00,New,82
+52,Intrusion Detection,DLP,High,West herself guy new side number.,2025-01-12 03:28:00,2024-04-28 15:48:00,Closed,37
+53,Anomalous Login,IDS,Low,Leader voice very a.,2024-05-27 00:10:00,,Acknowledged,90
+54,Intrusion Detection,IDS,Medium,Four candidate raise sort.,2025-01-04 16:15:00,2024-09-19 13:12:00,Closed,88
+55,Anomalous Login,EDR,Low,Throughout billion book property throughout.,2024-12-14 20:31:00,2024-05-13 06:40:00,Closed,23
+56,Policy Violation,EDR,Low,Great improve president without central process.,2024-02-02 22:42:00,2024-06-14 23:11:00,New,11
+57,Intrusion Detection,WAF,Medium,Inside population ago positive now enter any.,2024-08-13 22:12:00,2024-07-21 12:23:00,Investigating,96
+58,Policy Violation,SIEM,Critical,Nothing few along customer start color.,2024-05-22 06:32:00,2024-06-18 05:26:00,Closed,37
+59,Intrusion Detection,DLP,Low,Success foot cup resource age.,2024-08-08 23:01:00,2024-11-11 01:55:00,New,1
+60,Anomalous Login,DLP,Low,Establish risk different within plant far.,2024-09-25 02:15:00,2025-01-20 20:37:00,Closed,54
+61,Anomalous Login,WAF,Medium,Fear around program thus short.,2024-07-28 12:25:00,2024-01-24 22:35:00,New,43
+62,Anomalous Login,IDS,Medium,Long generation threat represent couple.,2024-02-22 12:28:00,2024-09-13 14:20:00,Closed,95
+63,Anomalous Login,WAF,High,Amount assume put very.,2024-07-21 00:44:00,2024-04-04 10:45:00,Closed,10
+64,Intrusion Detection,EDR,Medium,Easy travel people throw half risk way.,2024-03-30 16:03:00,,Closed,37
+65,Anomalous Login,EDR,Medium,Clear guy scene side.,2024-07-24 12:11:00,2024-10-01 18:40:00,Closed,26
+66,Intrusion Detection,SIEM,High,Only example near article just.,2025-01-24 02:52:00,2024-12-12 18:23:00,Closed,51
+67,Data Exfiltration,IDS,Medium,Property fact clear including view do level probably.,2024-08-31 19:21:00,2024-04-15 22:24:00,Closed,53
+68,Anomalous Login,DLP,Medium,Least bag always.,2024-03-11 03:49:00,2024-08-08 11:46:00,Closed,68
+69,Data Exfiltration,SIEM,Low,Run board family stuff.,2024-02-27 23:54:00,2024-06-28 03:40:00,Closed,28
+70,Malware,DLP,Medium,Model across hot policy wall.,2024-09-12 15:11:00,2024-01-26 18:56:00,Closed,34
+71,Intrusion Detection,WAF,Low,Both meeting film only.,2024-10-10 09:03:00,2024-12-12 02:54:00,Investigating,88
+72,Malware,WAF,High,Agent eight attorney.,2024-07-30 02:52:00,2025-01-20 21:02:00,Investigating,83
+73,Policy Violation,IDS,Low,Price single article.,2024-01-08 01:25:00,2024-02-27 03:27:00,Closed,2
+74,Malware,SIEM,High,Recognize reach rule south.,2024-02-15 07:41:00,2024-07-07 20:37:00,Acknowledged,16
+75,Malware,WAF,High,Common air nothing debate require increase argue.,2024-01-31 08:02:00,2024-10-07 05:42:00,Closed,4
+76,Data Exfiltration,IDS,Low,Beat available learn provide ever.,2024-02-18 10:42:00,,Closed,62
+77,Policy Violation,IDS,Medium,Avoid song have act because.,2024-03-27 00:43:00,2024-03-30 02:06:00,Closed,81
+78,Policy Violation,WAF,Low,Message near although indeed side know special.,2024-03-22 14:01:00,2024-10-25 14:46:00,Acknowledged,82
+79,Anomalous Login,IDS,Low,Environment enter direction visit.,2024-06-03 16:28:00,,Acknowledged,81
+80,Intrusion Detection,DLP,Low,Idea note build rest use listen.,2024-10-17 14:58:00,2024-08-21 20:05:00,Acknowledged,37
+81,Policy Violation,EDR,Medium,Assume sing music boy.,2024-03-19 11:51:00,2024-12-23 23:20:00,New,98
+82,Intrusion Detection,WAF,High,Business bad remember company right suffer.,2024-11-07 03:18:00,2024-04-04 07:40:00,Investigating,11
+83,Policy Violation,SIEM,Medium,Debate have cover born hotel.,2024-05-09 03:49:00,2024-04-16 21:11:00,Closed,83
+84,Anomalous Login,EDR,Low,White action effort recently material water.,2024-01-22 18:35:00,2024-02-27 16:08:00,Investigating,78
+85,Policy Violation,DLP,Medium,Democratic support along customer to cost.,2024-06-21 04:26:00,2024-10-14 23:06:00,Investigating,67
+86,Data Exfiltration,SIEM,Low,Just focus all.,2024-07-29 18:21:00,2024-07-18 05:20:00,Closed,100
+87,Intrusion Detection,EDR,Medium,Fly right computer unit nature.,2025-01-26 16:37:00,2024-12-14 12:55:00,Closed,51
+88,Malware,SIEM,Medium,Rest alone particular purpose campaign she.,2024-08-26 22:07:00,2024-04-29 00:47:00,Investigating,21
+89,Intrusion Detection,IDS,Medium,Spend imagine between address us.,2024-05-02 08:10:00,2025-01-29 03:56:00,Closed,56
+90,Data Exfiltration,SIEM,Critical,Offer site strategy opportunity better significant study significant.,2024-12-09 16:31:00,2024-06-03 23:37:00,Closed,83
+91,Anomalous Login,EDR,Low,Specific particularly measure.,2024-02-20 03:01:00,2024-10-26 00:13:00,Investigating,65
+92,Anomalous Login,SIEM,Low,Strong technology later religious.,2024-09-03 09:07:00,2025-01-14 21:47:00,Closed,66
+93,Data Exfiltration,WAF,Low,Career red society continue minute tax fill baby.,2024-05-05 03:56:00,2024-10-15 17:28:00,Closed,9
+94,Intrusion Detection,SIEM,Low,Tell either change green player fear former analysis.,2024-04-04 14:53:00,2024-12-02 11:40:00,Closed,24
+95,Intrusion Detection,SIEM,Low,Interview population look mouth report personal.,2024-03-22 13:05:00,2024-03-06 12:09:00,Investigating,65
+96,Policy Violation,IDS,Low,Style thus nature these also audience.,2024-01-16 04:52:00,2024-12-11 12:43:00,Closed,38
+97,Policy Violation,DLP,Low,Not role recognize life.,2024-09-11 04:19:00,2024-09-14 01:27:00,Closed,47
+98,Malware,SIEM,High,Country save manage marriage might.,2024-11-23 06:13:00,,Investigating,16
+99,Malware,DLP,Low,Lay medical activity able reality care.,2024-09-19 11:01:00,2024-08-23 18:31:00,Closed,25
+100,Anomalous Login,EDR,Low,Me society plan.,2024-02-24 11:56:00,2024-06-13 03:16:00,Closed,2
+101,Anomalous Login,EDR,Medium,Respond technology despite score.,2024-06-19 20:13:00,2024-02-01 21:03:00,Closed,61
+102,Data Exfiltration,IDS,High,Year lawyer condition no.,2024-07-17 12:23:00,2024-08-03 05:05:00,Acknowledged,13
+103,Malware,WAF,High,Social history stock hold clearly.,2024-06-03 00:15:00,2024-05-17 17:29:00,Closed,89
+104,Malware,EDR,Medium,Land window character speech.,2024-01-22 01:50:00,2024-02-18 13:47:00,Closed,11
+105,Data Exfiltration,EDR,High,Safe quickly high successful husband think.,2024-08-12 16:27:00,2024-02-16 20:45:00,Closed,71
+106,Data Exfiltration,IDS,High,Trouble industry only simply within surface after.,2024-12-03 13:51:00,,New,57
+107,Anomalous Login,WAF,Low,Ability dream agree nothing probably.,2024-04-09 02:51:00,2024-04-30 00:42:00,Closed,61
+108,Intrusion Detection,SIEM,Critical,Hospital low serious again more direction sound.,2024-06-19 16:12:00,2024-03-12 14:29:00,Closed,70
+109,Malware,DLP,Medium,Staff other wife analysis hospital.,2025-01-26 10:32:00,2024-07-07 10:06:00,Closed,93
+110,Malware,EDR,Medium,Poor manage across respond government moment.,2024-05-22 16:44:00,2024-01-30 23:44:00,Closed,36
+111,Data Exfiltration,WAF,Medium,Possible fund TV.,2025-01-10 08:54:00,2024-12-22 22:27:00,Closed,77
+112,Malware,WAF,Medium,Apply design indicate perform guess reality opportunity measure.,2024-07-17 12:11:00,,Closed,89
+113,Intrusion Detection,EDR,High,Goal wish he.,2024-10-06 14:57:00,2024-03-01 23:04:00,Acknowledged,60
+114,Policy Violation,SIEM,Medium,Up find back off explain attack.,2024-04-11 03:24:00,2024-11-23 17:06:00,Closed,28
+115,Policy Violation,DLP,Critical,End individual hotel head.,2024-02-28 21:28:00,2024-06-15 13:24:00,Investigating,21
+116,Intrusion Detection,SIEM,Medium,Other seem once why.,2024-02-14 20:52:00,2024-03-22 01:32:00,Closed,30
+117,Malware,IDS,Medium,Human ok several measure score too.,2024-03-18 10:18:00,2024-01-03 03:46:00,Acknowledged,40
+118,Policy Violation,EDR,Low,Theory decision management enjoy add care watch last.,2024-04-07 12:33:00,,Closed,8
+119,Policy Violation,DLP,Medium,Nor western behavior budget long.,2024-08-22 13:30:00,2024-07-30 14:05:00,Closed,92
+120,Anomalous Login,WAF,Low,Four age really property American could.,2024-03-15 11:54:00,2024-12-20 18:15:00,Closed,8
+121,Intrusion Detection,DLP,High,Fund that scene black stand great vote.,2024-02-28 13:46:00,2024-08-31 15:57:00,Investigating,54
+122,Malware,DLP,Medium,Throw per appear Mrs.,2024-01-21 12:06:00,2024-04-15 23:11:00,Closed,95
+123,Policy Violation,IDS,Medium,Hour trade water arrive interesting fact investment.,2024-07-30 15:28:00,2024-12-17 15:11:00,Closed,69
+124,Anomalous Login,EDR,Critical,Think line happen data some wall.,2024-12-04 03:19:00,2024-10-27 23:05:00,Closed,87
+125,Intrusion Detection,WAF,High,Eat product wonder management dark value.,2024-07-05 04:59:00,2024-05-01 16:43:00,Acknowledged,86
+126,Intrusion Detection,EDR,Low,Ability bit arm nation several resource debate.,2025-01-09 00:18:00,2024-10-04 14:06:00,Closed,99
+127,Data Exfiltration,SIEM,High,Become able able plant soon accept charge.,2024-01-04 13:27:00,2024-08-17 02:58:00,Investigating,88
+128,Anomalous Login,WAF,Medium,Either best shoulder act rate.,2024-05-13 21:24:00,2024-07-05 10:02:00,Investigating,56
+129,Intrusion Detection,EDR,Low,Officer girl region.,2024-03-09 06:24:00,2024-09-01 09:35:00,Acknowledged,79
+130,Malware,DLP,Critical,Southern government though human none material how.,2024-08-04 15:05:00,2024-12-22 22:27:00,Acknowledged,42
+131,Intrusion Detection,SIEM,Medium,Entire out exactly six eye.,2024-12-27 16:10:00,2024-03-26 05:17:00,Closed,71
+132,Anomalous Login,EDR,Medium,Response its positive by college letter.,2024-10-31 10:43:00,2024-04-02 14:29:00,Acknowledged,10
+133,Malware,SIEM,Medium,Car bit future sister social water.,2025-01-04 14:27:00,2024-10-07 04:15:00,Closed,47
+134,Intrusion Detection,IDS,Medium,Right affect support model.,2024-03-31 14:22:00,2024-04-23 11:05:00,Closed,76
+135,Anomalous Login,SIEM,High,Surface include return once total.,2024-02-01 19:49:00,2024-08-30 17:56:00,Closed,41
+136,Intrusion Detection,EDR,Medium,Onto him medical husband economic within office.,2024-05-06 21:32:00,2024-10-12 10:11:00,Closed,68
+137,Data Exfiltration,WAF,High,Sure protect last ever couple.,2024-08-24 00:40:00,2024-07-30 07:26:00,Closed,60
+138,Policy Violation,EDR,High,White mother computer must news improve size field.,2024-10-15 10:41:00,2025-01-07 12:17:00,Acknowledged,30
+139,Intrusion Detection,EDR,Medium,Difference respond different put kid.,2024-01-22 17:59:00,,Acknowledged,47
+140,Policy Violation,SIEM,Low,Help popular already wide artist.,2025-01-10 18:45:00,2024-09-02 16:07:00,Closed,24
+141,Malware,WAF,Low,Just development scene owner kind send.,2024-10-19 10:24:00,2025-01-06 02:29:00,Investigating,65
+142,Anomalous Login,SIEM,High,More design effort report.,2025-01-10 12:27:00,,New,55
+143,Malware,IDS,Medium,Actually experience order.,2024-01-15 12:57:00,2024-04-03 15:21:00,Closed,36
+144,Anomalous Login,EDR,Low,Mr someone church dark human wear bad.,2024-06-28 07:46:00,2025-01-06 15:37:00,Closed,4
+145,Anomalous Login,IDS,Critical,Smile today civil sense.,2024-11-19 17:42:00,2024-02-14 13:38:00,Investigating,81
+146,Policy Violation,WAF,High,Man same star use important become.,2024-01-12 14:57:00,2024-06-24 21:42:00,Closed,26
+147,Intrusion Detection,EDR,High,Watch interview fish those knowledge question.,2024-12-14 04:11:00,,Acknowledged,69
+148,Data Exfiltration,SIEM,Medium,Can hard instead need sense.,2024-10-01 02:22:00,2024-04-05 02:33:00,Acknowledged,77
+149,Data Exfiltration,WAF,Medium,News form reflect trouble physical.,2025-01-25 20:50:00,2024-08-16 09:25:00,Closed,34
+150,Intrusion Detection,EDR,Low,Return personal adult discussion off.,2024-05-09 17:00:00,2024-07-15 06:05:00,Investigating,37
+151,Policy Violation,DLP,Medium,Create third cup effect woman wrong.,2024-11-08 07:21:00,2024-03-03 01:15:00,Closed,39
+152,Policy Violation,WAF,High,Sense model your family most you case represent.,2024-05-11 09:22:00,2024-12-12 19:01:00,Closed,8
+153,Intrusion Detection,EDR,High,Write consumer new throughout tend general.,2024-02-29 13:18:00,,New,60
+154,Policy Violation,WAF,Medium,Against admit throughout something bit.,2024-10-15 02:18:00,2024-07-19 11:43:00,New,1
+155,Intrusion Detection,WAF,High,Somebody relationship receive.,2024-11-02 20:57:00,2024-09-21 06:29:00,Closed,65
+156,Anomalous Login,WAF,Low,Interesting age grow middle share soon treatment.,2024-09-13 08:30:00,,Investigating,58
+157,Data Exfiltration,SIEM,Critical,Upon everyone five conference month.,2024-03-15 11:42:00,2025-01-11 12:39:00,Investigating,90
+158,Anomalous Login,IDS,Low,Yeah season get send meet current many minute.,2024-05-29 20:45:00,,Closed,37
+159,Anomalous Login,IDS,Critical,Practice sell remain certain glass.,2024-11-23 05:01:00,2025-01-07 08:01:00,Closed,11
+160,Policy Violation,EDR,High,Sort final money card star organization step.,2024-10-11 12:45:00,2024-04-05 04:12:00,Closed,76
+161,Data Exfiltration,SIEM,Medium,Practice sort kitchen into.,2024-04-15 22:53:00,2024-12-21 18:26:00,Closed,21
+162,Anomalous Login,DLP,Medium,Test free alone fly will five somebody.,2024-06-14 09:51:00,2024-11-11 09:33:00,Closed,15
+163,Malware,WAF,Low,Throughout himself arrive detail teach decade young attack.,2024-05-24 05:48:00,2024-08-22 04:17:00,Acknowledged,12
+164,Anomalous Login,SIEM,Medium,Will line be green.,2024-10-11 22:26:00,2024-05-04 21:05:00,Closed,76
+165,Malware,DLP,Critical,Store same change firm.,2024-06-14 08:18:00,2024-01-16 02:47:00,Investigating,14
+166,Anomalous Login,IDS,Low,Remember political meet show somebody choose.,2024-06-16 22:03:00,2024-12-10 01:46:00,Investigating,34
+167,Data Exfiltration,EDR,Low,Present indicate nation away month.,2024-09-11 07:50:00,,Acknowledged,70
+168,Intrusion Detection,DLP,Medium,Race season listen art hit employee treatment.,2024-05-26 22:44:00,2024-12-23 12:30:00,Closed,93
+169,Data Exfiltration,DLP,High,Bag prove she.,2024-12-19 03:57:00,,New,44
+170,Intrusion Detection,WAF,Low,Help agent rise article rock choice include member.,2024-10-27 01:26:00,2024-12-04 13:12:00,Investigating,94
+171,Intrusion Detection,SIEM,Medium,Toward quality until pressure interview.,2024-12-20 00:06:00,2024-09-23 09:56:00,Closed,46
+172,Malware,DLP,Low,Land economic southern news.,2024-02-02 06:41:00,2024-06-10 11:59:00,Investigating,88
+173,Data Exfiltration,DLP,Low,Long foreign a difference voice likely building.,2024-05-01 13:21:00,2024-03-11 07:09:00,Investigating,30
+174,Malware,WAF,Medium,Boy cover evening there single mother.,2024-09-28 00:11:00,2024-01-23 20:55:00,Acknowledged,86
+175,Malware,WAF,Medium,Industry green spend sign.,2024-03-13 17:41:00,2024-03-28 12:18:00,Closed,14
+176,Malware,SIEM,High,Congress development property long home lawyer.,2024-03-16 08:13:00,,Closed,34
+177,Policy Violation,WAF,Medium,Game stay add single once.,2024-08-09 21:19:00,2024-12-09 22:05:00,Closed,17
+178,Malware,SIEM,Low,Series wife east large per forget human.,2024-09-04 02:02:00,2024-05-09 04:22:00,Investigating,72
+179,Policy Violation,IDS,Low,Pick college rate task energy.,2024-05-24 16:55:00,2024-02-29 11:38:00,New,56
+180,Intrusion Detection,DLP,High,Forward those manager.,2025-01-04 04:48:00,2024-05-12 05:25:00,Investigating,36
+181,Data Exfiltration,WAF,High,Group then recognize particular without remain.,2024-08-26 07:05:00,2024-02-19 01:32:00,Closed,83
+182,Data Exfiltration,DLP,High,Attention no pretty.,2024-06-05 12:58:00,,Closed,45
+183,Malware,EDR,High,Significant them clearly land evening drive.,2024-12-15 21:20:00,2024-06-01 07:53:00,Investigating,1
+184,Intrusion Detection,WAF,Low,Former reveal term mind artist then show.,2024-01-29 17:13:00,2024-10-23 15:48:00,New,35
+185,Intrusion Detection,DLP,Low,Do prepare possible entire agency statement people.,2024-04-09 05:07:00,2024-06-30 14:22:00,New,88
+186,Data Exfiltration,DLP,Medium,Together drive fish establish suggest sort art.,2024-07-14 00:31:00,2025-01-16 17:09:00,Acknowledged,82
+187,Anomalous Login,EDR,Medium,To show star movie account recognize middle history.,2024-03-01 03:03:00,2024-04-05 11:05:00,Investigating,52
+188,Anomalous Login,DLP,Medium,Per whatever player another Republican hundred thousand subject.,2024-02-14 07:54:00,2024-03-26 13:38:00,Closed,9
+189,Data Exfiltration,DLP,Low,Maintain film source billion.,2024-04-30 05:58:00,2024-07-07 16:25:00,Investigating,24
+190,Data Exfiltration,SIEM,Medium,Knowledge lay lose wall be threat.,2024-08-17 01:07:00,2024-05-03 19:56:00,Investigating,51
+191,Data Exfiltration,EDR,High,Stuff idea assume major.,2024-03-05 21:08:00,2024-08-17 06:04:00,Closed,62
+192,Anomalous Login,SIEM,Medium,Usually suddenly doctor month manager as.,2024-02-22 11:08:00,2024-05-05 22:56:00,Closed,70
+193,Anomalous Login,EDR,Medium,Recognize wonder town.,2024-06-20 09:23:00,2024-02-20 15:23:00,Acknowledged,12
+194,Anomalous Login,IDS,Low,Real bring interesting term responsibility interest financial.,2024-01-21 14:38:00,2024-03-29 15:52:00,Acknowledged,60
+195,Malware,IDS,Low,Pay nation rich poor it they.,2024-08-21 00:22:00,2024-03-30 00:50:00,Closed,55
+196,Malware,EDR,Medium,Common say maybe conference less wind.,2024-07-12 01:31:00,,Closed,83
+197,Anomalous Login,SIEM,Medium,Consider election if window up interest amount reach.,2024-06-01 20:05:00,2025-01-25 01:49:00,Closed,29
+198,Intrusion Detection,EDR,Medium,Hotel kitchen point million.,2024-10-10 06:07:00,2024-06-30 07:49:00,Closed,6
+199,Policy Violation,IDS,Critical,Grow particular free Mr reality court firm.,2024-03-24 05:13:00,2025-02-01 22:30:00,Closed,40
+200,Anomalous Login,IDS,Medium,Our area young size.,2024-11-18 02:11:00,,Closed,83
+201,Malware,IDS,Medium,Factor audience since dream game.,2024-02-27 15:53:00,,Investigating,66
+202,Intrusion Detection,WAF,Critical,Yet long the series.,2024-10-24 19:37:00,2024-11-13 12:51:00,Investigating,62
+203,Data Exfiltration,SIEM,Critical,Generation fire yeah tax.,2024-12-13 01:01:00,2025-01-23 23:41:00,Closed,68
+204,Anomalous Login,IDS,Medium,Newspaper step four know.,2024-10-26 02:16:00,,Acknowledged,18
+205,Data Exfiltration,SIEM,Medium,Whose late ago lay president window paper step.,2025-01-24 19:06:00,2024-10-10 06:02:00,Closed,17
+206,Malware,SIEM,High,Decide soldier hospital tell.,2024-11-15 06:32:00,2024-09-30 17:58:00,New,24
+207,Policy Violation,EDR,Medium,During cultural hundred fast give write.,2024-06-10 22:24:00,2024-10-25 15:09:00,Closed,88
+208,Intrusion Detection,IDS,Low,Which each reason scene right.,2024-04-07 13:56:00,2024-04-03 19:30:00,Closed,43
+209,Data Exfiltration,DLP,Low,Spring because beyond front.,2024-09-21 17:25:00,2025-01-18 02:40:00,Investigating,77
+210,Anomalous Login,DLP,Medium,Recently later shoulder other factor.,2025-01-21 12:56:00,2024-03-25 07:52:00,Closed,51
+211,Intrusion Detection,SIEM,Medium,Protect group number system large amount believe source.,2024-06-05 07:16:00,2024-04-25 06:31:00,Closed,92
+212,Intrusion Detection,EDR,Medium,Growth mouth rise.,2024-01-01 14:43:00,2024-10-31 23:13:00,Acknowledged,19
+213,Malware,DLP,Low,Necessary cost attack entire type form.,2024-10-12 06:20:00,,Acknowledged,1
+214,Anomalous Login,IDS,Medium,Home trial cover how likely member.,2024-05-04 09:19:00,2024-02-02 05:07:00,Closed,55
+215,Policy Violation,SIEM,Medium,Join its information system feel.,2024-08-24 18:12:00,2024-07-18 18:59:00,Closed,4
+216,Data Exfiltration,DLP,Medium,Rest today meet bring product.,2024-03-19 17:29:00,2024-01-09 22:30:00,Investigating,43
+217,Policy Violation,DLP,Low,Seem six teacher seven north.,2024-07-27 05:57:00,,Closed,50
+218,Intrusion Detection,EDR,High,Help report age.,2024-02-02 19:18:00,2024-07-29 22:31:00,Investigating,49
+219,Policy Violation,IDS,Medium,Test oil chair particular.,2024-04-13 07:05:00,2024-12-16 07:12:00,Acknowledged,70
+220,Malware,EDR,Medium,Series become stop entire.,2024-01-15 19:46:00,2024-05-04 04:55:00,Closed,21
+221,Intrusion Detection,SIEM,Medium,Whatever politics social game issue.,2024-06-28 22:03:00,2024-06-30 20:10:00,New,16
+222,Policy Violation,WAF,Critical,Must college office scene me care budget.,2024-12-01 04:07:00,2025-01-12 12:20:00,Investigating,78
+223,Policy Violation,DLP,Low,Use democratic character option.,2024-07-20 18:02:00,2024-06-23 05:10:00,Closed,8
+224,Anomalous Login,IDS,Low,Court series will they true bit thousand.,2024-12-06 02:18:00,,New,47
+225,Anomalous Login,WAF,Medium,Perform vote majority international its would.,2024-05-21 23:23:00,2024-08-22 04:03:00,New,3
+226,Anomalous Login,SIEM,Low,Rich with mention wear.,2024-09-20 01:16:00,2024-11-15 11:17:00,Acknowledged,43
+227,Malware,IDS,High,Financial whom air.,2024-10-02 18:38:00,2024-12-10 04:09:00,Investigating,21
+228,Policy Violation,EDR,Medium,Radio recent thank minute bad red.,2024-04-17 17:24:00,2024-02-02 13:49:00,New,5
+229,Data Exfiltration,DLP,Medium,Budget than ever truth indicate.,2025-01-06 11:00:00,2024-10-06 11:16:00,Closed,76
+230,Intrusion Detection,EDR,Low,Management cultural bill think build worry.,2024-11-10 23:22:00,2024-02-02 18:55:00,Investigating,61
+231,Malware,SIEM,Low,Off people school position candidate.,2025-01-29 15:54:00,2025-01-23 19:17:00,Closed,1
+232,Malware,WAF,Low,Serve listen save blue.,2024-12-05 15:43:00,2024-05-22 07:33:00,Closed,25
+233,Policy Violation,SIEM,Medium,Successful year perform price own at.,2024-04-13 08:13:00,2024-06-21 20:54:00,Closed,24
+234,Data Exfiltration,WAF,Medium,Fall majority indicate west notice adult.,2024-03-04 11:00:00,2024-09-29 16:22:00,New,7
+235,Malware,DLP,Medium,Within few play skill agent now.,2024-11-12 01:56:00,2024-08-01 11:58:00,Closed,69
+236,Intrusion Detection,WAF,Low,Three would inside.,2024-09-12 07:23:00,2024-08-14 09:09:00,Closed,5
+237,Anomalous Login,DLP,Medium,Add series future word product wrong indicate.,2024-10-17 03:21:00,,Closed,1
+238,Policy Violation,SIEM,Medium,His decision federal place work pretty thus manage.,2024-08-28 02:46:00,2024-09-30 07:31:00,Closed,6
+239,Intrusion Detection,IDS,Medium,Arrive sure increase watch.,2024-04-06 23:56:00,2024-04-24 14:40:00,Closed,29
+240,Anomalous Login,DLP,Low,Cultural cut piece window ahead determine.,2025-01-26 18:18:00,2024-12-13 02:16:00,Acknowledged,20
+241,Anomalous Login,DLP,Medium,Whole seat until quality young national.,2024-10-24 08:49:00,2024-10-30 04:08:00,Closed,73
+242,Malware,DLP,Medium,Positive read why admit son yes many.,2024-06-19 23:54:00,,Closed,62
+243,Anomalous Login,DLP,Low,In necessary red follow word.,2024-01-27 13:45:00,2024-07-19 14:53:00,Closed,31
+244,Data Exfiltration,SIEM,High,Raise now decision response.,2024-04-11 19:24:00,2024-09-09 23:26:00,Closed,59
+245,Intrusion Detection,IDS,High,Successful throughout police.,2024-08-22 07:36:00,,Acknowledged,27
+246,Intrusion Detection,WAF,Low,Series public site between treatment not hard.,2024-07-09 00:46:00,2025-01-04 15:03:00,Acknowledged,55
+247,Data Exfiltration,SIEM,Medium,Better ability message simply available how shoulder.,2024-10-16 01:11:00,2024-01-21 14:35:00,Closed,21
+248,Intrusion Detection,WAF,Critical,Key ago test worker choice word trial.,2024-06-06 22:37:00,,Closed,84
+249,Policy Violation,IDS,Low,Put sure her themselves amount reason.,2024-08-02 10:03:00,,Closed,73
+250,Intrusion Detection,EDR,Medium,Paper certain add you method.,2024-04-11 09:13:00,2024-08-18 03:51:00,Closed,27
+251,Anomalous Login,SIEM,High,Only central similar skin stock foot method.,2024-06-29 22:38:00,,Closed,96
+252,Anomalous Login,WAF,Medium,Participant standard name court agency.,2024-08-04 04:00:00,2024-09-22 16:56:00,Closed,91
+253,Malware,WAF,Low,Likely seem check happy necessary never note.,2024-06-28 15:50:00,,Closed,3
+254,Data Exfiltration,DLP,High,Mind day article edge learn.,2025-01-24 09:53:00,2024-02-26 04:15:00,Investigating,60
+255,Malware,EDR,Medium,Back country window reveal give president under.,2024-09-08 04:19:00,2024-05-27 19:12:00,Closed,59
+256,Data Exfiltration,IDS,Low,Floor season network.,2025-01-04 06:04:00,,Investigating,45
+257,Data Exfiltration,SIEM,Medium,Report remember avoid these able.,2024-10-25 18:05:00,2024-06-26 09:42:00,Closed,39
+258,Intrusion Detection,WAF,Medium,Method group rock board sure.,2024-07-08 17:08:00,2024-08-06 10:34:00,Closed,35
+259,Data Exfiltration,SIEM,Low,Radio program media billion.,2024-08-07 00:05:00,2024-10-07 01:16:00,Closed,35
+260,Malware,WAF,Medium,Expect foot five this record history follow guess.,2024-05-27 22:24:00,2024-01-31 11:18:00,Closed,87
+261,Data Exfiltration,IDS,Medium,Even big choice which.,2024-05-20 02:20:00,2024-06-09 06:42:00,Closed,31
+262,Data Exfiltration,WAF,High,My article treat around course can four.,2024-04-21 23:38:00,2024-03-23 22:52:00,Closed,9
+263,Anomalous Login,WAF,Low,Eight many issue book those film wide church.,2024-08-05 16:22:00,,Closed,100
+264,Data Exfiltration,IDS,Medium,Out see up.,2025-01-08 16:54:00,2024-10-28 20:57:00,Closed,86
+265,Malware,DLP,Low,Use in baby but.,2024-09-06 08:02:00,2024-07-05 22:20:00,Acknowledged,98
+266,Policy Violation,EDR,Low,You nor might true suddenly art.,2024-12-05 01:52:00,2024-04-23 20:23:00,Acknowledged,19
+267,Anomalous Login,EDR,Medium,Ask report despite receive.,2024-07-28 16:34:00,2024-05-06 06:20:00,New,51
+268,Intrusion Detection,WAF,Medium,Information often high word.,2024-09-24 13:25:00,2024-08-20 06:50:00,Closed,69
+269,Data Exfiltration,DLP,Low,Would practice town cost nature positive worker court.,2024-07-16 14:06:00,2025-01-01 14:06:00,Closed,24
+270,Intrusion Detection,DLP,Medium,Film fall film hotel college soon against.,2024-04-28 05:45:00,2024-08-30 05:10:00,Closed,52
+271,Data Exfiltration,IDS,High,Enough owner argue wonder mention yet room.,2024-04-19 05:54:00,2024-11-21 00:29:00,Investigating,94
+272,Data Exfiltration,DLP,High,Garden party account.,2024-10-14 02:36:00,2024-08-29 14:18:00,Closed,57
+273,Data Exfiltration,DLP,Medium,Class political job discuss charge.,2025-01-15 19:02:00,,Closed,10
+274,Intrusion Detection,DLP,Medium,Man beat record make level well business.,2024-05-03 23:03:00,2024-03-14 09:54:00,Closed,6
+275,Intrusion Detection,EDR,Medium,Strategy head bag.,2024-09-29 15:55:00,2025-01-11 01:33:00,Closed,56
+276,Intrusion Detection,WAF,Low,Scientist toward occur security see base.,2025-01-25 04:10:00,2024-11-23 01:02:00,Closed,52
+277,Intrusion Detection,WAF,Medium,From necessary or responsibility so cold.,2024-06-28 06:48:00,2024-04-02 19:21:00,New,50
+278,Anomalous Login,WAF,Critical,Eight phone cell benefit cup necessary.,2024-02-16 11:51:00,2024-07-22 13:00:00,Closed,69
+279,Policy Violation,DLP,Low,Enough modern unit prove.,2024-07-17 10:32:00,2024-01-25 18:32:00,Closed,56
+280,Data Exfiltration,EDR,Low,Movement production against choice away upon writer.,2025-01-12 02:54:00,2024-01-09 15:45:00,Closed,47
+281,Data Exfiltration,WAF,Low,Fire blood possible rest certainly fine.,2024-10-02 11:29:00,2024-08-16 02:18:00,Investigating,22
+282,Anomalous Login,SIEM,Low,Subject middle book write blood guy.,2025-01-17 21:37:00,,Closed,74
+283,Intrusion Detection,EDR,Low,Case health art art catch sure.,2024-10-20 00:18:00,,Closed,94
+284,Anomalous Login,EDR,High,Administration break decision example few.,2024-10-10 03:50:00,2024-08-04 18:14:00,Investigating,71
+285,Malware,WAF,Low,Continue example let long question.,2024-01-17 01:50:00,2024-09-19 13:44:00,Closed,83
+286,Policy Violation,IDS,High,Who he professional.,2025-01-10 07:59:00,2024-11-04 04:01:00,Investigating,69
+287,Intrusion Detection,WAF,Low,Catch card long listen wall camera apply figure.,2024-10-26 13:39:00,2024-03-20 19:02:00,Closed,49
+288,Anomalous Login,IDS,Medium,Human various list on whom view receive.,2024-10-13 21:57:00,2024-03-20 16:09:00,Acknowledged,55
+289,Malware,DLP,High,Idea option possible figure as girl.,2025-01-02 07:56:00,2024-09-17 23:32:00,Closed,57
+290,Intrusion Detection,EDR,High,Real skill peace herself collection language idea.,2024-07-22 16:12:00,2024-11-16 07:56:00,Investigating,67
+291,Data Exfiltration,WAF,Low,North media watch kitchen treat.,2024-10-19 03:18:00,2024-06-09 10:19:00,Acknowledged,84
+292,Anomalous Login,EDR,Medium,Tell material answer we green contain animal at.,2024-10-26 04:50:00,2024-09-23 10:43:00,Acknowledged,87
+293,Policy Violation,WAF,Medium,Sport win rule central what hard now.,2024-11-21 15:23:00,2024-05-11 00:35:00,Acknowledged,13
+294,Anomalous Login,DLP,Low,Dog response catch shake beat.,2024-10-14 06:37:00,2024-07-24 01:21:00,Closed,85
+295,Malware,WAF,Low,Discussion born time wear issue.,2024-03-22 18:06:00,2024-10-18 11:01:00,Closed,96
+296,Intrusion Detection,WAF,High,School perform professor film film there.,2024-09-14 11:18:00,2024-03-16 18:02:00,Investigating,68
+297,Policy Violation,EDR,Medium,Main maintain born you southern oil today social.,2024-11-28 23:52:00,2025-01-23 19:54:00,Investigating,23
+298,Anomalous Login,DLP,Medium,Have nation law dream.,2024-08-22 05:24:00,2024-02-15 19:40:00,Acknowledged,23
+299,Malware,DLP,Critical,Trial manager focus hard.,2024-01-24 16:49:00,2024-12-26 07:14:00,Investigating,40
+300,Malware,EDR,Medium,Husband consider feeling decision thank rich few.,2024-12-16 11:44:00,2024-11-18 21:35:00,Closed,65
+301,Malware,EDR,High,Mrs woman represent scientist surface land speech.,2024-11-12 01:46:00,2024-12-01 11:51:00,Closed,73
+302,Malware,WAF,Low,Positive market ten mind age position least.,2024-12-26 11:25:00,2024-10-10 11:24:00,Closed,45
+303,Malware,SIEM,Low,Attack window suddenly more.,2024-11-05 22:15:00,2024-06-30 20:27:00,Closed,95
+304,Malware,DLP,High,Fill any choose maintain employee meeting eight everybody.,2024-12-02 14:34:00,2024-07-24 17:04:00,Closed,31
+305,Intrusion Detection,EDR,High,Kid stay image into appear.,2024-03-08 00:16:00,2024-06-08 19:48:00,Closed,29
+306,Policy Violation,WAF,Low,Much however your learn build.,2024-08-08 16:16:00,2024-12-04 16:16:00,Closed,6
+307,Intrusion Detection,WAF,Medium,Away attack collection majority key detail statement.,2024-01-22 20:54:00,2025-01-09 05:39:00,Closed,49
+308,Policy Violation,DLP,Medium,Explain individual win scientist heart by time.,2025-01-31 03:44:00,2025-01-28 23:19:00,Investigating,90
+309,Data Exfiltration,IDS,Medium,Politics policy political stop tough.,2024-09-28 05:40:00,2024-07-02 03:40:00,Investigating,96
+310,Data Exfiltration,EDR,High,Fish many talk building.,2024-01-01 02:39:00,2024-10-02 09:43:00,Investigating,40
+311,Data Exfiltration,WAF,Low,Social everyone should plan gas.,2024-07-01 02:23:00,2024-06-09 13:24:00,Acknowledged,67
+312,Anomalous Login,IDS,Medium,Others PM air least situation article.,2024-04-22 01:11:00,2024-07-27 15:12:00,Closed,1
+313,Anomalous Login,WAF,Medium,Politics strategy piece health why agree.,2025-01-12 15:51:00,2024-05-05 19:03:00,New,27
+314,Policy Violation,EDR,Low,Author cultural simply.,2024-01-30 07:44:00,2024-01-29 03:03:00,Acknowledged,38
+315,Policy Violation,SIEM,High,Bit likely which onto board.,2024-06-17 10:38:00,,Investigating,68
+316,Policy Violation,WAF,Low,Offer never high real.,2024-03-05 06:40:00,2024-11-30 07:47:00,New,29
+317,Data Exfiltration,WAF,Medium,Appear hand small trip class.,2024-05-05 05:32:00,2024-02-20 12:26:00,Closed,17
+318,Data Exfiltration,DLP,Low,Marriage eye mother issue.,2024-02-26 20:47:00,2024-11-30 09:36:00,Closed,25
+319,Malware,DLP,Low,Type idea tree service.,2024-12-13 06:10:00,2024-08-21 20:58:00,Investigating,40
+320,Anomalous Login,WAF,Medium,Democratic film measure career child.,2024-07-08 17:14:00,2024-02-09 01:45:00,Acknowledged,94
+321,Data Exfiltration,WAF,Medium,Camera every about fall.,2024-08-20 19:27:00,2024-12-26 13:07:00,Acknowledged,1
+322,Intrusion Detection,EDR,Medium,Image leader heavy choose article stock rather.,2024-05-28 03:56:00,,Closed,96
+323,Data Exfiltration,DLP,Medium,Message information performance later discussion.,2024-01-11 13:14:00,2024-07-22 12:04:00,Closed,34
+324,Anomalous Login,DLP,Medium,Hear area draw claim.,2024-07-18 10:37:00,2024-11-14 07:53:00,New,28
+325,Intrusion Detection,SIEM,Medium,Same garden result wrong.,2024-08-23 03:27:00,2024-10-17 23:38:00,Investigating,73
+326,Intrusion Detection,DLP,Low,Smile arrive run institution girl.,2024-06-16 12:35:00,2024-08-29 09:41:00,Closed,37
+327,Data Exfiltration,EDR,Medium,Throw home pick pull should from.,2025-01-09 04:53:00,2024-09-25 15:21:00,Investigating,3
+328,Data Exfiltration,EDR,Medium,Mind evening goal design economic trade authority.,2024-12-29 04:54:00,2024-06-20 17:22:00,Acknowledged,64
+329,Intrusion Detection,IDS,Critical,Song some quality.,2024-06-28 19:48:00,2024-02-25 17:41:00,Closed,15
+330,Anomalous Login,EDR,High,Mrs heart identify.,2024-04-17 06:18:00,2024-02-20 05:12:00,Closed,89
+331,Intrusion Detection,EDR,Critical,Father way in.,2024-04-16 07:30:00,2024-09-05 15:42:00,Closed,33
+332,Data Exfiltration,EDR,Low,Watch benefit guy recent store.,2024-08-10 15:15:00,2024-11-06 13:46:00,New,7
+333,Malware,IDS,Critical,Buy heavy opportunity condition office agree.,2024-07-21 07:04:00,2024-11-18 22:30:00,Closed,60
+334,Intrusion Detection,IDS,Low,Involve doctor we quickly deep together conference.,2024-10-09 01:19:00,2024-03-05 08:53:00,Closed,49
+335,Data Exfiltration,SIEM,Low,Step top describe so and lay collection.,2024-09-06 05:38:00,2024-11-13 16:50:00,Closed,44
+336,Malware,EDR,Medium,No effect use our.,2024-06-26 12:33:00,2024-04-25 09:52:00,Closed,83
+337,Malware,WAF,Medium,Tree not safe main fall must.,2024-09-26 19:12:00,2024-09-25 08:40:00,Acknowledged,28
+338,Malware,WAF,High,Almost main hot though political property.,2024-05-16 16:36:00,2024-01-03 00:52:00,New,77
+339,Intrusion Detection,DLP,Low,Late degree me themselves arm billion southern.,2024-10-12 15:51:00,2024-12-11 21:41:00,New,85
+340,Anomalous Login,WAF,High,Present common various.,2024-04-16 05:55:00,2024-02-01 21:25:00,Closed,26
+341,Malware,DLP,Medium,War morning hair whole.,2024-12-03 07:17:00,,Acknowledged,100
+342,Anomalous Login,EDR,Low,Decision management analysis expert.,2024-12-20 23:59:00,2024-02-24 08:59:00,Investigating,8
+343,Data Exfiltration,IDS,Low,Soon huge drug cost everything race human.,2024-01-27 00:11:00,,Closed,1
+344,Intrusion Detection,WAF,Medium,Important everything body various college.,2024-09-02 21:42:00,2024-06-16 11:23:00,New,37
+345,Anomalous Login,WAF,Low,How season foot financial.,2024-03-29 00:48:00,2024-07-23 19:38:00,Closed,43
+346,Data Exfiltration,EDR,High,One cultural onto light car thousand fear.,2024-09-21 01:59:00,2024-11-07 18:55:00,Closed,14
+347,Malware,SIEM,High,Back history stop serious find protect.,2024-01-27 05:04:00,2024-12-16 12:17:00,Closed,11
+348,Intrusion Detection,WAF,Low,Anyone whole tax product.,2024-03-12 16:39:00,2024-08-14 18:41:00,Closed,91
+349,Intrusion Detection,DLP,High,Enjoy bar security serious enter majority.,2024-12-12 11:20:00,2024-08-27 17:49:00,Investigating,92
+350,Malware,SIEM,Medium,Cold produce learn.,2024-09-19 22:47:00,2024-01-11 21:03:00,Acknowledged,58
+351,Data Exfiltration,DLP,High,Form day including.,2024-01-17 22:55:00,2025-01-18 01:29:00,Acknowledged,97
+352,Data Exfiltration,DLP,Low,Down later cost send.,2024-11-15 23:00:00,2024-09-17 11:55:00,Acknowledged,100
+353,Policy Violation,EDR,Medium,Property sign word speak act Mr.,2024-01-19 23:33:00,2024-08-07 09:27:00,Closed,24
+354,Anomalous Login,IDS,Low,Their be or treat floor hotel.,2024-02-26 07:16:00,2024-10-15 19:47:00,Acknowledged,43
+355,Anomalous Login,EDR,Medium,Compare control identify painting set.,2024-10-19 11:55:00,2024-11-11 04:05:00,Investigating,63
+356,Malware,IDS,Low,Sport meet box girl.,2025-01-15 07:19:00,,Closed,71
+357,Data Exfiltration,DLP,Medium,Race condition whose baby.,2024-07-03 14:12:00,2024-05-02 20:53:00,Closed,78
+358,Policy Violation,EDR,High,Fact cause certainly they parent under east either.,2024-05-18 23:24:00,2024-10-28 12:31:00,Investigating,98
+359,Intrusion Detection,IDS,Medium,Kitchen so long up beautiful if quickly.,2024-08-22 07:26:00,2024-10-16 22:26:00,Investigating,8
+360,Malware,EDR,Medium,Civil election trial hair.,2024-09-20 14:48:00,2024-03-09 19:04:00,Acknowledged,92
+361,Malware,SIEM,Medium,Together minute television dog item matter nice.,2024-02-14 02:43:00,2024-01-17 02:09:00,Closed,46
+362,Anomalous Login,SIEM,Critical,Young executive message run sort.,2024-08-30 20:49:00,2024-03-24 04:20:00,Closed,95
+363,Data Exfiltration,WAF,Medium,Memory hot player goal play consumer home.,2024-05-18 02:33:00,2024-05-15 04:38:00,Investigating,71
+364,Policy Violation,SIEM,Medium,Image popular age war loss hard from.,2024-11-22 21:49:00,,Closed,42
+365,Policy Violation,SIEM,Low,Agent cost central.,2024-11-18 12:52:00,2024-10-14 08:15:00,Closed,82
+366,Policy Violation,EDR,Medium,Add cut important sport exactly them.,2024-09-04 19:22:00,2024-03-26 21:53:00,Acknowledged,39
+367,Data Exfiltration,SIEM,High,Choice along thus laugh beautiful center born source.,2024-05-19 13:08:00,2024-08-16 15:09:00,Closed,1
+368,Policy Violation,SIEM,Medium,Last computer still direction compare.,2024-10-29 09:34:00,2024-06-12 11:12:00,Closed,11
+369,Intrusion Detection,WAF,Medium,Rate writer reflect performance.,2024-07-21 02:11:00,2024-02-23 12:17:00,Acknowledged,24
+370,Intrusion Detection,DLP,Low,Foreign citizen statement scientist call east rock.,2024-07-22 06:55:00,2024-06-12 17:52:00,Closed,59
+371,Policy Violation,IDS,Low,Vote room the member center.,2024-03-14 19:21:00,2024-08-05 00:53:00,Acknowledged,73
+372,Policy Violation,DLP,Low,Ahead likely sometimes middle site.,2024-12-06 17:38:00,2024-07-04 20:10:00,Acknowledged,18
+373,Anomalous Login,WAF,Low,Stock particularly bit travel indicate away may operation.,2024-05-31 03:39:00,2025-01-29 18:05:00,Investigating,35
+374,Data Exfiltration,SIEM,Medium,Standard air move rich enjoy person discuss.,2024-10-31 17:53:00,2024-08-22 10:35:00,Acknowledged,58
+375,Malware,EDR,Low,Join yet sing forget.,2024-04-01 06:11:00,2024-01-17 00:11:00,Closed,5
+376,Malware,SIEM,Low,Control grow else hope.,2024-06-05 09:47:00,2025-01-25 22:07:00,New,15
+377,Intrusion Detection,SIEM,Low,Something ready represent machine continue.,2025-01-21 00:49:00,,Investigating,81
+378,Data Exfiltration,SIEM,Low,Big firm give certainly.,2024-12-03 23:36:00,2024-07-14 21:59:00,Closed,99
+379,Data Exfiltration,IDS,Low,Since hot tend.,2024-04-01 17:33:00,2024-03-08 20:37:00,Closed,68
+380,Malware,WAF,Medium,Since control usually kind gun.,2024-02-09 05:10:00,,New,27
+381,Intrusion Detection,DLP,Medium,Relate house spring writer.,2024-09-01 10:45:00,2024-04-03 16:13:00,Investigating,49
+382,Data Exfiltration,EDR,Low,Instead national community where.,2024-07-14 12:14:00,2024-07-21 07:47:00,Closed,58
+383,Malware,IDS,Low,Situation these different ok international return we wear.,2024-06-20 08:58:00,2025-01-25 23:17:00,New,68
+384,Policy Violation,SIEM,Medium,Food chance offer house fight where assume.,2024-12-29 19:06:00,,Closed,44
+385,Data Exfiltration,DLP,Low,Mention defense to probably.,2024-07-14 03:21:00,2024-07-08 11:50:00,Acknowledged,10
+386,Malware,EDR,Medium,Choice say budget report Mr wind form.,2024-10-19 05:55:00,2024-08-23 12:26:00,Closed,67
+387,Policy Violation,DLP,Low,Team simple visit item reason tax.,2024-07-27 16:16:00,,Closed,43
+388,Policy Violation,EDR,Medium,You skin wide leader scene inside.,2024-07-17 12:40:00,,Investigating,77
+389,Data Exfiltration,IDS,Low,Great peace sell away when here.,2024-08-23 17:30:00,2024-02-12 16:44:00,Closed,45
+390,Data Exfiltration,SIEM,Medium,One image scientist case her work.,2024-03-02 01:37:00,,Investigating,26
+391,Anomalous Login,IDS,Medium,Remember society girl bit eye late above.,2024-08-02 09:13:00,,Acknowledged,82
+392,Policy Violation,EDR,High,Culture quite wind father billion.,2024-03-18 02:47:00,2024-05-15 04:03:00,Closed,7
+393,Policy Violation,SIEM,Low,Choice culture marriage light even too.,2024-10-02 14:43:00,2024-07-13 19:28:00,Acknowledged,1
+394,Policy Violation,DLP,Medium,Congress better control feeling.,2024-09-27 21:07:00,2024-01-11 03:55:00,New,48
+395,Malware,SIEM,High,Special soldier success court.,2024-05-12 15:26:00,2024-12-29 06:38:00,Closed,52
+396,Anomalous Login,WAF,Medium,Begin run soon office true either daughter.,2025-01-04 19:00:00,2024-05-25 04:44:00,Closed,32
+397,Anomalous Login,SIEM,High,Force all computer up music rock force.,2024-03-02 06:40:00,2024-11-30 21:03:00,Acknowledged,99
+398,Malware,DLP,High,Save dog listen agency finish save follow.,2024-10-18 02:19:00,2024-08-25 07:58:00,Acknowledged,12
+399,Intrusion Detection,WAF,Critical,Fish interview cut public far.,2024-10-25 12:09:00,,Closed,84
+400,Anomalous Login,DLP,Critical,Assume keep back purpose plan.,2024-09-22 13:50:00,2024-12-17 18:06:00,Closed,79
+401,Anomalous Login,WAF,High,Throw herself upon crime.,2025-01-25 06:51:00,2024-09-14 20:26:00,Investigating,51
+402,Intrusion Detection,EDR,Low,End physical reduce the tend deep.,2024-09-29 20:25:00,2024-02-28 05:39:00,New,43
+403,Policy Violation,IDS,Medium,War coach few machine improve number cell.,2024-02-27 03:59:00,2024-11-15 03:40:00,Investigating,25
+404,Data Exfiltration,EDR,Medium,Allow type card water.,2024-06-14 18:57:00,2024-12-22 17:10:00,Closed,77
+405,Malware,DLP,Medium,Total effort significant reach community mention field leave.,2024-08-20 17:12:00,2024-02-23 13:59:00,Closed,78
+406,Malware,IDS,Low,Individual west woman series professional method be.,2024-11-27 13:06:00,2024-01-24 14:11:00,Investigating,55
+407,Data Exfiltration,SIEM,Medium,Hard fall painting blood.,2024-12-09 10:24:00,2024-08-09 23:22:00,Closed,69
+408,Intrusion Detection,WAF,Medium,Focus role full customer turn.,2024-05-24 11:51:00,2024-01-12 04:32:00,Closed,36
+409,Intrusion Detection,IDS,Low,Book development letter fact history issue.,2024-02-21 01:05:00,2025-01-28 21:11:00,Acknowledged,60
+410,Intrusion Detection,IDS,Low,Step five drop laugh after sell.,2024-07-19 18:43:00,,Closed,15
+411,Anomalous Login,WAF,High,Him back marriage employee about.,2024-06-23 05:42:00,2024-02-19 22:13:00,Investigating,88
+412,Malware,EDR,High,Send take white source company law more she.,2024-06-01 06:50:00,2024-08-06 20:34:00,Closed,91
+413,Intrusion Detection,SIEM,Medium,Task production hold show cell.,2024-12-27 11:45:00,2024-02-09 10:53:00,Closed,99
+414,Malware,EDR,Medium,International worry take evening never college crime pattern.,2024-11-30 21:07:00,2024-11-12 02:43:00,Closed,68
+415,Malware,EDR,High,Population threat necessary those.,2024-08-11 23:54:00,2024-09-05 11:44:00,Closed,72
+416,Intrusion Detection,SIEM,Low,Finish ready next real man election thousand.,2024-07-30 05:10:00,2024-02-13 22:09:00,Acknowledged,22
+417,Intrusion Detection,WAF,Medium,Parent century hair east.,2024-12-26 04:50:00,2024-01-29 10:27:00,Closed,5
+418,Intrusion Detection,WAF,High,Laugh friend son employee.,2024-05-16 11:17:00,2024-02-18 22:11:00,Closed,44
+419,Intrusion Detection,WAF,High,Its far doctor suffer.,2025-01-19 22:49:00,2024-05-22 02:41:00,Closed,4
+420,Malware,IDS,Medium,Any owner letter suddenly live.,2024-10-05 07:42:00,,Investigating,44
+421,Malware,IDS,Low,Generation industry open arm family.,2025-01-10 22:38:00,2024-04-09 18:10:00,Closed,8
+422,Policy Violation,SIEM,Low,Can value sell pattern hot.,2024-03-23 08:03:00,2024-08-19 05:43:00,Closed,86
+423,Intrusion Detection,IDS,High,Quality argue meeting position civil sense.,2024-08-19 17:47:00,2024-06-13 09:41:00,Acknowledged,1
+424,Malware,SIEM,Medium,Couple wait chance people.,2024-06-02 10:21:00,2024-12-23 13:12:00,Closed,73
+425,Intrusion Detection,EDR,Low,Main democratic statement final value movie.,2025-01-03 07:07:00,2024-10-12 04:01:00,Closed,67
+426,Anomalous Login,IDS,Low,Pay blue paper think letter easy.,2024-06-19 07:08:00,2024-07-19 20:06:00,Closed,39
+427,Intrusion Detection,DLP,High,Memory hot song offer center Republican.,2024-08-22 03:12:00,2024-08-20 21:16:00,Closed,5
+428,Malware,SIEM,Low,Dinner realize cultural if me.,2024-07-03 07:06:00,,Closed,39
+429,Policy Violation,WAF,Medium,Baby speech whole join.,2024-08-10 22:40:00,2024-05-24 06:39:00,Acknowledged,24
+430,Data Exfiltration,SIEM,Medium,Whole garden serious girl crime.,2024-06-21 01:38:00,2024-05-21 00:33:00,Closed,39
+431,Anomalous Login,SIEM,High,Understand southern interesting nothing past.,2024-02-18 20:39:00,2024-10-03 20:30:00,New,44
+432,Malware,WAF,High,Sing campaign enough including site article off.,2024-11-25 05:28:00,2024-03-11 10:35:00,Investigating,74
+433,Data Exfiltration,IDS,Low,Region minute foot physical building oil red.,2024-01-14 04:37:00,2024-04-20 21:57:00,Closed,44
+434,Anomalous Login,WAF,Low,Federal despite fine not budget city author education.,2024-11-18 16:56:00,2024-05-14 14:26:00,Closed,18
+435,Policy Violation,WAF,Medium,Often leg hope.,2024-12-16 17:56:00,2024-03-22 08:30:00,Closed,55
+436,Intrusion Detection,SIEM,Medium,Travel nearly weight manager almost.,2024-05-14 07:32:00,2024-07-09 00:26:00,Closed,62
+437,Anomalous Login,EDR,Medium,Way have seat.,2024-08-05 17:42:00,2024-03-04 14:17:00,Closed,79
+438,Anomalous Login,EDR,High,Pm let up after happy TV issue.,2025-01-29 17:00:00,2024-09-07 19:27:00,Closed,27
+439,Malware,SIEM,Medium,Anyone laugh who thing now.,2024-01-02 18:07:00,,Closed,83
+440,Policy Violation,WAF,Low,Major baby population old house pretty short whom.,2024-12-09 09:38:00,2024-12-20 22:25:00,Investigating,49
+441,Anomalous Login,DLP,Medium,Perform executive maintain step.,2024-11-10 23:19:00,2024-02-08 21:19:00,Closed,69
+442,Anomalous Login,WAF,Critical,Exactly source bill risk evening.,2025-01-07 08:01:00,2024-10-31 21:47:00,Closed,94
+443,Malware,WAF,High,Material message nor cause.,2024-04-17 12:39:00,2024-03-06 22:23:00,Closed,67
+444,Anomalous Login,EDR,Low,Century fish serious decision agreement conference read and.,2024-04-02 11:04:00,2024-03-01 04:52:00,Closed,42
+445,Anomalous Login,SIEM,High,Fight either purpose suffer.,2024-11-06 22:23:00,2024-10-17 16:52:00,Closed,78
+446,Policy Violation,IDS,High,Pay area girl have.,2024-04-08 15:02:00,2024-02-05 01:22:00,Acknowledged,31
+447,Anomalous Login,DLP,Medium,Drive mean reason agreement.,2024-05-04 06:03:00,,Closed,57
+448,Anomalous Login,SIEM,Medium,Whether manager lose show finish up executive carry.,2024-09-02 02:16:00,2024-09-03 14:35:00,New,51
+449,Intrusion Detection,IDS,Low,Discussion decision want since surface newspaper.,2025-01-30 01:04:00,2024-02-25 05:40:00,Closed,61
+450,Intrusion Detection,EDR,Medium,This term garden number among.,2024-10-22 22:43:00,2024-01-11 22:01:00,Closed,94
+451,Anomalous Login,IDS,Medium,No society next far decade.,2025-01-31 22:13:00,2024-05-05 05:25:00,New,67
+452,Anomalous Login,WAF,Medium,Instead any product smile.,2024-01-06 12:38:00,2024-05-02 15:06:00,Closed,86
+453,Malware,SIEM,Medium,Source American hand season during.,2024-06-11 23:49:00,2024-10-03 08:07:00,Acknowledged,29
+454,Intrusion Detection,SIEM,Medium,Until budget magazine low this.,2024-04-09 17:06:00,2024-03-04 16:49:00,New,99
+455,Anomalous Login,DLP,Low,Data responsibility prepare very remember.,2024-12-12 13:13:00,2024-01-22 21:10:00,Closed,7
+456,Intrusion Detection,IDS,High,Whatever region trouble.,2024-01-03 00:42:00,2024-06-23 17:01:00,Closed,68
+457,Malware,WAF,Low,Book rest charge wish personal most begin.,2024-08-07 13:48:00,2024-10-11 01:55:00,Investigating,19
+458,Policy Violation,EDR,Critical,Provide this professor notice which attack.,2024-09-29 17:46:00,2024-04-25 13:30:00,Closed,10
+459,Data Exfiltration,WAF,Medium,Leave play minute push product station.,2024-05-19 15:14:00,2024-07-05 05:41:00,Acknowledged,38
+460,Intrusion Detection,DLP,Medium,Sort upon child thank truth news thought.,2024-12-01 08:44:00,2024-02-24 16:34:00,Acknowledged,30
+461,Intrusion Detection,SIEM,High,Quite travel side cell style soldier last.,2025-01-28 05:29:00,2024-01-18 21:20:00,Investigating,86
+462,Policy Violation,DLP,Medium,Dream group finally process tough paper.,2025-01-07 12:29:00,,Closed,11
+463,Anomalous Login,EDR,High,Give travel later continue hospital.,2025-01-09 09:54:00,2024-09-01 19:48:00,Closed,52
+464,Intrusion Detection,DLP,Medium,Woman reduce class southern professional discuss reflect whose.,2024-11-19 09:15:00,2024-08-11 13:08:00,Investigating,22
+465,Policy Violation,EDR,Low,Arm audience plant performance.,2024-02-14 17:41:00,2024-09-15 10:52:00,Acknowledged,9
+466,Malware,EDR,High,Fly parent own age course.,2024-12-17 06:05:00,2024-05-18 03:00:00,New,89
+467,Anomalous Login,WAF,Medium,Short catch time past past dog.,2025-01-03 18:54:00,2024-12-12 02:44:00,Closed,98
+468,Policy Violation,DLP,Medium,Agency sure lose detail.,2024-06-11 22:15:00,2024-12-02 08:33:00,Closed,59
+469,Malware,SIEM,Medium,Contain himself worry star way far prove.,2024-01-24 06:37:00,2024-12-25 16:45:00,New,9
+470,Data Exfiltration,DLP,High,Realize office hospital past.,2024-10-03 14:16:00,,Investigating,33
+471,Policy Violation,IDS,Low,Dog newspaper natural right.,2024-01-21 14:15:00,2024-12-03 20:23:00,Investigating,17
+472,Intrusion Detection,IDS,Low,Agree ability type word.,2024-03-05 18:16:00,2024-07-08 03:12:00,Closed,77
+473,Policy Violation,DLP,High,Question few final support man center.,2024-11-22 21:33:00,2025-01-21 15:56:00,Closed,87
+474,Intrusion Detection,WAF,Critical,Even hand sometimes statement near wife add.,2024-09-10 07:51:00,,Acknowledged,46
+475,Data Exfiltration,SIEM,Low,Question color reveal later foreign.,2024-04-14 23:37:00,2025-01-16 15:25:00,Investigating,66
+476,Anomalous Login,EDR,Medium,Area general economy to others you drop avoid.,2024-03-23 02:44:00,2024-11-30 10:10:00,Closed,56
+477,Policy Violation,SIEM,Low,Compare reality black appear policy.,2024-12-30 13:37:00,2024-02-22 06:35:00,Closed,99
+478,Malware,EDR,High,Meet attack would training.,2024-09-02 02:44:00,,Closed,3
+479,Malware,IDS,Medium,Law other stage large year this boy issue.,2024-08-22 22:03:00,2025-01-04 04:42:00,Closed,21
+480,Malware,DLP,Low,Argue argue several international until pretty deep.,2024-02-19 20:13:00,2025-01-02 06:28:00,Acknowledged,77
+481,Policy Violation,SIEM,Medium,Someone citizen billion.,2024-07-20 07:10:00,2024-11-30 03:54:00,New,96
+482,Intrusion Detection,EDR,Low,Investment structure performance company town major.,2024-01-23 19:52:00,2024-01-12 13:58:00,Closed,73
+483,Anomalous Login,DLP,High,Civil table degree hair three girl.,2024-09-04 04:42:00,,Closed,37
+484,Data Exfiltration,IDS,Medium,Police water while view.,2024-03-30 14:50:00,2024-05-10 05:22:00,Investigating,99
+485,Data Exfiltration,IDS,High,City oil commercial various for our.,2024-09-10 04:30:00,2024-02-03 04:47:00,Closed,56
+486,Policy Violation,WAF,Medium,To note themselves avoid fear hair decade keep.,2024-12-30 09:25:00,2024-11-06 11:25:00,Acknowledged,22
+487,Data Exfiltration,WAF,Medium,Sense set trade without compare.,2024-11-20 20:03:00,2024-04-27 06:47:00,Closed,93
+488,Intrusion Detection,IDS,High,Very show government into find marriage.,2024-01-03 00:38:00,2024-10-31 17:39:00,Acknowledged,52
+489,Intrusion Detection,EDR,Medium,On together follow market reveal focus.,2024-05-28 07:47:00,2024-10-09 16:06:00,Closed,83
+490,Intrusion Detection,DLP,Medium,Imagine half story how out similar including.,2024-07-23 22:43:00,2024-09-15 22:46:00,Closed,2
+491,Intrusion Detection,SIEM,Low,Ten at hear political fine.,2024-03-05 05:42:00,2024-02-29 23:49:00,New,53
+492,Anomalous Login,DLP,Medium,Them successful include lead.,2025-01-26 15:35:00,2024-09-29 07:14:00,Closed,30
+493,Malware,SIEM,Low,Their interesting help particular pay.,2024-07-02 06:21:00,2024-07-31 10:48:00,Closed,37
+494,Intrusion Detection,IDS,Low,Summer nation size.,2024-09-29 13:52:00,2024-12-14 13:02:00,Closed,10
+495,Data Exfiltration,DLP,Low,Read imagine according weight hope.,2024-02-13 20:04:00,2024-05-26 13:36:00,Closed,12
+496,Policy Violation,DLP,Low,Region standard contain he respond bill central.,2024-06-21 11:58:00,2024-10-20 07:51:00,New,87
+497,Data Exfiltration,EDR,Low,Form teacher picture clear police citizen free.,2024-01-29 20:58:00,,Closed,43
+498,Data Exfiltration,SIEM,Low,Continue simple difference actually.,2024-10-13 17:01:00,2024-02-08 18:13:00,Closed,26
+499,Anomalous Login,DLP,High,Stage return enter star without these care manage.,2025-01-15 23:30:00,2024-04-29 08:19:00,Acknowledged,15
+500,Anomalous Login,DLP,High,Food rest thought family less.,2024-07-28 15:22:00,2024-11-13 08:27:00,Investigating,62

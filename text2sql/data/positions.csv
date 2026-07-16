@@ -1,0 +1,31 @@
+position_id,title,department_id,level,min_salary,max_salary
+1,Software Engineer,2,Junior,73456.57,179676.35
+2,Data Analyst,5,Director,83492.83,192670.61
+3,HR Manager,6,Senior,55444.7,179606.59
+4,Marketing Specialist,8,Director,74410.91,241618.5
+5,Sales Executive,5,Director,54801.02,138247.41
+6,DevOps Engineer,6,Director,62628.8,203807.94
+7,Product Manager,3,Lead,43592.78,114994.73
+8,Financial Analyst,2,Director,81264.58,163354.13
+9,Legal Counsel,7,Lead,57858.67,148027.14
+10,UX Designer,10,Director,68592.1,202563.08
+11,Data Scientist,4,Junior,71872.26,208720.13
+12,Business Analyst,1,Mid,66707.89,125947.53
+13,Operations Manager,6,Mid,66328.91,119009.35
+14,Customer Success Manager,9,Director,69789.49,143100.38
+15,Security Engineer,2,Senior,87191.16,148005.65
+16,Cloud Architect,9,Junior,54096.09,210099.91
+17,Recruiter,4,Junior,57022.32,125064.11
+18,Payroll Specialist,2,Lead,80119.31,158155.24
+19,QA Engineer,3,Senior,68828.43,190343.72
+20,Technical Writer,5,Mid,51783.6,116682.57
+21,Project Manager,9,Mid,66974.98,208362.05
+22,Account Manager,1,Senior,78956.8,192499.53
+23,Content Strategist,7,Lead,48091.75,179182.02
+24,Network Engineer,1,Lead,71251.22,207247.69
+25,Database Administrator,7,Senior,93812.76,214596.27
+26,Scrum Master,6,Lead,66941.25,160942.95
+27,BI Developer,7,Mid,47010.65,192169.25
+28,Compliance Officer,8,Director,79732.24,226375.06
+29,IT Support Specialist,6,Mid,58965.73,151541.09
+30,Solutions Architect,5,Mid,55783.71,184332.92

@@ -1,0 +1,31 @@
+event_id,event_name,event_type,campaign_id,start_date,end_date,budget,attendee_count
+1,Ramos-Turner Summit 2023,Trade Show,14,2024-02-25,2025-07-17,74111.24,3576
+2,Gregory-Avery Expo 2024,Conference,7,2023-06-18,2025-11-28,21224.0,265
+3,"Schmidt, Bird and Morris Summit 2023",Conference,40,2022-01-03,2025-05-23,92935.78,1504
+4,"Barnes, Bridges and Munoz Expo 2024",Webinar,16,2022-04-07,2025-11-27,18088.59,4165
+5,Mann PLC Forum 2023,Conference,13,2024-03-01,2025-06-20,96436.32,3036
+6,Vaughan-Gill Workshop 2024,Workshop,13,2022-02-17,2025-12-01,79777.5,374
+7,Fuentes LLC Workshop 2023,Workshop,37,2023-10-03,2025-11-09,7201.02,2360
+8,"Reynolds, Barry and Cobb Expo 2024",Webinar,26,2024-04-12,2025-07-05,32507.1,3031
+9,"Hancock, Jones and Stevens Summit 2023",Conference,30,2022-07-12,2025-10-07,66981.68,1256
+10,Fitzgerald-Snyder Forum 2024,Webinar,1,2022-10-08,2025-10-28,51332.51,2285
+11,Banks Inc Forum 2023,Product Demo,18,2023-08-31,2025-07-20,34139.3,348
+12,"Gutierrez, Glenn and Fritz Workshop 2024",Conference,42,2022-12-18,2025-12-14,68459.14,1170
+13,Waller PLC Summit 2023,Trade Show,46,2024-09-26,2025-11-25,69061.12,2205
+14,Gordon and Sons Summit 2024,Webinar,1,2022-05-13,2025-02-02,88638.17,2704
+15,Villarreal and Sons Workshop 2023,Product Demo,37,2024-09-17,2025-10-01,60523.85,1846
+16,Hamilton-Park Workshop 2024,Conference,39,2024-02-11,2025-07-06,31544.18,1262
+17,Malone LLC Summit 2023,Workshop,38,2024-04-12,2025-10-26,61477.65,1401
+18,"Benton, Williams and Dorsey Workshop 2024",Product Demo,32,2024-07-18,2025-11-25,24927.46,2413
+19,Francis-Yoder Expo 2023,Product Demo,28,2023-01-20,2025-08-04,48422.58,1063
+20,Harris-Allen Forum 2024,Webinar,21,2022-09-17,2025-08-26,5266.56,3759
+21,Waters PLC Expo 2023,Product Demo,5,2023-10-04,2025-09-23,33259.84,989
+22,Sanchez PLC Summit 2024,Webinar,5,2024-01-26,2025-07-08,32224.02,2957
+23,Taylor-Hammond Summit 2023,Trade Show,17,2024-01-31,2025-10-10,25037.98,4680
+24,Brown-Jones Expo 2024,Product Demo,3,2022-04-27,2025-04-17,80652.6,1834
+25,Sharp-Castaneda Forum 2023,Product Demo,32,2022-04-16,2025-09-15,94832.6,4744
+26,"Anderson, Lee and Stephens Workshop 2024",Webinar,31,2024-12-14,2025-06-01,80130.4,1100
+27,"Harris, Martin and Adams Expo 2023",Webinar,39,2022-08-02,2025-08-08,72577.99,2965
+28,"Stevenson, Odonnell and Marshall Workshop 2024",Trade Show,11,2022-12-31,2025-04-16,20056.13,1115
+29,Rodriguez-Fox Workshop 2023,Webinar,6,2024-07-17,2025-08-03,30042.79,3232
+30,"Price, Martin and Spears Forum 2024",Trade Show,4,2022-06-13,2025-04-11,28711.38,1716

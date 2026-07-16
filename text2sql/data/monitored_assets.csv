@@ -1,0 +1,101 @@
+asset_id,asset_name,asset_type,ip_address,criticality,owner,last_scan_date,risk_level
+1,app-LD86,Network Device,192.168.213.255,High,Engineering,2024-08-01,Low
+2,db-OE23,Endpoint,10.176.103.225,Low,Engineering,2024-09-12,High
+3,fw-JW47,Server,172.21.238.247,Low,IT Ops,2024-03-14,High
+4,app-gK68,Server,10.79.94.99,Medium,IT Ops,2024-07-11,Low
+5,srv-rf29,Endpoint,192.168.114.34,High,Engineering,2024-01-11,High
+6,srv-WS28,Application,10.200.148.114,High,Security,2024-01-03,Low
+7,fw-pR25,Network Device,192.168.48.136,Medium,Engineering,2024-04-21,High
+8,db-rv85,Cloud Resource,172.21.65.4,Medium,Security,2024-08-22,Medium
+9,app-Hp58,Cloud Resource,10.1.215.226,Medium,Engineering,2024-05-24,High
+10,app-wz03,Endpoint,10.81.40.170,Medium,Security,2024-08-05,High
+11,srv-BE82,Application,10.155.3.245,High,Security,2024-12-26,Low
+12,fw-tC90,Server,192.168.194.183,Low,Engineering,2024-03-17,Low
+13,vpc-gB57,Endpoint,192.168.223.149,Low,Security,2024-04-08,Medium
+14,fw-mj21,Endpoint,192.168.30.142,Low,Engineering,2024-09-18,High
+15,srv-lI86,Application,172.26.10.16,Low,Security,2024-02-13,Low
+16,fw-On64,Network Device,172.17.158.3,Medium,Engineering,2024-11-14,Low
+17,fw-ln88,Endpoint,10.185.22.155,Low,Engineering,2024-05-12,Low
+18,fw-lH87,Application,192.168.148.54,Critical,IT Ops,2024-01-28,Medium
+19,srv-Qn67,Endpoint,172.28.177.40,Low,IT Ops,2024-06-18,High
+20,fw-bJ33,Application,172.19.76.210,Medium,IT Ops,2024-04-01,High
+21,db-Vz72,Network Device,10.7.79.231,Medium,DevOps,2024-11-18,Low
+22,fw-Sz33,Endpoint,172.25.22.96,Critical,DevOps,2024-10-11,Medium
+23,srv-Kf74,Network Device,192.168.122.165,Medium,Engineering,2024-02-19,Medium
+24,srv-Rc43,Cloud Resource,10.31.67.169,Medium,Security,2024-06-09,High
+25,vpc-Ap16,Endpoint,172.20.153.1,Low,Engineering,2024-12-19,High
+26,app-xu84,Network Device,172.16.21.203,Low,Security,2024-12-02,Low
+27,vpc-DN85,Server,172.27.67.139,Medium,Engineering,2024-09-12,High
+28,fw-Oa11,Cloud Resource,192.168.218.158,High,IT Ops,2024-11-12,High
+29,app-yU10,Endpoint,172.17.236.158,Medium,Engineering,2024-11-21,High
+30,app-as26,Server,172.19.83.46,Low,Security,2024-03-17,High
+31,db-NQ74,Application,172.19.99.246,High,Engineering,2024-08-22,Low
+32,srv-tr62,Application,10.213.52.27,High,IT Ops,2024-06-18,Medium
+33,srv-II67,Cloud Resource,172.31.15.120,Medium,Engineering,2024-09-20,Medium
+34,srv-eB32,Cloud Resource,172.21.175.183,High,DevOps,2024-12-22,Medium
+35,app-nX42,Endpoint,192.168.177.110,Critical,DevOps,2024-01-07,Medium
+36,srv-aD44,Network Device,10.7.214.238,Medium,DevOps,2024-01-20,High
+37,fw-NH72,Application,172.23.205.227,Medium,Security,2024-07-10,Medium
+38,fw-OV05,Cloud Resource,10.222.16.177,Low,DevOps,2024-12-12,High
+39,srv-qI71,Network Device,172.23.29.178,High,IT Ops,2024-12-11,High
+40,vpc-FW31,Endpoint,10.162.50.56,Medium,IT Ops,2024-04-05,High
+41,app-VZ54,Application,10.84.232.63,High,DevOps,2024-12-06,Low
+42,srv-lk49,Server,10.92.28.52,Critical,Engineering,2025-01-27,Medium
+43,fw-ew88,Server,192.168.181.91,Medium,DevOps,2024-12-03,Medium
+44,app-Cz21,Cloud Resource,192.168.80.219,Medium,Security,2024-08-08,Low
+45,vpc-Bk69,Server,172.26.123.199,Low,Engineering,2024-10-23,Low
+46,vpc-Vo07,Application,192.168.32.112,Medium,IT Ops,2024-05-14,Low
+47,app-sp39,Application,10.86.104.117,Critical,Security,2024-07-03,High
+48,db-VW50,Cloud Resource,10.203.124.93,High,DevOps,2024-11-20,Medium
+49,app-Jo23,Server,192.168.151.100,Medium,IT Ops,2024-12-16,Medium
+50,vpc-EP03,Cloud Resource,172.22.188.78,High,IT Ops,2024-09-01,High
+51,vpc-Lr99,Server,10.182.117.34,Low,Security,2024-03-22,Low
+52,vpc-mo80,Application,10.130.98.209,High,Security,2024-10-04,High
+53,srv-JA14,Cloud Resource,192.168.65.142,Critical,DevOps,2025-01-24,Low
+54,srv-Gu90,Application,10.29.76.190,High,IT Ops,2024-01-05,Medium
+55,fw-FQ48,Endpoint,10.14.50.219,Low,IT Ops,2024-10-31,High
+56,vpc-Ji51,Cloud Resource,10.87.62.18,High,Security,2024-07-02,High
+57,app-Nd10,Application,172.24.58.158,High,Security,2024-10-04,Medium
+58,vpc-So79,Server,192.168.36.184,High,Security,2024-08-23,Medium
+59,vpc-Fq71,Application,192.168.102.156,Medium,Security,2024-09-19,Low
+60,app-zH45,Application,192.168.141.216,Low,IT Ops,2024-06-26,High
+61,srv-vR86,Application,172.31.82.216,Medium,DevOps,2024-06-01,High
+62,fw-My44,Endpoint,172.16.40.61,Medium,Security,2024-12-16,Medium
+63,srv-oz72,Application,172.25.89.147,Low,Security,2024-11-30,Medium
+64,app-gj74,Application,10.0.206.15,Low,Security,2024-06-26,High
+65,db-HM36,Network Device,10.78.197.125,High,Security,2024-03-27,High
+66,db-YI52,Cloud Resource,192.168.144.103,Low,Engineering,2024-12-31,High
+67,srv-nL04,Network Device,10.59.227.15,High,DevOps,2025-01-11,Low
+68,db-iz60,Endpoint,192.168.168.63,High,IT Ops,2024-05-21,High
+69,app-xi77,Endpoint,192.168.214.100,High,DevOps,2024-12-19,High
+70,vpc-Jd84,Application,10.50.129.224,Medium,IT Ops,2024-07-11,Medium
+71,srv-zE63,Application,192.168.161.84,High,Security,2025-01-01,Medium
+72,db-PJ24,Cloud Resource,10.124.251.72,Low,IT Ops,2024-06-27,Medium
+73,fw-rk76,Server,192.168.117.199,Medium,IT Ops,2024-10-21,Low
+74,vpc-an93,Cloud Resource,192.168.183.62,Low,Security,2024-02-02,Medium
+75,fw-xi39,Network Device,192.168.203.84,Medium,Engineering,2024-09-04,Medium
+76,vpc-PI08,Network Device,172.30.249.195,Medium,IT Ops,2024-01-02,High
+77,app-Tb34,Endpoint,10.250.72.156,Medium,DevOps,2024-07-11,High
+78,fw-vr47,Server,192.168.230.40,High,DevOps,2025-01-28,Low
+79,vpc-rW70,Cloud Resource,192.168.20.103,Critical,Engineering,2024-03-18,Low
+80,fw-DI96,Cloud Resource,10.186.172.15,Medium,Engineering,2024-08-30,High
+81,vpc-KE65,Endpoint,172.28.81.122,High,DevOps,2024-11-05,Medium
+82,srv-Qm10,Endpoint,192.168.175.173,Low,Engineering,2024-03-22,Low
+83,fw-zI73,Server,192.168.26.52,Medium,Engineering,2024-04-20,High
+84,app-sZ80,Cloud Resource,10.254.107.91,Medium,Engineering,2024-10-05,Medium
+85,app-NO56,Cloud Resource,172.17.3.169,High,DevOps,2024-04-01,Medium
+86,db-Zg72,Endpoint,192.168.233.162,Critical,DevOps,2024-01-25,High
+87,app-RU71,Server,172.19.58.78,Medium,IT Ops,2024-12-15,Medium
+88,srv-GD65,Cloud Resource,10.126.151.42,Medium,Security,2024-11-26,Medium
+89,vpc-hc41,Cloud Resource,172.26.158.55,Low,IT Ops,2024-05-11,Low
+90,vpc-TA78,Endpoint,172.19.136.52,High,Engineering,2024-08-17,Low
+91,db-uZ26,Application,172.18.34.53,Medium,DevOps,2025-01-04,Medium
+92,srv-XL82,Network Device,10.251.40.149,High,Engineering,2024-04-16,High
+93,db-PI89,Cloud Resource,192.168.84.71,Medium,Security,2024-12-13,Low
+94,vpc-RL49,Server,10.207.4.241,Low,Engineering,2024-08-29,Medium
+95,fw-sg08,Endpoint,192.168.171.98,Medium,DevOps,2024-08-05,Low
+96,db-DT53,Cloud Resource,10.142.99.41,High,IT Ops,2024-05-25,Medium
+97,vpc-An37,Application,10.188.160.62,Medium,DevOps,2024-05-30,Medium
+98,app-Fb96,Network Device,172.29.237.55,Medium,DevOps,2024-06-10,Low
+99,db-qJ94,Network Device,192.168.48.226,Medium,Security,2024-10-27,High
+100,app-aa44,Endpoint,10.139.32.2,Medium,IT Ops,2024-06-12,High

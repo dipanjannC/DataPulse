@@ -1,0 +1,151 @@
+vuln_id,cve_id,title,severity,affected_asset,discovery_date,patch_status,risk_score
+1,CVE-2020-23128,Involve as stand song detail service,Medium,Database,2024-05-12,In Progress,5.2
+2,CVE-2021-32791,Scene in push itself few appear,High,VPN Client,2022-02-26,Patched,6.4
+3,CVE-2020-1834,Want send pay relate member own throughout quickly still,Medium,Database,2022-11-29,In Progress,1.4
+4,CVE-2021-87900,Fund spring energy conference picture who,High,Database,2023-03-29,Unpatched,1.1
+5,CVE-2024-56873,By world property institution security able really memory,High,Web Server,2024-10-28,Patched,6.1
+6,CVE-2020-51201,Site yourself exist represent somebody suggest,Low,VPN Client,2024-03-17,Patched,3.1
+7,CVE-2022-27338,School either analysis pull peace me,Low,Browser,2024-01-19,Patched,1.4
+8,CVE-2021-88157,Adult recognize movie why prove appear generation,High,Email Server,2025-01-08,In Progress,3.8
+9,CVE-2021-29681,Shoulder individual goal capital husband age physical,Medium,Web Server,2023-02-10,Unpatched,9.7
+10,CVE-2023-43106,Board person site give option despite keep foreign,Critical,Email Server,2022-07-16,Accepted Risk,9.2
+11,CVE-2023-44511,Discussion firm evening finally,Low,VPN Client,2023-10-13,Patched,7.2
+12,CVE-2024-2948,Site even street campaign administration fly pull article wrong,High,OS Kernel,2024-06-03,In Progress,1.4
+13,CVE-2022-91431,Blue great understand what nice drug,Medium,Database,2023-11-13,Patched,2.6
+14,CVE-2021-49582,Range ok support dream even room plan,Medium,VPN Client,2023-02-16,Accepted Risk,2.2
+15,CVE-2020-61846,Second city home agent former,High,OS Kernel,2024-03-17,In Progress,3.2
+16,CVE-2021-3247,Shoulder happy get up yeah standard thousand,Low,Email Server,2022-01-12,Unpatched,3.9
+17,CVE-2023-65489,Parent he someone run kind reality,High,Browser,2023-07-25,Unpatched,2.3
+18,CVE-2023-71494,Organization own significant debate ahead radio,Medium,Web Server,2024-02-26,Patched,7.1
+19,CVE-2024-4049,Wife mean government knowledge,Medium,Email Server,2024-02-07,In Progress,2.8
+20,CVE-2020-21546,Most cost thing vote address suffer future conference,Medium,VPN Client,2025-01-15,Unpatched,3.4
+21,CVE-2024-5928,Drug knowledge cup radio author owner it guess,Low,Database,2023-09-27,Unpatched,2.5
+22,CVE-2020-28378,Tax quite factor sense play rule strategy send game,High,VPN Client,2023-01-06,In Progress,9.9
+23,CVE-2024-48029,Church floor second policy about decide church,Low,Browser,2023-10-05,Patched,8.1
+24,CVE-2020-25721,Vote southern medical ground later,High,VPN Client,2023-09-04,Patched,9.7
+25,CVE-2024-73008,Apply often that professor alone game word,High,Web Server,2024-08-20,Patched,5.8
+26,CVE-2023-83549,Animal hundred thus treat though,Medium,Database,2022-07-17,Unpatched,6.9
+27,CVE-2022-49993,Decade again human employee mouth lose,Low,OS Kernel,2023-02-12,In Progress,2.6
+28,CVE-2022-67043,Couple cold chance pick effort to especially radio,Medium,Email Server,2022-01-11,Unpatched,7.2
+29,CVE-2021-98429,Player off ball must person pull,Critical,OS Kernel,2023-05-31,Accepted Risk,5.5
+30,CVE-2023-4806,Attack around cultural huge travel,High,Browser,2024-08-09,Accepted Risk,7.6
+31,CVE-2024-50964,Race power same peace picture until throw bar police,Low,Web Server,2024-07-21,Patched,5.7
+32,CVE-2023-46043,Indeed inside low yard major of get,Low,Browser,2024-07-22,In Progress,6.7
+33,CVE-2020-40487,Game happen write religious myself blood range time,Medium,Database,2023-10-11,Accepted Risk,6.9
+34,CVE-2024-60099,Activity accept say bag tend,High,Email Server,2023-02-23,In Progress,7.6
+35,CVE-2020-45837,Condition form writer various arrive western,Low,Database,2023-06-05,Unpatched,7.6
+36,CVE-2023-79266,Attorney scene then represent environmental we,High,VPN Client,2025-01-15,Patched,3.8
+37,CVE-2020-76181,Help sort chance tax dog huge cell candidate yard,Low,Database,2022-11-30,In Progress,8.9
+38,CVE-2022-85024,Student edge exactly break herself so article,Medium,Email Server,2023-04-28,Patched,9.2
+39,CVE-2024-15845,Where down traditional more those clearly eight myself,Low,VPN Client,2023-08-07,Accepted Risk,7.9
+40,CVE-2021-25164,Art claim part mean,Medium,VPN Client,2023-11-26,Patched,2.0
+41,CVE-2020-44234,Likely special story result risk pretty,High,Database,2024-08-25,Patched,7.9
+42,CVE-2022-85939,Article general hospital let thank investment former picture,High,Database,2022-11-09,Unpatched,6.1
+43,CVE-2024-29433,Series last again different rule huge leave rock,Low,Email Server,2024-06-01,In Progress,1.6
+44,CVE-2022-57756,Seek TV should use with street again on peace,Low,VPN Client,2022-07-01,Patched,8.0
+45,CVE-2020-35986,Once personal score walk more music table fire describe,Low,Browser,2024-02-19,Patched,4.6
+46,CVE-2023-9414,Mrs eye style cover,Medium,OS Kernel,2024-10-28,In Progress,7.0
+47,CVE-2021-67047,Agent partner name ago leg allow,Medium,Database,2022-01-03,Patched,2.2
+48,CVE-2020-78211,Child well light front,Medium,Email Server,2023-05-13,Patched,5.3
+49,CVE-2021-83363,Girl speech simply its fact represent way decision,Medium,OS Kernel,2024-06-17,Unpatched,2.8
+50,CVE-2020-39335,Game bit take cell worry,Critical,VPN Client,2022-02-28,Patched,1.4
+51,CVE-2022-11842,Apply successful give clearly listen,Medium,OS Kernel,2023-11-28,Patched,6.9
+52,CVE-2023-11182,Word what rate tend name,Critical,Database,2024-09-19,Patched,5.0
+53,CVE-2024-67563,Situation security election value,Low,Database,2023-03-27,Patched,4.9
+54,CVE-2024-27261,Movement reality require thing,Medium,Browser,2022-06-24,Patched,5.3
+55,CVE-2021-68143,Blue sign maybe few,High,OS Kernel,2024-05-05,Patched,2.0
+56,CVE-2021-96774,Art word race single two camera,Critical,Email Server,2024-10-03,Patched,6.1
+57,CVE-2020-82669,Card blood identify black north,Low,Database,2022-08-03,In Progress,5.9
+58,CVE-2020-89466,Who surface the yourself too,Medium,Database,2024-08-21,Patched,1.5
+59,CVE-2023-94715,Tree campaign free usually low stock,High,Web Server,2023-05-16,Patched,5.0
+60,CVE-2021-97703,Boy actually share very move moment item information,High,VPN Client,2022-12-21,Patched,1.8
+61,CVE-2022-40481,Beyond line dog themselves style into,High,Web Server,2022-02-07,Patched,2.2
+62,CVE-2024-19410,Friend player factor control common least understand Mrs strong,High,VPN Client,2024-06-29,Patched,5.7
+63,CVE-2020-38132,Response specific determine stop hear hold too alone,Medium,VPN Client,2024-06-05,Patched,6.4
+64,CVE-2021-21222,Wind practice prevent science air,Medium,Web Server,2023-05-31,Unpatched,5.3
+65,CVE-2022-96497,Put admit past Republican whom quickly,High,Web Server,2022-07-13,In Progress,6.0
+66,CVE-2023-14039,Go yet best particular,Low,OS Kernel,2022-07-12,Accepted Risk,7.6
+67,CVE-2024-4295,Rock piece development difference practice maintain man,High,OS Kernel,2022-09-22,In Progress,4.9
+68,CVE-2023-11797,Response industry reduce guess who part relate,Medium,VPN Client,2023-02-26,Accepted Risk,6.9
+69,CVE-2024-8372,Teach discover sing similar before call series raise often,Medium,Email Server,2023-12-22,Patched,6.8
+70,CVE-2023-79412,Its natural shake beautiful,Medium,Browser,2022-11-15,Patched,1.1
+71,CVE-2024-87818,Huge product social cover wife offer around,Low,Email Server,2024-06-26,In Progress,4.8
+72,CVE-2022-52479,Police democratic use ever,Critical,Browser,2024-07-15,Patched,3.3
+73,CVE-2023-91637,Daughter economic itself article you mission kitchen pick serious,High,Browser,2022-05-29,Patched,2.1
+74,CVE-2022-48039,Expect certain top end region less,High,Web Server,2022-09-12,In Progress,6.6
+75,CVE-2023-26122,Behind Mr seat drop pay,Medium,VPN Client,2023-04-13,Patched,7.7
+76,CVE-2020-85703,Matter candidate policy cause month role,Medium,Email Server,2022-08-21,Patched,6.6
+77,CVE-2024-50092,Low page wear common summer bit public nice,Critical,VPN Client,2022-03-25,Patched,4.8
+78,CVE-2023-11322,American fine enter smile help just town development technology,Critical,Browser,2022-08-07,Patched,4.9
+79,CVE-2020-38244,Front benefit prove week night,Medium,Browser,2023-02-06,Patched,7.3
+80,CVE-2020-46529,Hotel I entire eight bit kind term edge,Critical,VPN Client,2022-12-08,Unpatched,5.7
+81,CVE-2020-17477,Interesting resource sure can husband particularly might former,Critical,Email Server,2024-03-02,Patched,4.8
+82,CVE-2022-99506,Include concern live authority bit,Low,Database,2024-02-11,In Progress,3.6
+83,CVE-2023-75244,Reach century network foreign politics ahead phone,High,Database,2022-01-06,Accepted Risk,4.3
+84,CVE-2022-19936,According age south keep raise remember western,Low,VPN Client,2022-12-06,In Progress,7.5
+85,CVE-2024-32953,Indeed fine least fear difficult project budget lay,Medium,Database,2023-07-29,Unpatched,7.1
+86,CVE-2024-73288,Many significant cultural parent,Low,Web Server,2024-07-17,Unpatched,4.0
+87,CVE-2020-4725,Computer true sit turn gun expert well serious Mr,Medium,Browser,2024-12-24,Patched,3.9
+88,CVE-2020-72785,Their professional they southern finally maintain record,Low,Email Server,2023-11-11,Unpatched,1.1
+89,CVE-2022-16326,Find blood energy billion she pretty allow,Medium,Email Server,2022-06-13,Patched,8.3
+90,CVE-2021-12103,Fall simply ten nothing produce,Low,VPN Client,2023-10-11,Unpatched,2.0
+91,CVE-2022-67186,Picture stock media present,Medium,Database,2024-12-15,Unpatched,5.5
+92,CVE-2023-93630,Mind example work report purpose care little,Medium,Web Server,2022-12-10,Patched,6.7
+93,CVE-2023-93721,Though woman recently trip history,Low,Browser,2024-01-24,In Progress,4.1
+94,CVE-2021-67857,Yet create street above opportunity race example maintain,Low,Email Server,2024-02-10,Unpatched,3.9
+95,CVE-2024-11208,Add moment prevent agreement soon there,Medium,Database,2024-05-03,Accepted Risk,4.7
+96,CVE-2020-70850,Organization civil not and I stock painting shake,Low,Web Server,2022-04-16,Patched,8.1
+97,CVE-2023-21346,New far choice north let edge camera,High,VPN Client,2024-02-02,Patched,2.3
+98,CVE-2021-18753,Policy never whom modern up draw these,High,VPN Client,2024-01-27,In Progress,2.7
+99,CVE-2022-87397,Information wrong analysis actually account often agent,High,Web Server,2023-07-04,In Progress,4.9
+100,CVE-2022-64576,Television shoulder memory according easy,Low,OS Kernel,2023-10-29,Patched,2.5
+101,CVE-2024-16356,Forward crime Mrs national,High,Email Server,2022-11-28,Patched,6.2
+102,CVE-2023-14905,Tend save picture skill pretty phone anything,Critical,Browser,2024-09-14,In Progress,5.0
+103,CVE-2022-83204,Act audience world my tonight,Medium,Web Server,2022-06-13,Unpatched,8.5
+104,CVE-2021-26201,Number color coach their opportunity her positive,High,Browser,2023-05-23,Patched,2.9
+105,CVE-2022-84635,Both especially give within attack,High,Email Server,2022-08-28,Patched,4.9
+106,CVE-2024-69582,Yeah arrive able single thus lawyer care production story,Medium,OS Kernel,2024-06-01,Accepted Risk,6.0
+107,CVE-2020-63090,Final start choice next describe Mrs system fill cold,Medium,OS Kernel,2024-04-21,Accepted Risk,7.4
+108,CVE-2021-8937,Customer old time star maintain pretty past,High,Email Server,2023-05-01,Patched,4.4
+109,CVE-2021-12250,Participant apply cell similar discover dream guy,High,VPN Client,2022-01-28,Accepted Risk,3.4
+110,CVE-2021-89348,Mean lay whom throughout power energy pressure positive,Critical,Email Server,2024-02-06,Patched,4.6
+111,CVE-2020-92617,Best itself production ago fly travel major debate recently,Medium,Database,2022-07-05,In Progress,3.0
+112,CVE-2022-62221,Only beat rest own serve,Medium,VPN Client,2022-08-07,Patched,4.3
+113,CVE-2021-27269,Fear investment not physical church among less sit meet,Medium,Database,2024-01-24,Unpatched,8.5
+114,CVE-2024-57820,Ever surface two ball audience,Low,Database,2024-07-12,In Progress,4.9
+115,CVE-2021-92648,When list class evidence situation feeling school establish either,High,VPN Client,2024-08-28,Unpatched,2.2
+116,CVE-2023-29180,Office company contain treat,High,VPN Client,2022-03-18,Patched,3.8
+117,CVE-2021-74853,Wife get music against those prevent would stock,Low,Email Server,2022-01-17,Patched,2.5
+118,CVE-2022-80515,Point against lead again now marriage ten who price,High,OS Kernel,2023-11-11,Unpatched,6.1
+119,CVE-2021-64286,Land rate price pay form yes toward,High,Web Server,2022-04-26,Unpatched,2.8
+120,CVE-2024-10229,Their instead agency reach environmental stand rock,Medium,Database,2022-11-08,Unpatched,9.2
+121,CVE-2020-83567,Billion reason no campaign,Medium,Database,2022-12-21,Patched,3.0
+122,CVE-2020-9694,Herself charge region fall population raise,Low,Database,2024-08-04,In Progress,2.4
+123,CVE-2024-49803,Question above win general occur always to large,Medium,VPN Client,2024-05-17,Patched,9.6
+124,CVE-2022-65152,Final especially interesting perform growth,Medium,Web Server,2023-05-21,Patched,8.2
+125,CVE-2021-3493,Ready today study mouth machine leader drug today,Medium,Web Server,2023-01-07,Patched,3.2
+126,CVE-2024-57235,Want mother four car,Medium,OS Kernel,2022-08-09,In Progress,3.5
+127,CVE-2024-28989,Owner war behind six arm respond stop economic,High,Database,2022-03-06,In Progress,1.7
+128,CVE-2022-96980,Film show ball add enough simple animal child,Medium,OS Kernel,2024-12-15,Patched,6.8
+129,CVE-2020-89313,Address sit nor then lead,Critical,Database,2023-12-05,Unpatched,1.4
+130,CVE-2023-84697,Worker step yeah simple seem us,Critical,Database,2024-03-10,Patched,7.1
+131,CVE-2020-38695,Her whatever growth ground catch meeting newspaper wait,Medium,VPN Client,2023-10-03,Patched,3.5
+132,CVE-2022-45108,Growth right international his worry may modern price finally,Medium,Browser,2023-01-11,In Progress,2.8
+133,CVE-2024-40496,List difference anything compare good if enter summer,High,OS Kernel,2023-02-11,In Progress,1.2
+134,CVE-2023-27648,Experience perform give one player wish,Medium,VPN Client,2023-03-13,In Progress,3.4
+135,CVE-2022-50726,Explain accept stand ready find along,High,Database,2023-01-31,Accepted Risk,4.2
+136,CVE-2022-85846,Deep cultural American owner friend black assume,High,Web Server,2022-09-20,Unpatched,3.8
+137,CVE-2021-69196,Opportunity possible cup population talk,Low,VPN Client,2023-06-05,In Progress,1.6
+138,CVE-2023-2687,Pressure give nor clear offer voice professor,Low,Email Server,2022-09-01,Patched,1.4
+139,CVE-2021-51496,This positive eye pattern pass suggest,Medium,Browser,2022-08-18,Unpatched,4.2
+140,CVE-2023-76149,Responsibility ball accept blue really kid six family,High,Web Server,2022-01-21,Patched,2.8
+141,CVE-2023-60324,Here stop nation will tend,Medium,VPN Client,2022-01-19,In Progress,1.3
+142,CVE-2020-75845,Forward choice between election range of even education,Low,Browser,2024-03-10,In Progress,7.1
+143,CVE-2022-12251,Day player simply hospital way mouth defense measure bank,High,Email Server,2022-05-09,In Progress,9.5
+144,CVE-2022-92482,Say red money lose least film road model argue,Medium,VPN Client,2024-10-07,Patched,5.0
+145,CVE-2022-37078,Country smile increase fish rise toward,Low,Web Server,2024-02-11,Accepted Risk,7.0
+146,CVE-2020-65374,Student save policy agree fly professional care information,High,Web Server,2023-12-28,In Progress,2.7
+147,CVE-2023-24487,Five suffer federal cause physical son sell,Medium,VPN Client,2023-07-10,Patched,9.9
+148,CVE-2020-39403,Unit perform Mrs why kind of,Critical,OS Kernel,2023-08-09,Patched,8.1
+149,CVE-2020-2448,North style policy indeed bed alone million,High,Email Server,2022-01-01,In Progress,2.9
+150,CVE-2024-51075,Term body minute ready give try board say,Low,Email Server,2023-07-13,Unpatched,5.2

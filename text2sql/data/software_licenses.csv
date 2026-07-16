@@ -1,0 +1,51 @@
+license_id,software_name,vendor,license_type,quantity,expiry_date,cost,assigned_to
+1,Microsoft Office,Salesforce,Site License,500,2024-12-25,24307.81,Finance
+2,Adobe Creative Cloud,GitHub,Site License,10,2027-06-18,9671.48,Finance
+3,Slack,Adobe,Per Seat,25,2027-07-28,50569.72,HR
+4,Zoom,Salesforce,Perpetual,500,2025-07-25,19430.51,HR
+5,Jira,GitHub,Subscription,50,2025-02-19,21513.52,All Staff
+6,Confluence,Microsoft,Subscription,100,2024-08-23,92089.18,All Staff
+7,GitHub Enterprise,GitHub,Subscription,500,2027-03-03,5278.56,Finance
+8,Tableau,Adobe,Per Seat,250,2024-11-14,53345.74,Finance
+9,Salesforce,Salesforce,Site License,250,2026-09-11,36823.1,All Staff
+10,ServiceNow,Microsoft,Site License,25,2027-01-25,2875.61,Marketing
+11,Microsoft Office,Atlassian,Perpetual,10,2025-01-18,80375.55,Marketing
+12,Adobe Creative Cloud,Atlassian,Per Seat,10,2026-03-02,94275.45,Engineering
+13,Slack,Salesforce,Perpetual,500,2026-06-21,13226.77,Engineering
+14,Zoom,Salesforce,Subscription,10,2027-10-03,75365.89,Marketing
+15,Jira,Microsoft,Perpetual,250,2027-09-17,46121.66,Finance
+16,Confluence,Adobe,Perpetual,10,2025-12-31,99835.91,Marketing
+17,GitHub Enterprise,Adobe,Subscription,50,2025-10-17,9185.78,Marketing
+18,Tableau,Salesforce,Site License,25,2024-11-26,18781.91,HR
+19,Salesforce,Salesforce,Site License,100,2024-08-28,18377.85,Marketing
+20,ServiceNow,Salesforce,Subscription,100,2026-05-30,34635.51,Engineering
+21,Microsoft Office,Salesforce,Per Seat,50,2026-12-17,33260.46,Finance
+22,Adobe Creative Cloud,Adobe,Perpetual,100,2025-03-12,89530.49,Marketing
+23,Slack,Salesforce,Perpetual,500,2024-09-26,15253.37,Finance
+24,Zoom,Microsoft,Subscription,10,2026-05-31,90438.62,HR
+25,Jira,GitHub,Perpetual,10,2026-10-21,58325.68,Finance
+26,Confluence,Salesforce,Subscription,10,2025-05-31,9239.68,All Staff
+27,GitHub Enterprise,Microsoft,Perpetual,100,2027-10-10,21058.33,Marketing
+28,Tableau,Adobe,Site License,25,2027-08-21,80542.82,Marketing
+29,Salesforce,Microsoft,Site License,50,2027-05-21,28905.73,All Staff
+30,ServiceNow,Atlassian,Subscription,100,2026-04-09,47834.95,Engineering
+31,Microsoft Office,Salesforce,Site License,25,2025-03-25,86207.93,All Staff
+32,Adobe Creative Cloud,Adobe,Subscription,25,2025-12-08,18487.12,Finance
+33,Slack,Salesforce,Site License,500,2026-04-09,74182.34,All Staff
+34,Zoom,Microsoft,Per Seat,500,2024-08-10,31154.13,Engineering
+35,Jira,Atlassian,Site License,250,2027-03-31,4244.94,Finance
+36,Confluence,Microsoft,Subscription,250,2025-08-28,19845.77,HR
+37,GitHub Enterprise,Atlassian,Per Seat,25,2026-10-02,21105.19,Marketing
+38,Tableau,Microsoft,Site License,100,2026-06-25,70290.36,Marketing
+39,Salesforce,Salesforce,Subscription,10,2027-08-28,82143.54,Finance
+40,ServiceNow,Microsoft,Perpetual,50,2025-09-21,45632.88,HR
+41,Microsoft Office,Microsoft,Per Seat,10,2027-01-04,2061.68,Finance
+42,Adobe Creative Cloud,Salesforce,Subscription,10,2025-06-12,34759.89,All Staff
+43,Slack,Adobe,Per Seat,25,2027-12-08,82155.89,HR
+44,Zoom,Microsoft,Perpetual,500,2027-06-10,38037.09,All Staff
+45,Jira,Microsoft,Perpetual,100,2027-10-23,45000.53,Engineering
+46,Confluence,Atlassian,Subscription,100,2025-09-28,96819.37,All Staff
+47,GitHub Enterprise,Adobe,Subscription,500,2024-10-20,98122.14,Finance
+48,Tableau,Atlassian,Subscription,100,2027-10-26,77138.73,Marketing
+49,Salesforce,Adobe,Subscription,100,2027-09-19,21976.35,HR
+50,ServiceNow,Atlassian,Perpetual,10,2027-04-30,60613.66,Finance

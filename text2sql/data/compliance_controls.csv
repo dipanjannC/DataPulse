@@ -1,0 +1,51 @@
+control_id,framework,control_ref,description,status,last_assessed,assigned_to,due_date
+1,GDPR,Req.10.7,Table picture fire best pull way every send.,Compliant,2023-09-02,Legal,2026-05-24
+2,SOC 2,Art.13.7,Our role national difference place tend former.,Compliant,2023-07-08,IT Security,2026-02-10
+3,PCI-DSS,CC.5.2,Now physical owner pass sell.,Non-Compliant,2023-12-04,Compliance Team,2025-08-06
+4,SOC 2,Art.1.10,Opportunity development give seven positive Republican.,Not Applicable,2024-09-08,Legal,2025-05-27
+5,SOC 2,Art.14.1,Card resource present focus.,Compliant,2023-07-12,CISO Office,2025-11-30
+6,HIPAA,Art.2.9,Yard number analysis nature.,Partially Compliant,2023-05-08,CISO Office,2025-06-07
+7,SOC 2,A.15.10,Property senior leader she business expert parent.,Compliant,2023-02-11,CISO Office,2026-06-08
+8,HIPAA,A.1.1,Decide sure north particular benefit.,Non-Compliant,2024-04-20,Compliance Team,2026-09-10
+9,SOC 2,Art.13.3,Fire able pull.,Non-Compliant,2024-08-19,IT Security,2026-01-24
+10,SOC 2,Req.8.8,Painting hope support peace laugh power.,Compliant,2023-07-01,Compliance Team,2026-10-31
+11,SOC 2,Art.2.2,Article suggest gun make since.,Compliant,2024-05-31,Compliance Team,2025-09-04
+12,ISO 27001,Req.13.5,Energy public fact over evening.,Compliant,2023-03-30,CISO Office,2025-03-16
+13,PCI-DSS,A.14.1,Admit federal admit meeting.,Compliant,2023-03-07,CISO Office,2025-11-06
+14,GDPR,A.10.10,Sport then cost phone we.,Compliant,2023-03-28,CISO Office,2025-10-18
+15,PCI-DSS,CC.8.4,Even along let kitchen foot alone.,Compliant,2023-12-19,Compliance Team,2025-04-28
+16,PCI-DSS,Art.3.7,Financial free thought paper off leader.,Compliant,2023-05-30,IT Security,2026-07-21
+17,ISO 27001,CC.10.10,Service wonder word talk stock often here.,Compliant,2024-04-21,Legal,2026-07-18
+18,PCI-DSS,A.1.2,Would race begin.,Compliant,2024-07-28,IT Security,2026-03-27
+19,SOC 2,Art.7.3,Only both set staff commercial my.,Compliant,2024-07-08,IT Security,2025-06-20
+20,HIPAA,Req.9.5,Day summer finish simply growth stop Mrs.,Not Applicable,2023-02-21,IT Security,2026-02-12
+21,PCI-DSS,Req.15.3,Machine say really on.,Partially Compliant,2024-04-02,Legal,2026-07-05
+22,GDPR,Req.2.4,Though indeed stuff book.,Compliant,2023-06-14,CISO Office,2025-06-30
+23,PCI-DSS,Req.4.5,Home pull through our itself again.,Not Applicable,2024-07-06,CISO Office,2026-02-06
+24,SOC 2,A.10.9,Population market buy action Republican government baby.,Compliant,2023-03-18,IT Security,2026-11-24
+25,SOC 2,A.8.9,Agree perhaps test half.,Not Applicable,2024-08-26,IT Security,2026-11-14
+26,ISO 27001,CC.14.7,Remain himself body week light region over thing.,Partially Compliant,2023-05-31,Legal,2025-08-12
+27,SOC 2,Art.9.5,Get play institution daughter grow term reason.,Compliant,2024-08-22,IT Security,2025-09-19
+28,HIPAA,A.10.3,Or be run save three.,Partially Compliant,2024-01-19,IT Security,2026-01-22
+29,GDPR,CC.15.4,Marriage able night because situation read relate.,Partially Compliant,2024-09-12,CISO Office,2025-04-07
+30,SOC 2,Art.8.9,Build discover someone particular.,Compliant,2025-01-25,IT Security,2026-12-11
+31,PCI-DSS,CC.3.10,Decade behind dog every.,Compliant,2023-03-18,IT Security,2026-02-26
+32,PCI-DSS,Req.7.10,Toward actually let serve better majority magazine own.,Not Applicable,2025-01-13,IT Security,2026-08-02
+33,GDPR,Art.13.2,Early member service pattern American.,Compliant,2025-01-19,IT Security,2025-11-03
+34,ISO 27001,Art.1.10,Right court way common anything medical center.,Compliant,2023-06-13,CISO Office,2026-04-08
+35,SOC 2,Req.7.4,Figure mind probably.,Partially Compliant,2023-10-20,Legal,2026-10-17
+36,SOC 2,A.1.5,Technology born make simply sing.,Compliant,2023-08-14,IT Security,2026-08-08
+37,GDPR,A.7.5,Indeed eight government born.,Partially Compliant,2023-10-06,Legal,2025-07-19
+38,SOC 2,Art.9.5,Song win protect.,Compliant,2024-03-17,CISO Office,2025-03-01
+39,PCI-DSS,Art.12.6,Yard option address site place memory.,Compliant,2023-08-31,CISO Office,2025-07-22
+40,HIPAA,A.11.3,Card share material religious.,Compliant,2024-08-12,IT Security,2025-04-11
+41,ISO 27001,Art.8.5,Song president watch development phone believe manager.,Partially Compliant,2023-12-13,Compliance Team,2025-04-20
+42,PCI-DSS,CC.5.7,Decide alone would traditional style.,Partially Compliant,2024-04-28,IT Security,2025-04-15
+43,HIPAA,A.4.6,Off forward southern before development early girl.,Non-Compliant,2023-08-11,Compliance Team,2025-03-23
+44,PCI-DSS,A.14.3,Discussion may set another.,Compliant,2023-04-25,Legal,2025-02-14
+45,HIPAA,Art.7.8,These task party until main industry happy explain.,Partially Compliant,2024-01-05,CISO Office,2026-03-14
+46,PCI-DSS,A.14.3,Ball history later plant.,Compliant,2023-08-19,Legal,2026-06-05
+47,SOC 2,Art.3.3,Clearly method war statement environmental lead.,Not Applicable,2024-08-08,Compliance Team,2026-01-27
+48,PCI-DSS,Req.2.10,Item rest player property defense charge.,Partially Compliant,2024-10-03,Compliance Team,2025-12-07
+49,GDPR,Art.15.9,Campaign series early rich analysis table bit.,Compliant,2024-06-03,IT Security,2025-07-17
+50,HIPAA,CC.3.8,Eight paper my read worker.,Not Applicable,2024-04-22,Compliance Team,2026-04-03
