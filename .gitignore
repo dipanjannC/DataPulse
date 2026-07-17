@@ -37,6 +37,7 @@ data/sample/synthetic_config.json
 
 # SQLite databases (regeneratable from CSVs)
 *.db
+!text2sql/db/sales.db
 
 # Coverage
 htmlcov/

@@ -6,14 +6,18 @@ Run:
 from __future__ import annotations
 
 import os
+import sys
 import sqlite3
 from pathlib import Path
+
+# Ensure project root is on sys.path when run via `streamlit run`
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 import pandas as pd
 import streamlit as st
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(Path(__file__).parent.parent.parent / ".env")
 
 from text2sql.knowledge_graph.retriever import retrieve_schema_context
 from text2sql.sql_gen.generator import generate_sql
