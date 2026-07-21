@@ -22,8 +22,7 @@ from text2sql.knowledge_graph.retriever import retrieve_schema_context
 from text2sql.sql_gen.generator import generate_sql
 from text2sql.metadata.utils import load_schema, get_domains
 
-DB_PATH   = Path(__file__).parent.parent / "db" / "sales.db"
-DIST_PATH = Path(__file__).parent.parent / "frontend" / "dist"
+DB_PATH = Path(__file__).parent.parent / "db" / "sales.db"
 
 app = FastAPI(title="DataPulse Text2SQL API")
 
@@ -119,7 +118,7 @@ def query(req: QueryRequest) -> dict[str, Any]:
 
 
 # Serve vanilla JS frontend
-STATIC_PATH = Path(__file__).parent / "static"
+STATIC_PATH = ROOT / "frontend"
 if STATIC_PATH.exists():
     app.mount("/static", StaticFiles(directory=str(STATIC_PATH)), name="static")
 
