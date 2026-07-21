@@ -1,0 +1,113 @@
+{
+  "summary": {
+    "pass": true,
+    "schema_pass": true,
+    "distribution_pass": true,
+    "row_count": 2000,
+    "generated_at": "2026-07-07T13:43:00Z"
+  },
+  "schema": {
+    "passed": true,
+    "violations": []
+  },
+  "distributions": {
+    "touchpoint": {
+      "observed": {
+        "Web": 727,
+        "Mobile App": 497,
+        "Store": 295,
+        "Email": 220,
+        "Social Media": 159,
+        "Call Center": 102
+      },
+      "expected": {
+        "Web": 0.35,
+        "Mobile App": 0.25,
+        "Store": 0.15,
+        "Email": 0.12,
+        "Social Media": 0.08,
+        "Call Center": 0.05
+      },
+      "chi2": 2.8556785714285717,
+      "p_value": 0.7222241753438,
+      "passed": true
+    },
+    "interaction_type": {
+      "observed": {
+        "Browse": 585,
+        "Search": 369,
+        "Add To Cart": 253,
+        "Wishlist Add": 168,
+        "Recommendation Click": 334,
+        "Support Chat": 150,
+        "Store Visit": 141
+      },
+      "expected": {
+        "Browse": 0.3,
+        "Search": 0.2,
+        "Add To Cart": 0.12,
+        "Wishlist Add": 0.08,
+        "Recommendation Click": 0.15,
+        "Support Chat": 0.08,
+        "Store Visit": 0.07
+      },
+      "chi2": 8.367142857142857,
+      "p_value": 0.2124202110113704,
+      "passed": true
+    },
+    "region": {
+      "observed": {
+        "North America": 953,
+        "Europe": 625,
+        "Asia Pacific": 422
+      },
+      "expected": {
+        "North America": 0.5,
+        "Europe": 0.3,
+        "Asia Pacific": 0.2
+      },
+      "chi2": 4.460666666666667,
+      "p_value": 0.10749259329888765,
+      "passed": true
+    },
+    "mode_consistency": {
+      "observed": {},
+      "expected": {},
+      "chi2": null,
+      "p_value": null,
+      "passed": true,
+      "mismatch_rate": 0.0,
+      "mismatches": 0
+    },
+    "engagement_seconds": {
+      "observed": {},
+      "expected": {},
+      "chi2": null,
+      "p_value": null,
+      "passed": true,
+      "violation_rate": 0.0,
+      "max_rate": 0.02,
+      "violations": 0
+    },
+    "date_range": {
+      "observed": {},
+      "expected": {},
+      "chi2": null,
+      "p_value": null,
+      "passed": true,
+      "out_of_range_rate": 0.0,
+      "start": "2024-01-01",
+      "end": "2024-12-31"
+    },
+    "referential_integrity": {
+      "observed": {},
+      "expected": {},
+      "chi2": null,
+      "p_value": null,
+      "passed": true,
+      "unknown_customer_ids": 0,
+      "unknown_product_ids": 0
+    }
+  },
+  "config_hash": "sha256:dd2b1d58c4cfe95b9a6a3f6586953b06078b11cc24fdf3afdc4ac2b0c8ef51c3"
+}

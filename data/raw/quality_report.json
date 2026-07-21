@@ -1,0 +1,91 @@
+{
+  "summary": {
+    "pass": true,
+    "schema_pass": true,
+    "distribution_pass": true,
+    "row_count": 1000,
+    "generated_at": "2026-07-07T13:42:55Z"
+  },
+  "schema": {
+    "passed": true,
+    "violations": []
+  },
+  "distributions": {
+    "region": {
+      "observed": {
+        "North America": 507,
+        "Europe": 292,
+        "Asia Pacific": 201
+      },
+      "expected": {
+        "North America": 0.5,
+        "Europe": 0.3,
+        "Asia Pacific": 0.2
+      },
+      "chi2": 0.31633333333333336,
+      "p_value": 0.853707485529853,
+      "passed": true
+    },
+    "channel": {
+      "observed": {
+        "Online": 603,
+        "Retail": 287,
+        "Distributor": 110
+      },
+      "expected": {
+        "Online": 0.6,
+        "Retail": 0.3,
+        "Distributor": 0.1
+      },
+      "chi2": 1.5783333333333334,
+      "p_value": 0.4542231569072055,
+      "passed": true
+    },
+    "category": {
+      "observed": {
+        "Electronics": 475,
+        "Stationery": 318,
+        "Furniture": 207
+      },
+      "expected": {
+        "Electronics": 0.5,
+        "Stationery": 0.3,
+        "Furniture": 0.2
+      },
+      "chi2": 2.575,
+      "p_value": 0.2759598209859731,
+      "passed": true
+    },
+    "price_bands": {
+      "observed": {},
+      "expected": {},
+      "chi2": null,
+      "p_value": null,
+      "passed": true,
+      "violation_rate": 0.0,
+      "max_rate": 0.02,
+      "violations": 0
+    },
+    "quantity": {
+      "observed": {},
+      "expected": {},
+      "chi2": null,
+      "p_value": null,
+      "passed": true,
+      "violation_rate": 0.0,
+      "max_rate": 0.02,
+      "violations": 0
+    },
+    "date_range": {
+      "observed": {},
+      "expected": {},
+      "chi2": null,
+      "p_value": null,
+      "passed": true,
+      "out_of_range_rate": 0.0,
+      "start": "2024-01-01",
+      "end": "2024-12-31"
+    }
+  },
+  "config_hash": "sha256:72e350652522a78f6c995114526b64f251147b26c1fa3f5c1b65ec1f8d82c14b"
+}

@@ -1,10 +1,14 @@
 """Step 4 — Sentence-transformer embedding pipeline.
 
-Embeds each column's description as:
-    "{table_name}.{column_name}: {description}"
+Embeds three levels of schema metadata so the retriever can route and seed at
+the right granularity:
+    Column  →  "{table_name}.{column_name}: {description}"
+    Table   →  "{domain} • {table_name}: {description}"
+    Domain  →  "{domain_name}: {description}"
 
-Returns a dict keyed by "table.column" → List[float] (384-dim, L2-normalised).
-Works with both the v1 flat schema and the v2 multi-domain schema.
+Each returns a dict keyed by the node's identity → List[float] (384-dim,
+L2-normalised). Works with both the v1 flat schema and the v2 multi-domain
+schema.
 """
 from __future__ import annotations
 
@@ -12,7 +16,7 @@ from pathlib import Path
 
 from sentence_transformers import SentenceTransformer
 
-from text2sql.metadata.utils import get_all_tables, load_schema
+from text2sql.metadata.utils import get_all_tables, get_domains, load_schema
 
 MODEL_NAME = "all-MiniLM-L6-v2"
 
@@ -30,6 +34,21 @@ def _column_text(table_name: str, col: dict) -> str:
     return f"{table_name}.{col['name']}: {col['description']}"
 
 
+def _table_text(table: dict) -> str:
+    return f"{table['domain']} • {table['name']}: {table['description']}"
+
+
+def _domain_text(domain: dict) -> str:
+    return f"{domain['name']}: {domain['description']}"
+
+
+def _encode(texts: list[str]) -> list[list[float]]:
+    if not texts:
+        return []
+    vectors = _get_model().encode(texts, normalize_embeddings=True, show_progress_bar=True)
+    return [v.tolist() for v in vectors]
+
+
 def build_column_embeddings(schema: dict | None = None) -> dict[str, list[float]]:
     """Embed every column in the schema. Returns {table.column: vector}."""
     if schema is None:
@@ -42,8 +61,29 @@ def build_column_embeddings(schema: dict | None = None) -> dict[str, list[float]
             keys.append(f"{table['name']}.{col['name']}")
             texts.append(_column_text(table["name"], col))
 
-    vectors = _get_model().encode(texts, normalize_embeddings=True, show_progress_bar=True)
-    return {k: v.tolist() for k, v in zip(keys, vectors)}
+    return dict(zip(keys, _encode(texts)))
+
+
+def build_table_embeddings(schema: dict | None = None) -> dict[str, list[float]]:
+    """Embed every table (domain + name + description). Returns {table_name: vector}."""
+    if schema is None:
+        schema = load_schema()
+
+    tables = get_all_tables(schema)
+    keys  = [t["name"] for t in tables]
+    texts = [_table_text(t) for t in tables]
+    return dict(zip(keys, _encode(texts)))
+
+
+def build_domain_embeddings(schema: dict | None = None) -> dict[str, list[float]]:
+    """Embed every domain (name + description). Returns {domain_name: vector}."""
+    if schema is None:
+        schema = load_schema()
+
+    domains = get_domains(schema)
+    keys  = [d["name"] for d in domains]
+    texts = [_domain_text(d) for d in domains]
+    return dict(zip(keys, _encode(texts)))
 
 
 def embed_query(question: str) -> list[float]:

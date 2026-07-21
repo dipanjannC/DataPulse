@@ -42,7 +42,7 @@
           "columns": [
             {"name": "category_id",        "type": "INTEGER", "description": "Unique identifier for each product category.",                             "primary_key": true,  "nullable": false},
             {"name": "category_name",      "type": "TEXT",    "description": "Name of the category, e.g. Electronics, Clothing, Home and Garden.",       "primary_key": false, "nullable": false},
-            {"name": "parent_category_id", "type": "INTEGER", "description": "Parent category for subcategories; NULL for top-level categories.",        "primary_key": false, "nullable": true},
+            {"name": "parent_category_id", "type": "INTEGER", "description": "Parent category for subcategories; NULL for top-level categories.",        "primary_key": false, "nullable": true,  "foreign_key": {"table": "categories", "column": "category_id"}},
             {"name": "description",        "type": "TEXT",    "description": "Detailed description of the category scope and merchandise it covers.",    "primary_key": false, "nullable": true}
           ]
         },
@@ -137,7 +137,8 @@
         }
       ],
       "relationships": [
-        {"from_table": "products",       "from_column": "category_id",  "to_table": "categories",  "to_column": "category_id"},
+        {"from_table": "products",       "from_column": "category_id",        "to_table": "categories",  "to_column": "category_id"},
+        {"from_table": "categories",     "from_column": "parent_category_id", "to_table": "categories",  "to_column": "category_id"},
         {"from_table": "orders",         "from_column": "customer_id",  "to_table": "customers",   "to_column": "customer_id"},
         {"from_table": "orders",         "from_column": "rep_id",       "to_table": "sales_reps",  "to_column": "rep_id"},
         {"from_table": "orders",         "from_column": "region_id",    "to_table": "regions",     "to_column": "region_id"},
@@ -318,7 +319,7 @@
             {"name": "position_id",       "type": "INTEGER", "description": "Job position or role of the employee.",                                     "primary_key": false, "nullable": false, "foreign_key": {"table": "positions", "column": "position_id"}},
             {"name": "hire_date",         "type": "DATE",    "description": "Date the employee was hired.",                                              "primary_key": false, "nullable": false},
             {"name": "employment_type",   "type": "TEXT",    "description": "Employment type: Full-Time, Part-Time, Contractor, or Intern.",             "primary_key": false, "nullable": false},
-            {"name": "manager_id",        "type": "INTEGER", "description": "Employee ID of the direct manager; NULL for top-level employees.",          "primary_key": false, "nullable": true}
+            {"name": "manager_id",        "type": "INTEGER", "description": "Employee ID of the direct manager; NULL for top-level employees.",          "primary_key": false, "nullable": true,  "foreign_key": {"table": "employees", "column": "employee_id"}}
           ]
         },
         {
@@ -329,7 +330,7 @@
             {"name": "department_name", "type": "TEXT",    "description": "Name of the department, e.g. Engineering, Finance, Marketing, HR.",           "primary_key": false, "nullable": false},
             {"name": "location",        "type": "TEXT",    "description": "Physical office location of the department.",                                 "primary_key": false, "nullable": true},
             {"name": "budget",          "type": "REAL",    "description": "Annual budget allocated to the department in USD.",                           "primary_key": false, "nullable": true},
-            {"name": "head_employee_id","type": "INTEGER", "description": "Employee ID of the department head or director.",                             "primary_key": false, "nullable": true}
+            {"name": "head_employee_id","type": "INTEGER", "description": "Employee ID of the department head or director.",                             "primary_key": false, "nullable": true,  "foreign_key": {"table": "employees", "column": "employee_id"}}
           ]
         },
         {
@@ -368,7 +369,7 @@
             {"name": "end_date",     "type": "DATE",    "description": "End date of the leave period.",                                                 "primary_key": false, "nullable": false},
             {"name": "days_count",   "type": "INTEGER", "description": "Total number of working days covered by the leave.",                             "primary_key": false, "nullable": false},
             {"name": "status",       "type": "TEXT",    "description": "Approval status of the leave: Pending, Approved, or Rejected.",                  "primary_key": false, "nullable": false},
-            {"name": "approved_by",  "type": "INTEGER", "description": "Employee ID of the manager who approved or rejected the request.",               "primary_key": false, "nullable": true}
+            {"name": "approved_by",  "type": "INTEGER", "description": "Employee ID of the manager who approved or rejected the request.",               "primary_key": false, "nullable": true,  "foreign_key": {"table": "employees", "column": "employee_id"}}
           ]
         },
         {
@@ -377,7 +378,7 @@
           "columns": [
             {"name": "review_id",      "type": "INTEGER", "description": "Unique identifier for each performance review.",                               "primary_key": true,  "nullable": false},
             {"name": "employee_id",    "type": "INTEGER", "description": "Employee being reviewed.",                                                     "primary_key": false, "nullable": false, "foreign_key": {"table": "employees", "column": "employee_id"}},
-            {"name": "reviewer_id",    "type": "INTEGER", "description": "Employee ID of the reviewer, typically the direct manager.",                   "primary_key": false, "nullable": false},
+            {"name": "reviewer_id",    "type": "INTEGER", "description": "Employee ID of the reviewer, typically the direct manager.",                   "primary_key": false, "nullable": false, "foreign_key": {"table": "employees", "column": "employee_id"}},
             {"name": "review_period",  "type": "TEXT",    "description": "Period covered by the review, e.g. Q1 2024 or Annual 2023.",                   "primary_key": false, "nullable": false},
             {"name": "rating",         "type": "REAL",    "description": "Overall performance rating on a scale of 1 to 5.",                            "primary_key": false, "nullable": false},
             {"name": "comments",       "type": "TEXT",    "description": "Qualitative feedback comments from the reviewer.",                             "primary_key": false, "nullable": true},
@@ -439,12 +440,16 @@
         }
       ],
       "relationships": [
-        {"from_table": "employees",          "from_column": "department_id", "to_table": "departments", "to_column": "department_id"},
-        {"from_table": "employees",          "from_column": "position_id",   "to_table": "positions",   "to_column": "position_id"},
-        {"from_table": "positions",          "from_column": "department_id", "to_table": "departments", "to_column": "department_id"},
+        {"from_table": "employees",          "from_column": "department_id",    "to_table": "departments", "to_column": "department_id"},
+        {"from_table": "employees",          "from_column": "position_id",      "to_table": "positions",   "to_column": "position_id"},
+        {"from_table": "employees",          "from_column": "manager_id",       "to_table": "employees",   "to_column": "employee_id"},
+        {"from_table": "departments",        "from_column": "head_employee_id", "to_table": "employees",   "to_column": "employee_id"},
+        {"from_table": "positions",          "from_column": "department_id",    "to_table": "departments", "to_column": "department_id"},
         {"from_table": "payroll",            "from_column": "employee_id",   "to_table": "employees",   "to_column": "employee_id"},
         {"from_table": "leave_requests",     "from_column": "employee_id",   "to_table": "employees",   "to_column": "employee_id"},
+        {"from_table": "leave_requests",     "from_column": "approved_by",   "to_table": "employees",   "to_column": "employee_id"},
         {"from_table": "performance_reviews","from_column": "employee_id",   "to_table": "employees",   "to_column": "employee_id"},
+        {"from_table": "performance_reviews","from_column": "reviewer_id",   "to_table": "employees",   "to_column": "employee_id"},
         {"from_table": "training_programs",  "from_column": "employee_id",   "to_table": "employees",   "to_column": "employee_id"},
         {"from_table": "employee_benefits",  "from_column": "employee_id",   "to_table": "employees",   "to_column": "employee_id"},
         {"from_table": "job_postings",       "from_column": "position_id",   "to_table": "positions",   "to_column": "position_id"},

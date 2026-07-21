@@ -21,6 +21,8 @@ Rules:
 - Output ONLY the raw SQL query — no markdown fences, no explanation, nothing else.
 - Use table and column names exactly as shown in the schema below.
 - Use JOINs whenever data from multiple tables is needed.
+- When joining, use the relationships listed under "## Join Paths" as the join
+  conditions; do not invent join keys that are not shown there.
 - Default LIMIT is 100 rows unless the user specifies otherwise.
 - Never use DROP, DELETE, UPDATE, INSERT, CREATE, ALTER, or any DDL / DML statement.
 """
@@ -45,6 +47,14 @@ def generate_sql(
           "attempts": int,
         }
     """
+    if not context.get("tables"):
+        return {
+            "sql": "",
+            "success": False,
+            "error": "No relevant tables found in the knowledge graph for this question.",
+            "attempts": 0,
+        }
+
     client       = Groq(api_key=api_key)
     schema_block = _format_schema(context)
     user_message = f"{schema_block}\n\n## Question\n{question}"
@@ -89,16 +99,37 @@ def generate_sql(
 # ── helpers ───────────────────────────────────────────────────────────────────
 
 def _format_schema(context: dict) -> str:
-    lines = ["## Schema\n"]
-    for table_name, info in context["tables"].items():
-        lines.append(f"### {table_name}")
-        lines.append(f"{info['description']}\n")
-        lines.append("| Column | Type | PK | Description |")
-        lines.append("|--------|------|----|-------------|")
-        for col in info["columns"]:
-            pk = "Yes" if col.get("is_pk") else ""
-            lines.append(f"| {col['name']} | {col['type']} | {pk} | {col['description']} |")
-        lines.append("")
+    tables = context.get("tables", {})
+    lines: list[str] = ["## Schema"]
+
+    # Group tables by domain (single unlabelled group if domain is absent).
+    by_domain: dict[str, list[str]] = {}
+    for tname, info in tables.items():
+        by_domain.setdefault(info.get("domain") or "", []).append(tname)
+
+    for domain, tnames in by_domain.items():
+        if domain:
+            lines.append(f"\n### Domain: {domain}")
+        for tname in tnames:
+            info = tables[tname]
+            lines.append(f"\n#### {tname}")
+            if info.get("description"):
+                lines.append(info["description"])
+            lines.append("| Column | Type | PK | Description |")
+            lines.append("|--------|------|----|-------------|")
+            for col in info["columns"]:
+                pk = "Yes" if col.get("is_pk") else ""
+                lines.append(f"| {col['name']} | {col['type']} | {pk} | {col['description']} |")
+
+    joins = context.get("joins") or []
+    if joins:
+        lines.append("\n## Join Paths")
+        lines.append("Use these exact keys when joining tables:")
+        for j in joins:
+            lines.append(
+                f"- {j['from_table']}.{j['from_column']} = {j['to_table']}.{j['to_column']}"
+            )
+
     return "\n".join(lines)
 
 
