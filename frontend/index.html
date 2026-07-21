@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DataPulse — Text-to-SQL</title>
+  <title>DataPulse — Knowledge Graph Reasoning Agent</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="/static/style.css?v=5" />
 </head>
 <body>
 
@@ -21,10 +21,9 @@
         </svg>
         <div class="logo-text">
           <div class="logo-name">DataPulse</div>
-          <div class="logo-sub">Text-to-SQL</div>
+          <div class="logo-sub">Knowledge Graph Reasoning Agent</div>
         </div>
       </div>
-      <div class="logo-tagline">Ask your enterprise data in plain English.</div>
       <div class="tech-badges">
         <span class="badge">Neo4j</span>
         <span class="badge">LLaMA-3.3-70b</span>
@@ -35,6 +34,9 @@
         <span id="kg-label" class="kg-label">Connecting…</span>
       </div>
     </div>
+
+    <!-- ── Knowledge Graph + Recent share one scroll region so neither collapses ── -->
+    <div class="sidebar-scroll">
 
     <!-- ── Domains ── -->
     <div class="sidebar-section">
@@ -49,15 +51,25 @@
     <div class="sidebar-section sidebar-recent">
       <div class="section-head">
         <span class="eyebrow">Recent Queries</span>
-        <button class="clear-btn" id="clear-btn" title="Clear history">Clear</button>
+        <button class="clear-btn" id="clear-btn" title="Clear history" style="display:none">Clear</button>
       </div>
-      <div id="recent-list"><span class="empty-recent">No queries yet</span></div>
+      <div id="recent-list">
+        <div class="empty-recent">
+          <svg class="empty-recent-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3 2.2"/>
+            <path d="M12 8v4.25l2.75 2.75" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <p class="empty-recent-primary">No recent queries</p>
+          <p class="empty-recent-secondary">Ask a question — click any entry here to replay it</p>
+        </div>
+      </div>
     </div>
+    </div><!-- /.sidebar-scroll -->
 
-    <!-- ── Activity ── -->
+    <!-- ── System Log ── -->
     <div class="sidebar-log">
       <div class="log-header">
-        <span class="eyebrow">Activity</span>
+        <span class="eyebrow">System Log</span>
         <span class="log-live"><span class="live-dot"></span>LIVE</span>
       </div>
       <div id="log-list" class="log-list">
@@ -87,7 +99,7 @@
       <div id="input-box">
         <span id="prompt-glyph" class="prompt-glyph">&gt;_</span>
         <textarea id="query-input"
-          placeholder="Ask anything about your enterprise data in plain English…"
+          placeholder="Ask about your enterprise data in plain English…"
           rows="1" autocomplete="off" spellcheck="false"></textarea>
         <button id="send-btn" title="Send query (Enter)">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -102,6 +114,6 @@
     </div>
   </main>
 
-  <script src="/static/app.js"></script>
+  <script src="/static/app.js?v=4"></script>
 </body>
 </html>

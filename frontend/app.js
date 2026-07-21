@@ -2,13 +2,6 @@
   'use strict';
 
   // ── Constants ──────────────────────────────────────────────────────────────
-  const DOMAIN_COLORS = {
-    SALES:     '#A100FF',
-    IT:        '#3B7DFF',
-    HR:        '#FF4F9A',
-    MARKETING: '#1FD1B4',
-    SECURITY:  '#FF7A59',
-  };
   const SUGGESTIONS = [
     { label: 'Sales',     text: 'Show top 5 customers by total revenue' },
     { label: 'IT',        text: 'High-priority IT incidents this month' },
@@ -20,8 +13,8 @@
   const LOG_CFG = {
     info:  { color: '#6B6B78', prefix: 'SYS' },
     embed: { color: '#8A8A96', prefix: 'EMB' },
-    kg:    { color: '#BE82FF', prefix: 'KG ' },
-    llm:   { color: '#BE82FF', prefix: 'LLM' },
+    kg:    { color: '#8A8A96', prefix: 'KG ' },
+    llm:   { color: '#8A8A96', prefix: 'LLM' },
     sql:   { color: '#8A8A96', prefix: 'SQL' },
     db:    { color: '#8A8A96', prefix: 'DB ' },
     done:  { color: '#A100FF', prefix: 'OK ' },
@@ -158,7 +151,7 @@
     }
   }
 
-  // ── Activity log ─────────────────────────────────────────────────────────────
+  // ── System log ───────────────────────────────────────────────────────────────
   function simLog(msg, type) {
     type = type || 'info';
     const list = document.getElementById('log-list');
@@ -209,8 +202,7 @@
     const el = document.createElement('div');
     el.className = 'domain-badges';
     el.innerHTML = domains.map(d => {
-      const c = DOMAIN_COLORS[d.toUpperCase()] || '#A100FF';
-      return `<span class="domain-badge" style="color:${c};border:1px solid ${c}40;background:${c}0d">${esc(d)}</span>`;
+      return `<span class="domain-badge">${esc(d)}</span>`;
     }).join('');
     return el;
   }
@@ -331,10 +323,9 @@
   function setDomains(domains) {
     document.getElementById('domains-list').innerHTML = domains.map(d => {
       const key   = String(d.name || '').toUpperCase();
-      const c     = DOMAIN_COLORS[key] || '#A100FF';
       const label = key.length <= 3 ? key : key[0] + key.slice(1).toLowerCase();  // keep acronyms (IT, HR) uppercase
       return `<div class="domain-item" title="${esc(d.description||d.name)}">
-        <span class="domain-dot" style="background:${c}"></span>
+        <span class="domain-dot"></span>
         <span class="domain-name">${esc(label)}</span>
       </div>`;
     }).join('');
@@ -342,6 +333,15 @@
     if (countEl) countEl.textContent = `${domains.length} domain${domains.length !== 1 ? 's' : ''}`;
     simLog(`Loaded ${domains.length} domains from knowledge graph`, 'kg');
   }
+
+  const EMPTY_RECENT_HTML = `<div class="empty-recent">
+    <svg class="empty-recent-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3 2.2"/>
+      <path d="M12 8v4.25l2.75 2.75" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <p class="empty-recent-primary">No recent queries</p>
+    <p class="empty-recent-secondary">Ask a question — click any entry here to replay it</p>
+  </div>`;
 
   const sidebarRecent = [];
   function addRecent(text) {
@@ -354,6 +354,7 @@
       .map(t => `<button class="recent-item" data-q="${esc(t)}">${esc(t)}</button>`)
       .join('');
     list.querySelectorAll('.recent-item').forEach(btn => btn.addEventListener('click', () => sendQuery(btn.dataset.q)));
+    document.getElementById('clear-btn').style.display = '';
   }
 
   // ── Empty State ────────────────────────────────────────────────────────────
@@ -364,7 +365,7 @@
     es.id = 'empty-state';
     es.innerHTML = `
       <div class="empty-hero">
-        <div class="empty-eyebrow"><span class="eyebrow">Natural language to SQL</span></div>
+        <div class="empty-eyebrow"><span class="eyebrow">Sales · IT · HR · Marketing · Security</span></div>
         <div class="empty-logo-row">
           <svg class="empty-logo-icon" width="46" height="46" viewBox="0 0 30 30" fill="none" aria-hidden="true">
             <path d="M8 5 L20 15 L8 25" stroke="#A100FF" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"/>
@@ -374,13 +375,13 @@
         <div class="empty-pills">
           <span class="empty-pill">5 domains</span>
           <span class="empty-pill">50 tables</span>
-          <span class="empty-pill">Powered by Groq</span>
+          <span class="empty-pill">373 embedded columns</span>
         </div>
       </div>
 
       <div class="highlighted-caption">
-        Ask anything about your enterprise data in plain English.
-        <span class="hl-brand">DataPulse</span> finds the right schema and writes the SQL for you.
+        Ask about your enterprise data in plain English.
+        <span class="hl-brand">DataPulse</span> searches its knowledge graph for the right schema and writes the query for you — no SQL required.
       </div>
 
       <div class="suggestions-grid">
@@ -423,7 +424,8 @@
 
     document.getElementById('clear-btn').addEventListener('click', () => {
       sidebarRecent.length = 0;
-      document.getElementById('recent-list').innerHTML = '<span class="empty-recent">No queries yet</span>';
+      document.getElementById('recent-list').innerHTML = EMPTY_RECENT_HTML;
+      document.getElementById('clear-btn').style.display = 'none';
     });
 
     function submit() {

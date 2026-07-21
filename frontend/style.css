@@ -20,13 +20,6 @@
   --text-dim: #A8A8B3;
   --muted:    #6B6B78;
 
-  /* Domains — disciplined categorical, purple-led */
-  --dom-sales:     #A100FF;
-  --dom-it:        #3B7DFF;
-  --dom-hr:        #FF4F9A;
-  --dom-marketing: #1FD1B4;
-  --dom-security:  #FF7A59;
-
   /* SQL syntax — low-saturation on dark. Names must match SQL_C in app.js. */
   --sql-kw:  #BE82FF;  --sql-fn:  #7EC8FF;  --sql-str: #7DD6C0;
   --sql-num: #F0A868;  --sql-cmt: #5A5A66;  --sql-op:  #C9C9D2;  --sql-pt: #8A8A96;
@@ -92,6 +85,7 @@ textarea::placeholder { color: var(--muted); }
 .sidebar-logo {
   padding: 20px 20px 16px;
   border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
 }
 .logo-row { display: flex; align-items: center; gap: 11px; margin-bottom: 12px; }
 .logo-icon { flex-shrink: 0; }
@@ -103,10 +97,6 @@ textarea::placeholder { color: var(--muted); }
 .logo-sub {
   font-family: var(--sans); font-size: 8.5px; font-weight: 500; color: var(--muted);
   letter-spacing: 2.4px; text-transform: uppercase;
-}
-.logo-tagline {
-  font-size: 11.5px; color: var(--text-dim); margin-bottom: 14px;
-  line-height: 1.5;
 }
 
 .tech-badges { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
@@ -128,7 +118,16 @@ textarea::placeholder { color: var(--muted); }
 
 /* Sections */
 .sidebar-section { padding: 16px 20px; border-bottom: 1px solid var(--border); }
-.sidebar-recent  { flex: 1; overflow-y: auto; min-height: 0; }
+
+/* Knowledge Graph + Recent share this one scroll region; it is the only
+   flexible element between the pinned logo and the pinned log/footer, so on a
+   short viewport the two scroll together instead of Recent collapsing to 0. */
+.sidebar-scroll {
+  flex: 1; min-height: 0; overflow-y: auto;
+  display: flex; flex-direction: column;
+}
+.sidebar-scroll > .sidebar-section:not(.sidebar-recent) { flex-shrink: 0; }
+.sidebar-recent { flex: 1 1 auto; min-height: 180px; }
 
 .section-head {
   display: flex; justify-content: space-between; align-items: flex-end;
@@ -150,12 +149,20 @@ textarea::placeholder { color: var(--muted); }
 }
 .domain-item:hover { background: var(--surface-2); }
 .domain-dot {
-  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  background: var(--accent-soft);
 }
 .domain-name { font-family: var(--sans); font-size: 12px; color: var(--text-dim); }
 .domain-count { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-left: auto; }
 
-.empty-recent { font-size: 11px; color: var(--muted); }
+.empty-recent {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 20px 16px 16px; text-align: center; gap: 8px; color: var(--muted);
+}
+.empty-recent-icon { opacity: .35; }
+.empty-recent-primary { font-size: 12px; font-weight: 500; color: var(--text-dim); margin: 0; }
+.empty-recent-secondary { font-size: 10.5px; color: var(--muted); line-height: 1.55; max-width: 180px; margin: 0; }
+
 .recent-item {
   display: block; width: 100%; background: none; border: none; cursor: pointer;
   text-align: left; padding: 6px 8px; border-radius: var(--radius); color: var(--muted);
@@ -165,7 +172,7 @@ textarea::placeholder { color: var(--muted); }
 }
 .recent-item:hover { background: var(--surface-2); color: var(--text-dim); border-left-color: var(--accent); }
 
-/* Activity log */
+/* System log */
 .sidebar-log {
   border-top: 1px solid var(--border);
   padding: 14px 20px 10px;
@@ -189,8 +196,8 @@ textarea::placeholder { color: var(--muted); }
 
 .log-info  .log-prefix { color: var(--muted); }
 .log-embed .log-prefix { color: var(--muted); }
-.log-kg    .log-prefix { color: var(--accent-soft); }
-.log-llm   .log-prefix { color: var(--accent-soft); }
+.log-kg    .log-prefix { color: var(--muted); }
+.log-llm   .log-prefix { color: var(--muted); }
 .log-sql   .log-prefix { color: var(--muted); }
 .log-db    .log-prefix { color: var(--muted); }
 .log-done  .log-prefix { color: var(--accent); }
@@ -203,6 +210,7 @@ textarea::placeholder { color: var(--muted); }
   border-top: 1px solid var(--border);
   display: flex; justify-content: center; gap: 9px;
   font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: .3px;
+  flex-shrink: 0;
 }
 .footer-sep { color: var(--border-hi); }
 
@@ -355,7 +363,7 @@ textarea::placeholder { color: var(--muted); }
 .msg-assistant { margin-bottom: 28px; animation: fadeInUp .3s ease-out; }
 
 .domain-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
-.domain-badge  { font-family: var(--sans); font-size: 9.5px; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; padding: 3px 9px; border-radius: var(--radius); }
+.domain-badge  { font-family: var(--sans); font-size: 9.5px; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; padding: 3px 9px; border-radius: var(--radius); color: var(--accent-soft); border: 1px solid var(--border-hi); background: transparent; }
 
 /* Error */
 .msg-error {
@@ -457,8 +465,11 @@ textarea::placeholder { color: var(--muted); }
 }
 #input-box:focus-within {
   border-color: var(--accent);
-  box-shadow: 0 0 0 1px var(--accent);
+  box-shadow: 0 0 0 3px rgba(161, 0, 255, .15);
 }
+/* The container (:focus-within) is the single focus indicator; suppress the
+   textarea's own outline so the bar doesn't show a box-inside-a-box. */
+#query-input:focus, #query-input:focus-visible { outline: none; }
 .prompt-glyph {
   font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--accent);
   flex-shrink: 0; padding-bottom: 3px; transition: color .2s;
