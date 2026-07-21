@@ -3,29 +3,29 @@
 
   // ── Constants ──────────────────────────────────────────────────────────────
   const DOMAIN_COLORS = {
-    SALES:     '#00ff88',
-    HR:        '#8b5cf6',
-    IT:        '#00d4ff',
-    MARKETING: '#f59e0b',
-    SECURITY:  '#f87171',
+    SALES:     '#A100FF',
+    IT:        '#3B7DFF',
+    HR:        '#FF4F9A',
+    MARKETING: '#1FD1B4',
+    SECURITY:  '#FF7A59',
   };
   const SUGGESTIONS = [
-    { label: 'QUERY_01', text: 'Show top 5 customers by total revenue' },
-    { label: 'QUERY_02', text: 'High-priority IT incidents this month' },
-    { label: 'QUERY_03', text: 'Employees with the most leave days remaining' },
-    { label: 'QUERY_04', text: 'Marketing campaigns with the highest ROI' },
-    { label: 'QUERY_05', text: 'Most common security vulnerabilities detected' },
-    { label: 'QUERY_06', text: 'Payroll distribution across all departments' },
+    { label: 'Sales',     text: 'Show top 5 customers by total revenue' },
+    { label: 'IT',        text: 'High-priority IT incidents this month' },
+    { label: 'HR',        text: 'Employees with the most leave days remaining' },
+    { label: 'Marketing', text: 'Marketing campaigns with the highest ROI' },
+    { label: 'Security',  text: 'Most common security vulnerabilities detected' },
+    { label: 'HR',        text: 'Payroll distribution across all departments' },
   ];
   const LOG_CFG = {
-    info:  { color: '#3d6b8a', prefix: 'SYS' },
-    embed: { color: '#00d4ff', prefix: 'EMB' },
-    kg:    { color: '#00ff88', prefix: 'KG ' },
-    llm:   { color: '#8b5cf6', prefix: 'LLM' },
-    sql:   { color: '#4db8ff', prefix: 'SQL' },
-    db:    { color: '#f59e0b', prefix: 'DB ' },
-    done:  { color: '#00ff88', prefix: 'OK ' },
-    error: { color: '#f87171', prefix: 'ERR' },
+    info:  { color: '#6B6B78', prefix: 'SYS' },
+    embed: { color: '#8A8A96', prefix: 'EMB' },
+    kg:    { color: '#BE82FF', prefix: 'KG ' },
+    llm:   { color: '#BE82FF', prefix: 'LLM' },
+    sql:   { color: '#8A8A96', prefix: 'SQL' },
+    db:    { color: '#8A8A96', prefix: 'DB ' },
+    done:  { color: '#A100FF', prefix: 'OK ' },
+    error: { color: '#FF5C5C', prefix: 'ERR' },
   };
   const PAGE_SIZE = 50;
 
@@ -34,7 +34,6 @@
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   const now   = () => new Date().toLocaleTimeString('en-US', { hour12:false, hour:'2-digit', minute:'2-digit', second:'2-digit' });
   const delay = ms => new Promise(r => setTimeout(r, ms));
-  const rnd   = n  => Math.round(Math.random() * n);
 
   // ── SQL Tokenizer ──────────────────────────────────────────────────────────
   const KW = new Set(['SELECT','FROM','WHERE','JOIN','INNER','LEFT','RIGHT','OUTER','FULL','ON','GROUP','BY','ORDER','HAVING','LIMIT','OFFSET','AS','AND','OR','NOT','IN','LIKE','BETWEEN','IS','NULL','DISTINCT','WITH','UNION','ALL','INTERSECT','EXCEPT','CASE','WHEN','THEN','ELSE','END','INSERT','INTO','VALUES','UPDATE','SET','DELETE','CREATE','DROP','ALTER','TABLE','ASC','DESC','EXISTS','OVER','PARTITION','ROWS','RANGE','RECURSIVE','CROSS']);
@@ -58,18 +57,17 @@
     return tokenize(sql).map(({t,v}) => { const c=SQL_C[t]; return c?`<span style="color:${c}">${esc(v)}</span>`:esc(v); }).join('');
   }
 
-  // ── Pipeline Card ──────────────────────────────────────────────────────────
+  // ── Pipeline Card (the signature) ────────────────────────────────────────────
+  // Five honest stages that mirror the real backend flow:
+  //   retrieve_schema_context → generate_sql (with retries) → SQLite execution.
+  // No fabricated per-step timings or infra claims; only real details are shown
+  // (matched tables/domains, attempts, row count) plus the true total elapsed.
   const PIPELINE_STEPS = [
-    { label: 'Reading & tokenizing question' },
-    { label: 'Encoding → 384-dim embedding vector' },
-    { label: 'Neo4j AuraDB — establishing secure connection' },
-    { label: 'Vector similarity search (cosine distance)' },
-    { label: 'Knowledge graph traversal — FK expansion' },
-    { label: 'Schema context assembly' },
-    { label: 'LLaMA-3.3-70b via Groq API — generating SQL' },
-    { label: 'SQL parsing & structure validation' },
-    { label: 'Syntax verification' },
-    { label: 'SQLite execution' },
+    { label: 'Understanding your question' },
+    { label: 'Searching the knowledge graph' },
+    { label: 'Assembling schema context' },
+    { label: 'Generating SQL' },
+    { label: 'Running the query' },
   ];
 
   class PipelineCard {
@@ -77,19 +75,17 @@
       this._q        = question;
       this._status   = PIPELINE_STEPS.map(() => 'pending');
       this._detail   = PIPELINE_STEPS.map(() => '');
-      this._ms       = PIPELINE_STEPS.map(() => null);
       this._total    = null;
       this._collapsed = false;
-      this._el       = this._build();  // _el is now assigned
-      this._renderSteps();             // safe to call — _el exists
+      this._el       = this._build();
+      this._renderSteps();
     }
 
     activate(i)  { this._status[i] = 'active';  this._renderSteps(); }
 
-    complete(i, detail, ms) {
+    complete(i, detail) {
       this._status[i] = 'done';
       if (detail != null) this._detail[i] = detail;
-      if (ms     != null) this._ms[i]     = ms;
       this._renderSteps();
     }
 
@@ -115,7 +111,7 @@
     get el() { return this._el; }
 
     _icon(st) {
-      return { pending:'○', active:'◉', done:'✓', error:'✗' }[st] || '○';
+      return { pending:'>', active:'>', done:'✓', error:'✗' }[st] || '>';
     }
 
     _renderSteps() {
@@ -123,13 +119,9 @@
       body.innerHTML = PIPELINE_STEPS.map((s, i) => {
         const st  = this._status[i];
         const det = this._detail[i];
-        const ms  = this._ms[i];
-        const right = st === 'active'
-          ? `<span class="step-spinner"></span>`
-          : ms != null ? `<span class="step-ms">${ms}ms</span>` : '';
+        const right = st === 'active' ? `<span class="step-spinner"></span>` : '';
         return `<div class="pipeline-step ${st}">
           <span class="step-icon">${this._icon(st)}</span>
-          <span class="step-num">${String(i+1).padStart(2,'0')}</span>
           <span class="step-body">
             <span class="step-label">${esc(s.label)}</span>
             ${det ? `<span class="step-detail">${esc(det)}</span>` : ''}
@@ -146,8 +138,8 @@
       el.innerHTML = `
         <div class="pipeline-header">
           <div class="pipeline-title-row">
-            <span class="pipeline-badge">QUERY PIPELINE</span>
-            <span class="pipeline-qtext">"${esc(qShort)}"</span>
+            <span class="pipeline-badge">Query Pipeline</span>
+            <span class="pipeline-qtext">${esc(qShort)}</span>
           </div>
           <div class="pipeline-right">
             <span class="pipeline-total"></span>
@@ -162,158 +154,11 @@
         el.classList.toggle('collapsed', this._collapsed);
         el.querySelector('.pipeline-toggle').textContent = this._collapsed ? '▸' : '▾';
       });
-      return el;  // do NOT call _renderSteps() here — this._el is not set yet
+      return el;
     }
   }
 
-  // ── Canvas — Navy Blue Graph Network ───────────────────────────────────────
-  const MAJOR_NODES = [
-    { label: 'SALES', color: '#00ff88', rx: 0.15, ry: 0.25 },
-    { label: 'HR',    color: '#8b5cf6', rx: 0.82, ry: 0.20 },
-    { label: 'IT',    color: '#00d4ff', rx: 0.12, ry: 0.74 },
-    { label: 'MKTG',  color: '#f59e0b', rx: 0.84, ry: 0.70 },
-    { label: 'SEC',   color: '#f87171', rx: 0.50, ry: 0.89 },
-  ];
-  const SAT_COLORS = ['#00d4ff','#4db8ff','#8b5cf6','#00ff88','#0066cc','#2d8fd4','#6ee7b7'];
-
-  let canvasNodes = [], canvasPackets = [];
-
-  function initCanvas() {
-    const canvas = document.getElementById('graph-canvas');
-    const ctx    = canvas.getContext('2d');
-    const N_SAT  = 58, DIST = 210, A = 0.14, SPD = 0.24;
-
-    function resize() {
-      canvas.width  = window.innerWidth;
-      canvas.height = window.innerHeight;
-      const W = canvas.width, H = canvas.height;
-
-      const major = MAJOR_NODES.map(m => ({
-        x: m.rx*W, y: m.ry*H,
-        vx: (Math.random()-.5)*SPD*.45, vy: (Math.random()-.5)*SPD*.45,
-        r: 4+Math.random()*.8, ph: Math.random()*Math.PI*2,
-        major: true, label: m.label, color: m.color, flashTimer: 0,
-      }));
-
-      const sats = Array.from({ length: N_SAT }, () => ({
-        x: Math.random()*W, y: Math.random()*H,
-        vx: (Math.random()-.5)*SPD, vy: (Math.random()-.5)*SPD,
-        r: 1.3+Math.random()*1.7, ph: Math.random()*Math.PI*2,
-        major: false,
-        color: SAT_COLORS[Math.floor(Math.random()*SAT_COLORS.length)],
-        flashTimer: 0,
-      }));
-
-      canvasNodes   = [...major, ...sats];
-      canvasPackets = [];
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    (function frame() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      for (const n of canvasNodes) {
-        n.x += n.vx; n.y += n.vy; n.ph += .015;
-        if (n.x < 0 || n.x > canvas.width)  n.vx *= -1;
-        if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
-      }
-
-      for (let i = 0; i < canvasNodes.length; i++) {
-        for (let j = i+1; j < canvasNodes.length; j++) {
-          const a = canvasNodes[i], b = canvasNodes[j];
-          const dx = a.x-b.x, dy = a.y-b.y, d = Math.sqrt(dx*dx+dy*dy);
-          if (d < DIST) {
-            const al = (1-d/DIST)*A;
-            const ec = (a.major||b.major) ? (a.color||b.color) : '#00d4ff';
-            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
-            ctx.strokeStyle = hexRgba(ec, al);
-            ctx.lineWidth   = (a.major||b.major) ? 1.1 : .55;
-            ctx.stroke();
-          }
-        }
-      }
-
-      if (canvasPackets.length < 30 && Math.random() < .03) {
-        const pairs = [];
-        for (let i=0; i<canvasNodes.length; i++) {
-          for (let j=i+1; j<canvasNodes.length; j++) {
-            const dx=canvasNodes[i].x-canvasNodes[j].x, dy=canvasNodes[i].y-canvasNodes[j].y;
-            if (Math.sqrt(dx*dx+dy*dy) < DIST) pairs.push([i,j]);
-          }
-        }
-        if (pairs.length) {
-          const [i,j] = pairs[Math.floor(Math.random()*pairs.length)];
-          const fwd = Math.random() > .5;
-          canvasPackets.push({ from: canvasNodes[fwd?i:j], to: canvasNodes[fwd?j:i], progress: 0, speed: .007+Math.random()*.007, burst: false });
-        }
-      }
-
-      for (let p = canvasPackets.length-1; p >= 0; p--) {
-        const pk = canvasPackets[p];
-        pk.progress += pk.speed;
-        if (pk.progress > 1) { canvasPackets.splice(p,1); continue; }
-        const fx=pk.from.x, fy=pk.from.y, tx=pk.to.x, ty=pk.to.y;
-        for (let t=5; t>=0; t--) {
-          const tp  = Math.max(0, pk.progress-t*.032);
-          const px2 = fx+(tx-fx)*tp, py2 = fy+(ty-fy)*tp;
-          const a2  = (1-t/6)*(pk.burst?.95:.7);
-          const r2  = (1-t/6)*(pk.burst?3.2:2.4);
-          ctx.beginPath(); ctx.arc(px2,py2,r2,0,Math.PI*2);
-          ctx.fillStyle = pk.burst ? `rgba(0,212,255,${a2})` : `rgba(77,184,255,${(a2*.85).toFixed(3)})`;
-          ctx.fill();
-        }
-      }
-
-      for (const n of canvasNodes) {
-        const p = Math.sin(n.ph)*.5+.5;
-        let a = A+p*A*.8, r = n.r+p*(n.major?2.2:1.3);
-
-        if (n.flashTimer > 0) {
-          const fp = n.flashTimer/45;
-          a += fp*.65; r += fp*6;
-          ctx.beginPath(); ctx.arc(n.x,n.y,r+fp*14,0,Math.PI*2);
-          ctx.strokeStyle = hexRgba(n.color, fp*.22); ctx.lineWidth = 1.8; ctx.stroke();
-          n.flashTimer--;
-        }
-
-        ctx.beginPath(); ctx.arc(n.x,n.y,r,0,Math.PI*2);
-        ctx.fillStyle = hexRgba(n.color, a); ctx.fill();
-
-        if (n.major && (n.flashTimer > 0 || Math.sin(n.ph) > .5)) {
-          const la = n.flashTimer > 0 ? n.flashTimer/45*.55 : .12;
-          ctx.font = `600 10px 'JetBrains Mono',monospace`;
-          ctx.fillStyle = hexRgba(n.color, la);
-          ctx.textAlign = 'center';
-          ctx.fillText(n.label, n.x, n.y-r-5);
-          ctx.textAlign = 'left';
-        }
-      }
-
-      requestAnimationFrame(frame);
-    })();
-  }
-
-  function triggerBurst() {
-    const major = canvasNodes.filter(n => n.major);
-    if (!major.length) return;
-    const center = major[Math.floor(Math.random()*major.length)];
-    center.flashTimer = 45;
-    canvasNodes.forEach(n => {
-      const dx=n.x-center.x, dy=n.y-center.y, d=Math.sqrt(dx*dx+dy*dy);
-      if (n !== center && d < 300) {
-        canvasPackets.push({ from: center, to: n, progress: 0, speed: .014+Math.random()*.01, burst: true });
-        if (n.major) setTimeout(() => { n.flashTimer = 28; }, d*1.8);
-      }
-    });
-  }
-
-  function hexRgba(hex, alpha) {
-    const r=parseInt(hex.slice(1,3),16), g=parseInt(hex.slice(3,5),16), b=parseInt(hex.slice(5,7),16);
-    return `rgba(${r},${g},${b},${Math.max(0,Math.min(1,alpha)).toFixed(3)})`;
-  }
-
-  // ── System Log ─────────────────────────────────────────────────────────────
+  // ── Activity log ─────────────────────────────────────────────────────────────
   function simLog(msg, type) {
     type = type || 'info';
     const list = document.getElementById('log-list');
@@ -364,7 +209,7 @@
     const el = document.createElement('div');
     el.className = 'domain-badges';
     el.innerHTML = domains.map(d => {
-      const c = DOMAIN_COLORS[d.toUpperCase()] || '#00d4ff';
+      const c = DOMAIN_COLORS[d.toUpperCase()] || '#A100FF';
       return `<span class="domain-badge" style="color:${c};border:1px solid ${c}40;background:${c}0d">${esc(d)}</span>`;
     }).join('');
     return el;
@@ -378,7 +223,7 @@
     function render() {
       el.innerHTML = `
         <button class="schema-header">
-          <span><span class="schema-icon">⬡</span>Schema Context · ${names.length} table${names.length!==1?'s':''}</span>
+          <span><span class="schema-icon">&gt;</span>Schema Context · ${names.length} table${names.length!==1?'s':''}</span>
           <span class="schema-arrow" style="transform:rotate(${open?'180':'0'}deg)">▾</span>
         </button>
         ${open?`<div class="schema-body">${names.map(n=>`<span class="table-pill" title="${esc(tables[n]?.description||n)}">${esc(n)}</span>`).join('')}</div>`:''}
@@ -457,8 +302,8 @@
       const err = document.createElement('div');
       err.className = 'msg-error';
       err.innerHTML = `
-        <div class="error-title">✗ Query failed</div>
-        <div class="error-body">${esc(data.error||'Unknown error')}</div>
+        <div class="error-title">Query failed</div>
+        <div class="error-body">${esc(data.error||data.detail||'Unknown error')}</div>
         ${data.sql?`<div class="error-sql">${esc(data.sql)}</div>`:''}
       `;
       wrapper.appendChild(err);
@@ -477,21 +322,24 @@
   function setKGStatus(status) {
     const dot = document.getElementById('kg-dot'), lbl = document.getElementById('kg-label');
     dot.className = 'kg-dot ' + status;
-    const labels = { connected:'AuraDB connected', connecting:'Connecting…', error:'Not connected' };
+    const labels = { connected:'Online', connecting:'Connecting…', error:'Offline' };
     lbl.textContent = labels[status] || status;
-    if (status === 'connected') simLog('Neo4j AuraDB — connection established', 'done');
-    else if (status === 'error') simLog('Neo4j connection failed', 'error');
+    if (status === 'connected') simLog('Backend online', 'done');
+    else if (status === 'error') simLog('Backend offline', 'error');
   }
 
   function setDomains(domains) {
     document.getElementById('domains-list').innerHTML = domains.map(d => {
-      const c = DOMAIN_COLORS[d.name] || '#00d4ff';
+      const key   = String(d.name || '').toUpperCase();
+      const c     = DOMAIN_COLORS[key] || '#A100FF';
+      const label = key.length <= 3 ? key : key[0] + key.slice(1).toLowerCase();  // keep acronyms (IT, HR) uppercase
       return `<div class="domain-item" title="${esc(d.description||d.name)}">
-        <span class="domain-dot" style="background:${c};box-shadow:0 0 7px ${c}77"></span>
-        <span class="domain-name">${esc(d.name[0]+d.name.slice(1).toLowerCase())}</span>
-        <span class="domain-count">10t</span>
+        <span class="domain-dot" style="background:${c}"></span>
+        <span class="domain-name">${esc(label)}</span>
       </div>`;
     }).join('');
+    const countEl = document.getElementById('domain-count');
+    if (countEl) countEl.textContent = `${domains.length} domain${domains.length !== 1 ? 's' : ''}`;
     simLog(`Loaded ${domains.length} domains from knowledge graph`, 'kg');
   }
 
@@ -503,7 +351,7 @@
     if (sidebarRecent.length > 8) sidebarRecent.pop();
     const list = document.getElementById('recent-list');
     list.innerHTML = sidebarRecent
-      .map(t => `<button class="recent-item" data-q="${esc(t)}">↑ ${esc(t)}</button>`)
+      .map(t => `<button class="recent-item" data-q="${esc(t)}">${esc(t)}</button>`)
       .join('');
     list.querySelectorAll('.recent-item').forEach(btn => btn.addEventListener('click', () => sendQuery(btn.dataset.q)));
   }
@@ -516,55 +364,29 @@
     es.id = 'empty-state';
     es.innerHTML = `
       <div class="empty-hero">
+        <div class="empty-eyebrow"><span class="eyebrow">Natural language to SQL</span></div>
         <div class="empty-logo-row">
-          <svg class="empty-logo-icon" width="54" height="54" viewBox="0 0 34 34" fill="none">
-            <circle cx="17" cy="17" r="15" stroke="#00d4ff" stroke-width=".45" stroke-dasharray="3 2" opacity=".25"/>
-            <circle cx="17" cy="17" r="4.5" fill="#00d4ff" opacity=".95"/>
-            <circle cx="17" cy="17" r="7"   fill="none" stroke="#00d4ff" stroke-width=".6" opacity=".3"/>
-            <circle cx="6"  cy="9"  r="2.4" fill="#00ff88" opacity=".85"/>
-            <circle cx="28" cy="9"  r="2.4" fill="#8b5cf6" opacity=".85"/>
-            <circle cx="5"  cy="24" r="2.4" fill="#4db8ff" opacity=".8"/>
-            <circle cx="29" cy="24" r="2.4" fill="#f59e0b" opacity=".8"/>
-            <circle cx="17" cy="3"  r="1.8" fill="#00d4ff" opacity=".7"/>
-            <circle cx="17" cy="31" r="1.8" fill="#f87171" opacity=".7"/>
-            <line x1="17" y1="17" x2="6"  y2="9"  stroke="#00ff88" stroke-width="1.1" opacity=".5"/>
-            <line x1="17" y1="17" x2="28" y2="9"  stroke="#8b5cf6" stroke-width="1.1" opacity=".5"/>
-            <line x1="17" y1="17" x2="5"  y2="24" stroke="#4db8ff" stroke-width="1.1" opacity=".5"/>
-            <line x1="17" y1="17" x2="29" y2="24" stroke="#f59e0b" stroke-width="1.1" opacity=".5"/>
-            <line x1="17" y1="17" x2="17" y2="3"  stroke="#00d4ff" stroke-width="1"   opacity=".45"/>
-            <line x1="17" y1="17" x2="17" y2="31" stroke="#f87171" stroke-width="1"   opacity=".45"/>
+          <svg class="empty-logo-icon" width="46" height="46" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+            <path d="M8 5 L20 15 L8 25" stroke="#A100FF" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"/>
           </svg>
-          <div class="empty-title-block">
-            <div class="empty-name">SYNAPSE AI</div>
-            <div class="empty-name-sub">REAL DATA GUIDE</div>
-          </div>
-        </div>
-        <div class="empty-tagline">
-          STREAMLINED STRUCTURED KNOWLEDGE GRAPH
-          <span>·</span>
-          NEO4J AURADB
-          <span>·</span>
-          LLaMA-3.3-70b
+          <div class="empty-name">DataPulse</div>
         </div>
         <div class="empty-pills">
-          <span class="empty-pill">373 Embedded Columns</span>
-          <span class="empty-pill">50 Tables · 5 Domains</span>
-          <span class="empty-pill">Groq Inference API</span>
+          <span class="empty-pill">5 domains</span>
+          <span class="empty-pill">50 tables</span>
+          <span class="empty-pill">Powered by Groq</span>
         </div>
       </div>
 
       <div class="highlighted-caption">
-        Ask anything about your enterprise data.
-        <mark class="hl-brand">SYNAPSE AI</mark> searches the
-        <mark class="hl-kg">knowledge graph</mark> for relevant schema
-        and generates precise <mark class="hl-sql">SQL</mark> —
-        no technical knowledge required.
+        Ask anything about your enterprise data in plain English.
+        <span class="hl-brand">DataPulse</span> finds the right schema and writes the SQL for you.
       </div>
 
       <div class="suggestions-grid">
         ${SUGGESTIONS.map(s => `
           <button class="suggestion-card" data-q="${esc(s.text)}">
-            <span class="suggestion-label">${s.label}</span>${esc(s.text)}
+            <span class="suggestion-label">${esc(s.label)}</span>${esc(s.text)}
           </button>`).join('')}
       </div>
     `;
@@ -581,14 +403,12 @@
   function initInput() {
     const ta  = document.getElementById('query-input');
     const btn = document.getElementById('send-btn');
-    const box = document.getElementById('input-box');
     const gl  = document.getElementById('prompt-glyph');
 
     function syncState() {
       const ready = !!ta.value.trim() && !_busy;
       btn.className = ready ? 'ready' : '';
       gl.className  = 'prompt-glyph' + (_busy ? ' loading' : '');
-      box.className = ta.value.trim() ? 'active' : '';
     }
 
     ta.addEventListener('input', () => {
@@ -645,109 +465,83 @@
     msgs.appendChild(card.el);
     scrollBottom();
     addRecent(question);
-    triggerBurst();
 
     simLog(`Query: "${question.slice(0,42)}${question.length>42?'…':''}"`, 'info');
 
-    // Fire real API call immediately — runs in parallel with step animations
+    // One real API call does all server-side work: schema retrieval, SQL
+    // generation (with retries), and SQLite execution. The client can't observe
+    // the server-side stage boundaries, so no step is marked done until the call
+    // returns: the active step holds while we wait, then we advance only as far
+    // as the real outcome confirms. Only real details are ever shown, and a step
+    // is never checked green above a step that errored.
     const apiPromise = api.query(question)
       .catch(err => ({ success: false, error: err.message, sql: '', schema_context: {}, columns: [], rows: [] }));
 
     const t0 = performance.now();
-    let stepStart = t0;
-    const stepDur = () => { const d=Math.round(performance.now()-stepStart); stepStart=performance.now(); return d; };
+    const reveal = 160;
 
-    // Step 0 — Reading
+    // Stage 0 — the app has received the question (client-side, genuinely done).
     card.activate(0);
-    await delay(48+rnd(28));
-    card.complete(0, `"${question.slice(0,32)}${question.length>32?'…':''}"`, stepDur());
-    simLog('Question tokenised', 'info');
+    await delay(reveal);
+    card.complete(0);
 
-    // Step 1 — Embedding
+    // Stage 1 — schema retrieval (embed + KG vector search + FK expansion). Holds
+    // active across the real wait; any no-SQL failure is a retrieval failure and
+    // lands here, leaving the later steps pending.
     card.activate(1);
-    await delay(145+rnd(55));
-    card.complete(1, 'all-MiniLM-L6-v2 · 384 dims', stepDur());
-    simLog('Embedding vector generated (384-dim)', 'embed');
+    simLog('Searching knowledge graph for relevant schema', 'kg');
 
-    // Step 2 — Neo4j connection
-    card.activate(2);
-    await delay(105+rnd(40));
-    card.complete(2, 'AuraDB v5 · TLS 1.3', stepDur());
-    simLog('Neo4j AuraDB connection verified', 'kg');
+    const data = await apiPromise;
 
-    // Step 3 — Vector search
-    card.activate(3);
-    await delay(225+rnd(75));
-    card.complete(3, '373 column embeddings scanned', stepDur());
-    simLog('Vector similarity search complete', 'kg');
+    const tables   = Object.keys(data.schema_context && data.schema_context.tables ? data.schema_context.tables : {});
+    const domains  = [...new Set(tables.map(n => data.schema_context.tables[n] && data.schema_context.tables[n].domain).filter(Boolean))];
+    const kgDetail = tables.length ? `${tables.length} table${tables.length!==1?'s':''}${domains.length?` · ${domains.slice(0,3).join(', ')}`:''}` : '';
 
-    // Step 4 — KG traversal (placeholder, updated with real data after API returns)
-    card.activate(4);
-    await delay(260+rnd(85));
-    card.complete(4, 'FK relationships expanded', stepDur());
-    simLog('Knowledge graph traversal done', 'kg');
+    if (!data.success && !data.sql) {
+      // Failed before any SQL was produced → the retrieval step is what broke.
+      card.fail(1, (data.error||data.detail||'error').slice(0,80));
+      simLog(`Failed: ${(data.error||data.detail||'').slice(0,60)}`, 'error');
+    } else {
+      // Retrieval returned (we have schema and/or generated SQL). Advance the
+      // confirmed stages — the checks appear only now.
+      card.complete(1, kgDetail);
+      if (tables.length) simLog(`Matched ${tables.length} table${tables.length!==1?'s':''}${domains.length?` across ${domains.length} domain${domains.length!==1?'s':''}`:''}`, 'kg');
 
-    // Step 5 — Schema assembly
-    card.activate(5);
-    await delay(115+rnd(45));
-    card.complete(5, 'schema context ready', stepDur());
-    simLog('Schema context assembled for LLM prompt', 'kg');
-
-    // Step 6 — LLM call (waits for real API to return)
-    card.activate(6);
-    simLog('Sending prompt to LLaMA-3.3-70b via Groq…', 'llm');
-    stepStart = performance.now();
-
-    const data  = await apiPromise;
-    const llmMs = stepDur();
-
-    if (data.success) {
-      // Inject real schema data into earlier steps
-      const tables  = Object.keys(data.schema_context && data.schema_context.tables ? data.schema_context.tables : {});
-      const domains = [...new Set(tables.map(n => data.schema_context.tables[n] && data.schema_context.tables[n].domain).filter(Boolean))];
-      card.updateDetail(3, `${Math.min(tables.length*4,18)} columns matched`);
-      card.updateDetail(4, `${tables.length} tables · ${domains.slice(0,3).join(', ')}`);
+      card.activate(2);
+      await delay(reveal);
+      card.complete(2);
 
       const attempts = data.attempts || 1;
-      card.complete(6, `SQL generated · ${attempts} attempt${attempts!==1?'s':''}`, llmMs);
-      simLog(`LLM responded in ${llmMs}ms (${attempts} attempt${attempts!==1?'s':''})`, 'llm');
+      card.activate(3);
+      simLog('Generating SQL with LLaMA-3.3-70b via Groq', 'llm');
+      await delay(reveal);
+      card.complete(3, `${attempts} attempt${attempts!==1?'s':''}`);
+      simLog(`SQL generated (${attempts} attempt${attempts!==1?'s':''})`, 'llm');
 
-      // Step 7 — SQL parsing
-      card.activate(7);
-      await delay(38);
-      const lines = (data.sql||'').split('\n').filter(l => l.trim()).length;
-      card.complete(7, `${lines} line${lines!==1?'s':''}`, stepDur());
-
-      // Step 8 — Validation
-      card.activate(8);
-      await delay(28);
-      card.complete(8, 'syntax OK · no injection risk', stepDur());
-      simLog('SQL syntax validated', 'sql');
-
-      // Step 9 — Execution
-      card.activate(9);
-      await delay(22);
-      const rowCount = data.rows ? data.rows.length : 0;
-      card.complete(9, `${rowCount.toLocaleString()} row${rowCount!==1?'s':''} returned`, stepDur());
-      simLog(`Executed → ${rowCount} rows in ${Math.round(performance.now()-t0)}ms`, 'done');
-
-    } else {
-      card.fail(6, (data.error||'error').slice(0,60));
-      simLog(`Failed: ${(data.error||'').slice(0,55)}`, 'error');
+      card.activate(4);
+      await delay(reveal);
+      if (data.success) {
+        const rowCount = data.rows ? data.rows.length : 0;
+        card.complete(4, `${rowCount.toLocaleString()} row${rowCount!==1?'s':''}`);
+        const elapsed = Math.round(performance.now() - t0);
+        simLog(`Done — ${rowCount} row${rowCount!==1?'s':''} in ${(elapsed/1000).toFixed(2)}s`, 'done');
+      } else {
+        // SQL was produced but the query did not execute cleanly.
+        card.fail(4, (data.error||data.detail||'error').slice(0,80));
+        simLog(`Failed: ${(data.error||data.detail||'').slice(0,60)}`, 'error');
+      }
     }
 
-    card.setTotal(Math.round(performance.now()-t0));
+    card.setTotal(Math.round(performance.now() - t0));
     msgs.appendChild(buildAssistantBubble(data));
     scrollBottom();
   }
 
   // ── Init ──────────────────────────────────────────────────────────────────
   async function init() {
-    initCanvas();
     initInput();
     showEmpty();
-    simLog('SYNAPSE AI v1.0 — Real Data Guide', 'info');
-    simLog('Streamlined Structured Knowledge Graph · Neo4j AuraDB', 'info');
+    simLog('DataPulse ready', 'info');
 
     api.health()
       .then(h => setKGStatus(h.status === 'ok' ? 'connected' : 'error'))
