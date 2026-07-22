@@ -1,5 +1,31 @@
 {
   "version": "2.0",
+  "metrics": [
+    {
+      "name": "total revenue",
+      "expression": "SUM(order_items.line_total)",
+      "tables": ["order_items"],
+      "description": "Total transactional sales revenue: the sum of all order line item totals (quantity x unit_price). This is the canonical revenue measure. Do NOT use invoices.amount, sales_targets.achieved_amount, or campaign_metrics.revenue_attributed for company sales revenue."
+    },
+    {
+      "name": "average order value",
+      "expression": "SUM(order_items.line_total) / COUNT(DISTINCT order_items.order_id)",
+      "tables": ["order_items"],
+      "description": "Average revenue per order (AOV): total line revenue divided by the number of distinct orders."
+    },
+    {
+      "name": "gross margin",
+      "expression": "SUM((order_items.unit_price - products.cost_price) * order_items.quantity)",
+      "tables": ["order_items", "products"],
+      "description": "Gross profit in USD: revenue minus product cost, summed over line items. Requires joining order_items.product_id = products.product_id."
+    },
+    {
+      "name": "target attainment rate",
+      "expression": "SUM(sales_targets.achieved_amount) / SUM(sales_targets.target_amount)",
+      "tables": ["sales_targets"],
+      "description": "Sales-target attainment: achieved amount divided by target amount for sales reps. A ratio of quota performance, not company revenue."
+    }
+  ],
   "domains": [
 
     {
@@ -18,7 +44,7 @@
             {"name": "city",         "type": "TEXT",    "description": "City where the customer resides.",                                               "primary_key": false, "nullable": true},
             {"name": "country",      "type": "TEXT",    "description": "Country where the customer resides.",                                            "primary_key": false, "nullable": true},
             {"name": "signup_date",  "type": "DATE",    "description": "Date when the customer first registered.",                                       "primary_key": false, "nullable": false},
-            {"name": "loyalty_tier", "type": "TEXT",    "description": "Customer loyalty tier: Bronze, Silver, Gold, or Platinum.",                     "primary_key": false, "nullable": true},
+            {"name": "loyalty_tier", "type": "TEXT",    "description": "Customer loyalty tier: Bronze, Silver, Gold, or Platinum.",                     "primary_key": false, "nullable": true, "aliases": ["membership level", "loyalty level", "customer tier"]},
             {"name": "is_active",    "type": "INTEGER", "description": "Whether the customer account is active: 1 for active, 0 for inactive.",          "primary_key": false, "nullable": false}
           ]
         },
@@ -31,7 +57,7 @@
             {"name": "category_id",    "type": "INTEGER", "description": "Category this product belongs to.",                                            "primary_key": false, "nullable": false, "foreign_key": {"table": "categories", "column": "category_id"}},
             {"name": "unit_price",     "type": "REAL",    "description": "Current selling price per unit in USD.",                                       "primary_key": false, "nullable": false},
             {"name": "cost_price",     "type": "REAL",    "description": "Procurement or manufacturing cost per unit in USD.",                           "primary_key": false, "nullable": true},
-            {"name": "stock_quantity", "type": "INTEGER", "description": "Units currently available in inventory.",                                      "primary_key": false, "nullable": false},
+            {"name": "stock_quantity", "type": "INTEGER", "description": "Units currently available in inventory.",                                      "primary_key": false, "nullable": false, "aliases": ["inventory", "stock", "units in stock", "on hand"]},
             {"name": "brand",          "type": "TEXT",    "description": "Brand or manufacturer name of the product.",                                   "primary_key": false, "nullable": true},
             {"name": "is_active",      "type": "INTEGER", "description": "Whether the product is available for sale: 1 for yes, 0 for discontinued.",    "primary_key": false, "nullable": false}
           ]
@@ -70,7 +96,7 @@
             {"name": "product_id", "type": "INTEGER", "description": "Product purchased on this line item.",                                             "primary_key": false, "nullable": false, "foreign_key": {"table": "products", "column": "product_id"}},
             {"name": "quantity",   "type": "INTEGER", "description": "Number of units of the product ordered.",                                          "primary_key": false, "nullable": false},
             {"name": "unit_price", "type": "REAL",    "description": "Unit price at the time of purchase in USD.",                                       "primary_key": false, "nullable": false},
-            {"name": "line_total", "type": "REAL",    "description": "Total line amount: quantity multiplied by unit_price in USD.",                     "primary_key": false, "nullable": false}
+            {"name": "line_total", "type": "REAL",    "description": "Total line amount: quantity multiplied by unit_price in USD. Canonical transactional revenue / sales amount per line item.", "primary_key": false, "nullable": false, "aliases": ["revenue", "sales", "sales amount", "turnover", "gross merchandise value"]}
           ]
         },
         {
@@ -106,7 +132,7 @@
             {"name": "period_year",     "type": "INTEGER", "description": "Calendar year of the target period.",                                         "primary_key": false, "nullable": false},
             {"name": "period_quarter",  "type": "INTEGER", "description": "Quarter of the year for this target: 1 through 4.",                           "primary_key": false, "nullable": false},
             {"name": "target_amount",   "type": "REAL",    "description": "Revenue target set for the period in USD.",                                   "primary_key": false, "nullable": false},
-            {"name": "achieved_amount", "type": "REAL",    "description": "Actual revenue achieved in the period in USD.",                               "primary_key": false, "nullable": true}
+            {"name": "achieved_amount", "type": "REAL",    "description": "Actual revenue a sales rep achieved against their target in the period in USD. A rep-vs-target attainment figure, not company-wide sales revenue.", "primary_key": false, "nullable": true, "aliases": ["attainment", "achieved sales", "quota attainment"]}
           ]
         },
         {
@@ -130,7 +156,7 @@
             {"name": "order_id",        "type": "INTEGER", "description": "Order this invoice was generated for.",                                       "primary_key": false, "nullable": false, "foreign_key": {"table": "orders", "column": "order_id"}},
             {"name": "invoice_date",    "type": "DATE",    "description": "Date the invoice was issued.",                                                "primary_key": false, "nullable": false},
             {"name": "due_date",        "type": "DATE",    "description": "Payment due date for the invoice.",                                           "primary_key": false, "nullable": false},
-            {"name": "amount",          "type": "REAL",    "description": "Total invoice amount in USD.",                                                "primary_key": false, "nullable": false},
+            {"name": "amount",          "type": "REAL",    "description": "Total invoice amount billed in USD. Amount invoiced to the customer, distinct from recognized sales revenue (see order_items.line_total).", "primary_key": false, "nullable": false, "aliases": ["invoiced amount", "billed amount", "invoice total"]},
             {"name": "status",          "type": "TEXT",    "description": "Invoice payment status: Unpaid, Paid, Overdue, or Void.",                     "primary_key": false, "nullable": false},
             {"name": "payment_method",  "type": "TEXT",    "description": "Payment method used: Credit Card, Bank Transfer, or Cash.",                   "primary_key": false, "nullable": true}
           ]
@@ -352,9 +378,9 @@
             {"name": "payroll_id",     "type": "INTEGER", "description": "Unique identifier for each payroll record.",                                   "primary_key": true,  "nullable": false},
             {"name": "employee_id",    "type": "INTEGER", "description": "Employee this payroll record belongs to.",                                     "primary_key": false, "nullable": false, "foreign_key": {"table": "employees", "column": "employee_id"}},
             {"name": "pay_period",     "type": "TEXT",    "description": "Pay period identifier, e.g. 2024-01 for January 2024.",                        "primary_key": false, "nullable": false},
-            {"name": "gross_salary",   "type": "REAL",    "description": "Total gross salary before deductions for the period in USD.",                  "primary_key": false, "nullable": false},
+            {"name": "gross_salary",   "type": "REAL",    "description": "Total gross salary before deductions for the period in USD. Canonical employee salary / pay / compensation figure.", "primary_key": false, "nullable": false, "aliases": ["salary", "pay", "compensation", "gross pay", "wage"]},
             {"name": "deductions",     "type": "REAL",    "description": "Total deductions including tax and benefits contributions in USD.",             "primary_key": false, "nullable": false},
-            {"name": "net_salary",     "type": "REAL",    "description": "Take-home salary after all deductions in USD.",                                "primary_key": false, "nullable": false},
+            {"name": "net_salary",     "type": "REAL",    "description": "Take-home salary after all deductions in USD.",                                "primary_key": false, "nullable": false, "aliases": ["take-home pay", "net pay"]},
             {"name": "payment_date",   "type": "DATE",    "description": "Date the salary was paid to the employee.",                                    "primary_key": false, "nullable": false}
           ]
         },
@@ -593,7 +619,7 @@
             {"name": "impressions",         "type": "INTEGER", "description": "Total ad or content impressions recorded on this date.",                  "primary_key": false, "nullable": true},
             {"name": "clicks",              "type": "INTEGER", "description": "Total clicks on campaign ads or content on this date.",                   "primary_key": false, "nullable": true},
             {"name": "conversions",         "type": "INTEGER", "description": "Number of desired actions completed, e.g. form fills or purchases.",      "primary_key": false, "nullable": true},
-            {"name": "revenue_attributed",  "type": "REAL",    "description": "Revenue attributed to the campaign on this date in USD.",                 "primary_key": false, "nullable": true},
+            {"name": "revenue_attributed",  "type": "REAL",    "description": "Marketing-attributed revenue credited to the campaign on this date in USD. An attribution estimate, not booked sales revenue (see order_items.line_total).", "primary_key": false, "nullable": true, "aliases": ["attributed revenue", "marketing revenue"]},
             {"name": "ctr",                 "type": "REAL",    "description": "Click-through rate calculated as clicks divided by impressions.",         "primary_key": false, "nullable": true}
           ]
         }

@@ -4,7 +4,8 @@ Node model
 ----------
 (:Domain {name, description, embedding})
 (:Table  {name, description, domain, embedding})
-(:Column {key, name, table_name, domain, description, data_type, is_primary_key, embedding})
+(:Column {key, name, table_name, domain, description, data_type, is_primary_key, aliases, embedding})
+(:Metric {name, expression, description, tables})   # canonical business measures
 
 Relationship model
 ------------------
@@ -32,6 +33,7 @@ from text2sql.metadata.utils import (
     get_all_relationships,
     get_all_tables,
     get_domains,
+    get_metrics,
     load_schema,
 )
 
@@ -52,6 +54,7 @@ def build(uri: str, user: str, password: str) -> None:
         _upsert_table_and_column_nodes(s, get_all_tables(schema), table_emb, col_emb)
         _upsert_fk_relationships(s, get_all_relationships(schema))
         _upsert_table_references(s, get_all_relationships(schema))
+        _upsert_metric_nodes(s, get_metrics(schema))
     driver.close()
 
     tables     = get_all_tables(schema)
@@ -59,7 +62,8 @@ def build(uri: str, user: str, password: str) -> None:
     rel_count  = len(get_all_relationships(schema))
     print(
         f"Knowledge Graph built: {len(get_domains(schema))} domains | "
-        f"{len(tables)} tables | {col_count} columns | {rel_count} FK edges"
+        f"{len(tables)} tables | {col_count} columns | {rel_count} FK edges | "
+        f"{len(get_metrics(schema))} metrics"
     )
 
 
@@ -77,6 +81,10 @@ def _create_constraints(session) -> None:
     session.run(
         "CREATE CONSTRAINT column_key_unique IF NOT EXISTS "
         "FOR (c:Column) REQUIRE c.key IS UNIQUE"
+    )
+    session.run(
+        "CREATE CONSTRAINT metric_name_unique IF NOT EXISTS "
+        "FOR (m:Metric) REQUIRE m.name IS UNIQUE"
     )
 
 
@@ -139,6 +147,7 @@ def _upsert_table_and_column_nodes(
                     c.description    = $desc,
                     c.data_type      = $dtype,
                     c.is_primary_key = $pk,
+                    c.aliases        = $aliases,
                     c.embedding      = $emb
                 WITH c
                 MATCH (t:Table {name: $table_name})
@@ -151,6 +160,7 @@ def _upsert_table_and_column_nodes(
                 desc=col["description"],
                 dtype=col["type"],
                 pk=col.get("primary_key", False),
+                aliases=col.get("aliases", []),
                 emb=col_emb.get(key, []),
             )
 
@@ -181,6 +191,24 @@ def _upsert_table_references(session, relationships: list[dict]) -> None:
             to_table=rel["to_table"],
             from_col=rel["from_column"],
             to_col=rel["to_column"],
+        )
+
+
+def _upsert_metric_nodes(session, metrics: list[dict]) -> None:
+    """Canonical business measures — the semantic layer that disambiguates which
+    column is 'revenue', 'salary', etc. Surfaced to the LLM at generation time."""
+    for m in metrics:
+        session.run(
+            """
+            MERGE (m:Metric {name: $name})
+            SET m.expression  = $expression,
+                m.description = $description,
+                m.tables      = $tables
+            """,
+            name=m["name"],
+            expression=m["expression"],
+            description=m.get("description", ""),
+            tables=m.get("tables", []),
         )
 
 

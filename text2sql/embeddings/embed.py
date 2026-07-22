@@ -31,7 +31,11 @@ def _get_model() -> SentenceTransformer:
 
 
 def _column_text(table_name: str, col: dict) -> str:
-    return f"{table_name}.{col['name']}: {col['description']}"
+    text = f"{table_name}.{col['name']}: {col['description']}"
+    aliases = col.get("aliases")
+    if aliases:
+        text += f" (also known as: {', '.join(aliases)})"
+    return text
 
 
 def _table_text(table: dict) -> str:

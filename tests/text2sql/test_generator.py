@@ -31,6 +31,10 @@ def _ctx() -> dict:
              "to_table": "customers", "to_column": "customer_id"},
         ],
         "domains": [{"name": "Sales", "score": 0.9}],
+        "metrics": [
+            {"name": "total revenue", "expression": "SUM(order_items.line_total)",
+             "description": "canonical transactional revenue"},
+        ],
     }
 
 
@@ -44,6 +48,9 @@ def test_format_schema_emits_domain_grouping_and_join_paths():
     # the discovered join key is handed to the LLM explicitly
     assert "## Join Paths" in out
     assert "orders.customer_id = customers.customer_id" in out
+    # canonical metric definition disambiguates which column is 'revenue'
+    assert "## Metric definitions" in out
+    assert "total revenue: SUM(order_items.line_total)" in out
 
 
 def test_format_schema_backward_compatible_without_joins_or_domain():
@@ -62,6 +69,7 @@ def test_format_schema_backward_compatible_without_joins_or_domain():
     assert "#### products" in out
     assert "## Join Paths" not in out
     assert "### Domain:" not in out
+    assert "## Metric definitions" not in out
 
 
 def test_generate_sql_short_circuits_on_empty_retrieval():

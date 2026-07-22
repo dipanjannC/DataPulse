@@ -108,6 +108,21 @@ class SchemaGraph:
                 seeds=seeds,
             ).data()
 
+    def self_joins(self, tables: list[str]) -> list[dict]:
+        """Rows: {name, from_column, to_column} — self-referential REFERENCES
+        loops (e.g. employees.manager_id -> employees.employee_id) that pairwise
+        shortest paths between distinct tables cannot surface. Fakes must match
+        this shape."""
+        with self._driver.session() as s:
+            return s.run(
+                """
+                MATCH (t:Table)-[r:REFERENCES]->(t)
+                WHERE t.name IN $tables
+                RETURN t.name AS name, r.from_column AS from_column, r.to_column AS to_column
+                """,
+                tables=tables,
+            ).data()
+
     def fetch_tables(self, tables: list[str]) -> list[dict]:
         """Rows: one per column — {table_name, table_desc, domain, col_name,
         dtype, col_desc, is_pk}. Fakes must match this shape."""
@@ -123,6 +138,20 @@ class SchemaGraph:
                        c.data_type   AS dtype,
                        c.description AS col_desc,
                        c.is_primary_key AS is_pk
+                """,
+                tables=tables,
+            ).data()
+
+    def fetch_metrics(self, tables: list[str]) -> list[dict]:
+        """Rows: {name, expression, description} for canonical metrics whose
+        referenced tables intersect the retrieved tables. Fakes must match this
+        shape."""
+        with self._driver.session() as s:
+            return s.run(
+                """
+                MATCH (m:Metric)
+                WHERE any(t IN m.tables WHERE t IN $tables)
+                RETURN m.name AS name, m.expression AS expression, m.description AS description
                 """,
                 tables=tables,
             ).data()
@@ -178,8 +207,18 @@ def retrieve_context(graph, q_vec: list[float], top_k: int = DEFAULT_TOP_K) -> d
     paths = graph.join_paths(seeds, MAX_JOIN_HOPS) if len(seeds) > 1 else []
     all_tables, joins = _collect_paths(paths, seeds)
 
-    rows = graph.fetch_tables(all_tables) if all_tables else []
-    return _build_context(rows, joins, domains)
+    if all_tables:
+        for sj in graph.self_joins(all_tables):
+            joins.append({
+                "from_table":  sj["name"],
+                "from_column": sj["from_column"],
+                "to_table":    sj["name"],
+                "to_column":   sj["to_column"],
+            })
+
+    rows    = graph.fetch_tables(all_tables) if all_tables else []
+    metrics = graph.fetch_metrics(all_tables) if all_tables else []
+    return _build_context(rows, joins, domains, metrics)
 
 
 def _seed_tables(col_hits: list[dict], table_hits: list[dict], max_seeds: int) -> list[str]:
@@ -216,7 +255,12 @@ def _collect_paths(paths: list[dict], seeds: list[str]) -> tuple[list[str], list
     return tables, joins
 
 
-def _build_context(rows: list[dict], joins: list[dict], domains: list[dict]) -> dict:
+def _build_context(
+    rows: list[dict],
+    joins: list[dict],
+    domains: list[dict],
+    metrics: list[dict] | None = None,
+) -> dict:
     tables: dict[str, dict] = {}
     for r in rows:
         tname = r["table_name"]
@@ -240,4 +284,8 @@ def _build_context(rows: list[dict], joins: list[dict], domains: list[dict]) -> 
         "tables":  tables,
         "joins":   joins,
         "domains": [{"name": d["name"], "score": d.get("score")} for d in domains],
+        "metrics": [
+            {"name": m["name"], "expression": m["expression"], "description": m.get("description", "")}
+            for m in (metrics or [])
+        ],
     }

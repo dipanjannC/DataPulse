@@ -416,6 +416,50 @@ textarea::placeholder { color: var(--muted); }
 
 .tw-cursor { display: inline-block; color: var(--accent); font-weight: 400; }
 
+/* Answer (the agent's natural-language conclusion) */
+.answer-block {
+  background: rgba(161,0,255,.05); border: 1px solid var(--border-hi);
+  border-left: 2px solid var(--accent); border-radius: var(--radius);
+  padding: 12px 16px; margin-bottom: 10px;
+}
+.answer-label {
+  font-family: var(--sans); font-size: 9px; font-weight: 600; color: var(--accent-soft);
+  letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 5px;
+}
+.answer-text { font-family: var(--sans); font-size: 14px; color: var(--text); line-height: 1.65; white-space: pre-wrap; }
+
+/* Reasoning trace (the agent's ordered tool calls) */
+.reasoning-toggle {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; margin-bottom: 10px;
+}
+.reasoning-header {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 14px; background: none; border: none; cursor: pointer;
+  font-family: var(--sans); font-size: 11px; font-weight: 500; color: var(--text-dim);
+}
+.reasoning-header:hover { color: var(--text); }
+.reasoning-icon  { color: var(--accent); margin-right: 8px; font-family: var(--mono); font-weight: 700; }
+.reasoning-arrow { transition: transform .2s; display: inline-block; }
+.reasoning-body  { padding: 4px 14px 12px; display: flex; flex-direction: column; gap: 8px; }
+
+.trace-step { border-left: 2px solid var(--border-hi); padding: 3px 0 3px 12px; }
+.trace-step-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.trace-num {
+  font-family: var(--mono); font-size: 9px; color: var(--muted);
+  border: 1px solid var(--border-hi); border-radius: var(--radius);
+  min-width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center;
+}
+.trace-tool   { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--accent-soft); }
+.trace-detail { font-family: var(--mono); font-size: 11px; color: var(--text-dim); word-break: break-word; }
+.trace-sql {
+  margin: 2px 0 4px; padding: 8px 10px; font-family: var(--mono); font-size: 11px;
+  color: var(--text-dim); line-height: 1.6; background: var(--bg-deep);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  white-space: pre-wrap; overflow-x: auto;
+}
+.trace-obs { font-family: var(--mono); font-size: 10.5px; color: var(--muted); line-height: 1.5; word-break: break-word; }
+
 /* Results table */
 .results-table {
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;

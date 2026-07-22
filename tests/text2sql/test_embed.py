@@ -14,6 +14,15 @@ def test_column_text():
     assert _column_text("customers", col) == "customers.loyalty_tier: Customer loyalty tier."
 
 
+def test_column_text_folds_in_aliases():
+    """Business synonyms must be embedded so a query like 'revenue' can retrieve
+    a column whose description never uses that word."""
+    col = {"name": "line_total", "description": "Total line amount.",
+           "aliases": ["revenue", "sales amount"]}
+    text = _column_text("order_items", col)
+    assert text == "order_items.line_total: Total line amount. (also known as: revenue, sales amount)"
+
+
 def test_table_text_includes_domain_for_routing_context():
     table = {"name": "orders", "domain": "Sales", "description": "Order headers."}
     assert _table_text(table) == "Sales • orders: Order headers."

@@ -23,6 +23,8 @@ Rules:
 - Use JOINs whenever data from multiple tables is needed.
 - When joining, use the relationships listed under "## Join Paths" as the join
   conditions; do not invent join keys that are not shown there.
+- If the question asks for a business measure defined under "## Metric definitions",
+  use that exact SQL expression rather than guessing a similar-looking column.
 - Default LIMIT is 100 rows unless the user specifies otherwise.
 - Never use DROP, DELETE, UPDATE, INSERT, CREATE, ALTER, or any DDL / DML statement.
 """
@@ -129,6 +131,15 @@ def _format_schema(context: dict) -> str:
             lines.append(
                 f"- {j['from_table']}.{j['from_column']} = {j['to_table']}.{j['to_column']}"
             )
+
+    metrics = context.get("metrics") or []
+    if metrics:
+        lines.append("\n## Metric definitions")
+        lines.append("When the question asks for one of these business measures, use the exact expression:")
+        for m in metrics:
+            lines.append(f"- {m['name']}: {m['expression']}")
+            if m.get("description"):
+                lines.append(f"    ({m['description']})")
 
     return "\n".join(lines)
 

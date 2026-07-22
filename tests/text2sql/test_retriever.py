@@ -24,12 +24,15 @@ Q = [0.1, 0.2, 0.3, 0.4]  # dummy query vector; the fake ignores it
 class _FakeSchemaGraph:
     """Duck-typed stand-in for SchemaGraph. Returns canned, shape-matched rows."""
 
-    def __init__(self, *, domains=None, columns=None, tables=None, paths=None, catalog=None):
-        self._domains = domains or []
-        self._columns = columns or []
-        self._tables  = tables or []
-        self._paths   = paths or []
-        self._catalog = catalog or {}   # {table: {"desc","domain","columns":[(n,t,d,pk)]}}
+    def __init__(self, *, domains=None, columns=None, tables=None, paths=None,
+                 catalog=None, self_ref=None, metrics=None):
+        self._domains  = domains or []
+        self._columns  = columns or []
+        self._tables   = tables or []
+        self._paths    = paths or []
+        self._catalog  = catalog or {}   # {table: {"desc","domain","columns":[(n,t,d,pk)]}}
+        self._self_ref = self_ref or []  # [{"name","from_column","to_column"}]
+        self._metrics  = metrics or []   # [{"name","expression","description","tables"}]
         self.calls: list[tuple] = []
 
     def route_domains(self, q_vec, top_n):
@@ -53,6 +56,15 @@ class _FakeSchemaGraph:
         # mirror the Cypher WHERE: both endpoints must be seeds
         return [p for p in self._paths
                 if {p["tables"][0], p["tables"][-1]} <= seedset]
+
+    def self_joins(self, tables):
+        self.calls.append(("self_joins", tuple(sorted(tables))))
+        return [r for r in self._self_ref if r["name"] in set(tables)]
+
+    def fetch_metrics(self, tables):
+        self.calls.append(("fetch_metrics", tuple(sorted(tables))))
+        seen = set(tables)
+        return [m for m in self._metrics if seen & set(m.get("tables", []))]
 
     def fetch_tables(self, tables):
         self.calls.append(("fetch_tables", tuple(sorted(tables))))
@@ -128,6 +140,59 @@ def test_dimension_question_reaches_fact_tables_via_join_path():
     assert _called(fake, "join_paths")
 
 
+def test_self_referential_join_is_surfaced():
+    """'employees and their managers' — the manager_id self-loop is not on any
+    pairwise path, so it must be pulled in via self_joins and reach the caller."""
+    fake = _FakeSchemaGraph(
+        domains=[{"name": "HR", "description": "hr", "score": 0.8}],
+        columns=[
+            {"table_name": "employees", "domain": "HR", "score": 0.9},
+            {"table_name": "positions", "domain": "HR", "score": 0.6},
+        ],
+        tables=[],
+        paths=[{
+            "tables": ["employees", "positions"],
+            "edges": [{"start": "employees", "end": "positions",
+                       "from_column": "position_id", "to_column": "position_id"}],
+        }],
+        self_ref=[{"name": "employees", "from_column": "manager_id", "to_column": "employee_id"}],
+        catalog={
+            "employees": {"desc": "emp", "domain": "HR", "columns": [
+                ("employee_id", "INTEGER", "id", True),
+                ("manager_id", "INTEGER", "mgr", False),
+                ("position_id", "INTEGER", "fk", False)]},
+            "positions": {"desc": "pos", "domain": "HR", "columns": [
+                ("position_id", "INTEGER", "id", True)]},
+        },
+    )
+
+    ctx = retrieve_context(fake, Q, top_k=10)
+
+    pairs = {(j["from_table"], j["from_column"], j["to_table"], j["to_column"]) for j in ctx["joins"]}
+    assert ("employees", "manager_id", "employees", "employee_id") in pairs
+
+
+def test_canonical_metric_surfaces_when_its_table_is_retrieved():
+    """The 'total revenue' metric must reach the caller whenever order_items is
+    retrieved, so the LLM is told the canonical expression instead of guessing
+    among invoices.amount / achieved_amount / revenue_attributed."""
+    fake = _FakeSchemaGraph(
+        domains=[{"name": "Sales", "description": "s", "score": 0.9}],
+        columns=[{"table_name": "order_items", "domain": "Sales", "score": 0.8}],
+        tables=[],
+        paths=[],
+        metrics=[{"name": "total revenue", "expression": "SUM(order_items.line_total)",
+                  "description": "canonical revenue", "tables": ["order_items"]}],
+        catalog={"order_items": {"desc": "li", "domain": "Sales",
+                                 "columns": [("line_total", "REAL", "amt", False)]}},
+    )
+
+    ctx = retrieve_context(fake, Q, top_k=10)
+
+    assert [m["name"] for m in ctx["metrics"]] == ["total revenue"]
+    assert ctx["metrics"][0]["expression"] == "SUM(order_items.line_total)"
+
+
 def test_single_seed_skips_join_path_expansion():
     fake = _FakeSchemaGraph(
         domains=[{"name": "Sales", "description": "d", "score": 0.9}],
@@ -201,3 +266,5 @@ def test_build_context_shape_and_drops_dangling_joins():
     # customers was not fetched, so the join referencing it is dropped
     assert ctx["joins"] == []
     assert ctx["domains"] == [{"name": "Sales", "score": 0.9}]
+    # metrics key is always present (additive contract), empty when none given
+    assert ctx["metrics"] == []

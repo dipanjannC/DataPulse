@@ -31,3 +31,8 @@ def get_all_relationships(schema: dict) -> list[dict]:
 def get_domains(schema: dict) -> list[dict]:
     """Return domain-level metadata (name, description)."""
     return [{"name": d["name"], "description": d["description"]} for d in schema["domains"]]
+
+
+def get_metrics(schema: dict) -> list[dict]:
+    """Return the canonical business-metric glossary (may be empty)."""
+    return schema.get("metrics", [])

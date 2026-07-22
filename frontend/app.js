@@ -51,10 +51,11 @@
   }
 
   // ── Pipeline Card (the signature) ────────────────────────────────────────────
-  // Five honest stages that mirror the real backend flow:
-  //   retrieve_schema_context → generate_sql (with retries) → SQLite execution.
+  // Five stages summarising the real backend flow at a high level: the agent
+  // retrieves schema from the KG, plans by calling tools, and runs read-only SQL.
   // No fabricated per-step timings or infra claims; only real details are shown
-  // (matched tables/domains, attempts, row count) plus the true total elapsed.
+  // (matched tables/domains, SQL attempts, row count) plus the true total elapsed.
+  // The verbatim step-by-step tool calls appear below in the reasoning trace.
   const PIPELINE_STEPS = [
     { label: 'Understanding your question' },
     { label: 'Searching the knowledge graph' },
@@ -282,6 +283,56 @@
     return el;
   }
 
+  function buildAnswerBlock(answer) {
+    const el = document.createElement('div');
+    el.className = 'answer-block';
+    el.innerHTML = `
+      <div class="answer-label">Answer</div>
+      <div class="answer-text">${esc(answer)}</div>
+    `;
+    return el;
+  }
+
+  // The agent's real reasoning: the ordered tool calls it made over the KG and
+  // SQLite. Collapsible, like the schema panel; run_sql details render as code.
+  function buildReasoningTrace(trace) {
+    const steps = (trace || []).filter(s => s.kind === 'tool');
+    const el = document.createElement('div');
+    el.className = 'reasoning-toggle';
+    if (!steps.length) return el;
+    let open = false;
+
+    function stepHtml(s, i) {
+      const isSQL  = s.tool === 'run_sql';
+      const detail = s.detail
+        ? (isSQL
+            ? `<pre class="trace-sql">${esc(s.detail)}</pre>`
+            : `<span class="trace-detail">${esc(s.detail)}</span>`)
+        : '';
+      return `<div class="trace-step">
+        <div class="trace-step-head">
+          <span class="trace-num">${i + 1}</span>
+          <span class="trace-tool">${esc(s.tool)}</span>
+        </div>
+        ${detail}
+        <div class="trace-obs">${esc(s.observation)}</div>
+      </div>`;
+    }
+
+    function render() {
+      el.innerHTML = `
+        <button class="reasoning-header">
+          <span><span class="reasoning-icon">&gt;</span>Reasoning trace · ${steps.length} tool call${steps.length !== 1 ? 's' : ''}</span>
+          <span class="reasoning-arrow" style="transform:rotate(${open ? '180' : '0'}deg)">▾</span>
+        </button>
+        ${open ? `<div class="reasoning-body">${steps.map(stepHtml).join('')}</div>` : ''}
+      `;
+      el.querySelector('.reasoning-header').addEventListener('click', () => { open = !open; render(); });
+    }
+    render();
+    return el;
+  }
+
   function buildAssistantBubble(data) {
     const wrapper = document.createElement('div');
     wrapper.className = 'msg-assistant';
@@ -289,6 +340,10 @@
 
     const badges = buildDomainBadges(tables);
     if (badges) wrapper.appendChild(badges);
+
+    // The natural-language answer is the agent's primary output — show it whether
+    // or not a result table came back (a step-capped run still explains itself).
+    if (data.answer && data.answer.trim()) wrapper.appendChild(buildAnswerBlock(data.answer));
 
     if (!data.success) {
       const err = document.createElement('div');
@@ -299,6 +354,7 @@
         ${data.sql?`<div class="error-sql">${esc(data.sql)}</div>`:''}
       `;
       wrapper.appendChild(err);
+      wrapper.appendChild(buildReasoningTrace(data.trace));
       return wrapper;
     }
 
@@ -307,6 +363,7 @@
     if (data.columns && data.columns.length > 0) {
       wrapper.appendChild(buildResultsTable(data.columns, data.rows || []));
     }
+    wrapper.appendChild(buildReasoningTrace(data.trace));
     return wrapper;
   }
 
