@@ -208,18 +208,29 @@
     return el;
   }
 
-  function buildSchemaToggle(tables) {
+  // The schema context the KG retrieval returned for this question: the matched
+  // tables plus the canonical metric definitions (e.g. revenue = SUM(...)). The
+  // metrics are the graph's semantic layer — showing them is what explains why a
+  // graph is in the loop at all, rather than a raw prompt dump.
+  function buildSchemaToggle(tables, metrics) {
     const names = Object.keys(tables);
+    const mlist = metrics || [];
     const el    = document.createElement('div');
     el.className = 'schema-toggle';
     let open = false;
     function render() {
       el.innerHTML = `
         <button class="schema-header">
-          <span><span class="schema-icon">&gt;</span>Schema Context · ${names.length} table${names.length!==1?'s':''}</span>
+          <span><span class="schema-icon">&gt;</span>Schema from the knowledge graph · ${names.length} table${names.length!==1?'s':''}</span>
           <span class="schema-arrow" style="transform:rotate(${open?'180':'0'}deg)">▾</span>
         </button>
-        ${open?`<div class="schema-body">${names.map(n=>`<span class="table-pill" title="${esc(tables[n]?.description||n)}">${esc(n)}</span>`).join('')}</div>`:''}
+        ${open?`<div class="schema-body">
+          <div class="schema-pills">${names.map(n=>`<span class="table-pill" title="${esc(tables[n]?.description||n)}">${esc(n)}</span>`).join('')}</div>
+          ${mlist.length?`<div class="schema-metrics">
+            <div class="schema-metrics-label">Metric definitions resolved</div>
+            ${mlist.map(m=>`<div class="metric-def" title="${esc(m.description||'')}"><code class="metric-name">${esc(m.name)}</code><span class="metric-eq">=</span><code class="metric-expr">${esc(m.expression)}</code></div>`).join('')}
+          </div>`:''}
+        </div>`:''}
       `;
       el.querySelector('.schema-header').addEventListener('click', () => { open=!open; render(); });
     }
@@ -293,26 +304,45 @@
     return el;
   }
 
-  // The agent's real reasoning: the ordered tool calls it made over the KG and
-  // SQLite. Collapsible, like the schema panel; run_sql details render as code.
+  // Which backend system each tool touches, plus a plain-language label for it.
+  // get_schema_context is the ONLY tool that queries the Neo4j knowledge graph;
+  // sample_values and run_sql read the SQLite database. This mapping is static and
+  // presentational — no API change — and it's what makes the two-store flow legible:
+  // the graph plans the query, SQLite executes it.
+  const TOOL_META = {
+    get_schema_context: { action: 'Searched the knowledge graph', system: 'kg',  sys: 'Knowledge Graph' },
+    sample_values:      { action: 'Sampled column values',        system: 'sql', sys: 'SQLite' },
+    run_sql:            { action: 'Ran SQL query',                 system: 'sql', sys: 'SQLite' },
+  };
+
+  // The agent's real reasoning: the ordered tool calls it made, each tagged with
+  // the system it hit (Knowledge Graph vs SQLite). Order is verbatim from the
+  // backend, so a re-run after a SQL error shows the agent self-correcting.
   function buildReasoningTrace(trace) {
     const steps = (trace || []).filter(s => s.kind === 'tool');
     const el = document.createElement('div');
     el.className = 'reasoning-toggle';
     if (!steps.length) return el;
-    let open = false;
+    let open = true;
 
     function stepHtml(s, i) {
+      const meta   = TOOL_META[s.tool] || { action: s.tool, system: 'kg', sys: '' };
       const isSQL  = s.tool === 'run_sql';
+      const isErr  = /^error:/i.test(s.observation || '');
       const detail = s.detail
         ? (isSQL
-            ? `<pre class="trace-sql">${esc(s.detail)}</pre>`
+            ? `<pre class="trace-sql">${highlightSQL(s.detail)}</pre>`
             : `<span class="trace-detail">${esc(s.detail)}</span>`)
         : '';
-      return `<div class="trace-step">
+      const badge = meta.sys
+        ? `<span class="sys-badge ${meta.system}"><span class="sys-dot"></span>${esc(meta.sys)}</span>`
+        : '';
+      return `<div class="trace-step ${meta.system}${isErr ? ' errored' : ''}">
         <div class="trace-step-head">
           <span class="trace-num">${i + 1}</span>
-          <span class="trace-tool">${esc(s.tool)}</span>
+          <span class="trace-action">${esc(meta.action)}</span>
+          <code class="trace-tool">${esc(s.tool)}</code>
+          ${badge}
         </div>
         ${detail}
         <div class="trace-obs">${esc(s.observation)}</div>
@@ -322,10 +352,13 @@
     function render() {
       el.innerHTML = `
         <button class="reasoning-header">
-          <span><span class="reasoning-icon">&gt;</span>Reasoning trace · ${steps.length} tool call${steps.length !== 1 ? 's' : ''}</span>
+          <span><span class="reasoning-icon">&gt;</span>Reasoning trace · ${steps.length} step${steps.length !== 1 ? 's' : ''}</span>
           <span class="reasoning-arrow" style="transform:rotate(${open ? '180' : '0'}deg)">▾</span>
         </button>
-        ${open ? `<div class="reasoning-body">${steps.map(stepHtml).join('')}</div>` : ''}
+        ${open ? `<div class="reasoning-body">
+          <div class="trace-intro">The <b class="ti-kg">knowledge graph</b> plans the query — which tables, how they join, and how a metric like <i>revenue</i> is defined — then the generated <b class="ti-sql">SQL</b> runs against SQLite to fetch the rows. Below is the actual sequence of steps, including any the agent retried.</div>
+          ${steps.map(stepHtml).join('')}
+        </div>` : ''}
       `;
       el.querySelector('.reasoning-header').addEventListener('click', () => { open = !open; render(); });
     }
@@ -358,7 +391,8 @@
       return wrapper;
     }
 
-    if (Object.keys(tables).length > 0) wrapper.appendChild(buildSchemaToggle(tables));
+    const metrics = (data.schema_context && data.schema_context.metrics) || [];
+    if (Object.keys(tables).length > 0) wrapper.appendChild(buildSchemaToggle(tables, metrics));
     if (data.sql) wrapper.appendChild(buildSQLBlock(data.sql));
     if (data.columns && data.columns.length > 0) {
       wrapper.appendChild(buildResultsTable(data.columns, data.rows || []));
@@ -439,6 +473,31 @@
       <div class="highlighted-caption">
         Ask about your enterprise data in plain English.
         <span class="hl-brand">DataPulse</span> searches its knowledge graph for the right schema and writes the query for you — no SQL required.
+      </div>
+
+      <div class="howit">
+        <span class="eyebrow">How it works</span>
+        <div class="howit-flow">
+          <div class="howit-node">
+            <div class="howit-k">Your question</div>
+            <div class="howit-v">plain English</div>
+          </div>
+          <span class="howit-arrow">&rarr;</span>
+          <div class="howit-node kg">
+            <div class="howit-k">Knowledge Graph</div>
+            <div class="howit-v">finds tables, join keys &amp; metric definitions</div>
+          </div>
+          <span class="howit-arrow">&rarr;</span>
+          <div class="howit-node">
+            <div class="howit-k">LLaMA-3.3</div>
+            <div class="howit-v">writes the SQL</div>
+          </div>
+          <span class="howit-arrow">&rarr;</span>
+          <div class="howit-node sql">
+            <div class="howit-k">SQLite</div>
+            <div class="howit-v">runs it, returns the rows</div>
+          </div>
+        </div>
       </div>
 
       <div class="suggestions-grid">
