@@ -1,34 +1,82 @@
 # Architecture
 
-## Bounded Contexts
+This documents the **active** stack, `text2sql/`. For a task-oriented quickstart (run it, add a
+domain), see [`../text2sql/README.md`](../text2sql/README.md). For the older `src/` graph stack,
+see [legacy_src.md](legacy_src.md).
 
-DataPulse uses Domain-Driven Design with three bounded contexts plus a shared kernel and a datagen module:
+## Overview
 
-1. **sales_data** — Owns the sales domain model (Order, Product, Customer), field-level metadata, and controlled vocabularies (Region, Channel, ProductCategory).
-2. **graph** — Loads sales CSVs directly into Neo4j as a knowledge graph. Defines node labels / relationship types (`schema.py`), the driver wrapper (`Neo4jStore`), and the CSV → graph loader (`Neo4jGraphBuilder`).
-3. **query_engine** — A single google-adk `Agent` answers natural-language questions by calling a read-only `run_cypher` tool against Neo4j.
-4. **datagen** — Generates synthetic sales CSVs (`src/datagen/`) for testing and demos.
+`text2sql/` turns a plain-English business question into SQL and rows. A Groq-backed agent plans
+the query by *calling tools* against a **Neo4j knowledge graph of the schema** (tables, columns,
+join keys, canonical metrics), then executes read-only SQL against **SQLite**. It spans five
+domains — Sales, IT, HR, Marketing, Security — and is standalone (imports nothing from `src/`,
+deploys via `render.yaml`).
 
-## Data Flow
+## The four layers
+
+Everything is driven by one contract, `metadata/schema.json`, which every layer reads.
 
 ```
-CSV  ->  Neo4j (Aura)  ->  google-adk Agent + run_cypher tool  ->  natural-language answer
-(datagen / data/raw)    (graph)                                   (query_engine)
+metadata/schema.json   ← the CATALOG contract (50 tables · types · PKs · 40 FK edges · metrics)
+        │  read by every layer
+        ▼
+ ┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐
+ │   GENERATE   │──▶│   QUALITY    │──▶│     LOAD     │──▶│   CONSUME    │
+ │   datagen/   │   │   quality/   │   │ db/ + graph/ │   │agent/ + api/ │
+ └──────────────┘   └──────────────┘   └──────────────┘   └──────────────┘
+  seeded CSVs,       validate CSVs      CSVs → SQLite      NL question →
+  one module         against the        + Neo4j graph      tools over KG →
+  per domain         schema (gate)      (schema meta)      SQL → rows
 ```
 
-## Tech Choices
+| Layer | Path | Entry-point seam | Responsibility |
+|---|---|---|---|
+| **CATALOG** | `metadata/` | `utils.py` (`load_schema`, `get_all_tables`, `get_all_relationships`, `get_domains`, `get_metrics`) | The contract: tables, column types, PKs, FK edges, canonical metric definitions. See [data_model.md](data_model.md). |
+| **GENERATE** | `datagen/` | `generate(seed=42, domains=None, data_dir=...) -> {table: rows}` | Writes one seeded CSV per table by iterating a per-domain registry. |
+| **QUALITY** | `quality/` | `validate_dataset(data_dir, schema=None) -> QualityReport` | Schema conformance + referential integrity over the CSVs. See [quality.md](quality.md). |
+| **LOAD** | `db/` + `knowledge_graph/` | `load(db_path, data_dir) -> LoadStats`; `build(uri, user, password)` | CSVs → SQLite (execution DB); column metadata + FK edges → Neo4j (schema graph). |
+| **CONSUME** | `agent/` + `api/` | `answer_question(question, *, groq_key, uri, user, password, db_path)`; FastAPI `/api/query` | Plan NL → SQL by calling KG tools; execute read-only. See [query_engine.md](query_engine.md). |
+
+The orchestrator `pipeline.py` (`main() -> int`) runs GENERATE → QUALITY(gate) → LOAD in order.
+
+## Two databases, two jobs
+
+The single most important design point: **SQLite and Neo4j hold different things.**
+
+- **SQLite (`db/sales.db`) — the execution store.** Holds the actual rows. The agent's `run_sql`
+  tool queries it. It is the source of *answers*.
+- **Neo4j (the knowledge graph) — the schema store.** Holds *metadata about the schema*: a node per
+  table/column, FK edges between them, canonical metric definitions, and a vector index over column
+  descriptions. The agent's `get_schema_context` tool searches it to discover *which* tables and join
+  keys are relevant. It is the source of *the plan*, never of row data.
+
+Row values live only in SQLite; the KG is unaffected by regenerating data (it is metadata-only). This
+is why changing the generator seed never requires rebuilding the graph.
+
+## Tech choices
 
 | Concern | Choice | Rationale |
 |---|---|---|
-| Knowledge graph | Neo4j (managed Aura) | Production-grade; Cypher; no local infra |
-| Agent framework | google-adk | Native Gemini support; simple function-tool API; sync + async runners |
-| LLM | Gemini (via google-adk → google-genai) | Same API key powers both adk and direct genai calls if needed |
-| CSV → graph | `Neo4jGraphBuilder` with UNWIND-batched MERGE | Idempotent reloads; efficient over the Bolt protocol |
+| Execution DB | SQLite (file, `db/sales.db`) | Zero-infra, tracked in-repo, fast read-only SELECTs |
+| Schema graph | Neo4j (managed Aura) | Vector search over column metadata + FK-path traversal for join discovery |
+| Embeddings | `sentence-transformers` (`all-MiniLM-L6-v2`), local | No API cost; runs in the deploy container |
+| Agent LLM | Groq (`llama-3.3-70b-versatile`) | Fast tool-calling; the loop is provider-agnostic behind `llm_fn` |
+| Data | pandas | CSV generation + bulk load |
+| API / UI | FastAPI serving a static `frontend/` | One process serves `/api/*` and the UI at `/` |
 
-## Import Rules (DDD)
+## Internal seams (import direction within `text2sql/`)
 
-- `sales_data` MUST NOT import from `graph` or `query_engine`.
-- `graph` MAY import `sales_data` domain models.
-- `query_engine` MAY import `graph` and `sales_data` domain models.
-- `datagen` MAY import `sales_data` (no other contexts).
-- All MAY import from `shared`.
+The layers depend one-directionally, mediated by the catalog:
+
+- `metadata/` depends on nothing else (the contract).
+- `datagen/` reads only `metadata/` (via the registry/generators); it does **not** import `quality`, `db`, or `agent`.
+- `quality/` reads `metadata/` + its own `reports.py`; no DB, no network. `reports.py` is a **verbatim copy** of `src/datagen/reports.py` (copy, not import — text2sql imports nothing from `src`).
+- `db/` and `knowledge_graph/` read `metadata/`.
+- `agent/` uses `knowledge_graph/` (tools) + `metadata/` (prompt domain list); `run_agent` itself is provider-agnostic.
+- `pipeline.py` (orchestrator) is the only module that wires generate + quality + load together.
+
+## See also
+
+- [`../text2sql/README.md`](../text2sql/README.md) — quickstart, and how to add a new domain
+- [data_model.md](data_model.md) · [query_engine.md](query_engine.md) · [quality.md](quality.md)
+- [legacy_src.md](legacy_src.md) — the retiring `src/` stack
