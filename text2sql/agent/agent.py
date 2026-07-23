@@ -22,6 +22,7 @@ from groq import BadRequestError, Groq, RateLimitError
 
 from text2sql.agent import tools as _tools
 from text2sql.knowledge_graph.retriever import _get_graph
+from text2sql.metadata.utils import get_domains, load_schema
 
 MODEL     = "llama-3.3-70b-versatile"
 MAX_STEPS = 6
@@ -69,9 +70,9 @@ class AgentResult:
     last_result: dict | None = None
 
 
-SYSTEM_PROMPT = """\
+_SYSTEM_PROMPT_TEMPLATE = """\
 You are DataPulse, an analyst that answers business questions by querying a SQLite
-database spanning Sales, IT, HR, Marketing, and Security data. You work by calling
+database spanning {domains}. You work by calling
 tools, observing the results, and refining — never guess table or column names.
 
 Tools:
@@ -91,6 +92,26 @@ Rules:
   rows, read it, fix the query, and try again.
 - When you have the answer, reply in plain language and state the key number(s).
 """
+
+
+def _domains_phrase(domains: list[str]) -> str:
+    names = [d for d in domains if d]
+    if not names:
+        return "multiple business domains"
+    if len(names) == 1:
+        return f"{names[0]} data"
+    return ", ".join(names[:-1]) + f", and {names[-1]} data"
+
+
+def build_system_prompt(domains: list[str]) -> str:
+    """Fill the system-prompt template with the domain list. Derived from the
+    catalog at wiring time so a new domain needs no prompt edit."""
+    return _SYSTEM_PROMPT_TEMPLATE.format(domains=_domains_phrase(domains))
+
+
+# Generic default for run_agent's default param (the fake-LLM tests hit this).
+# The real path (answer_question) injects the schema-derived domain list.
+SYSTEM_PROMPT = build_system_prompt([])
 
 TOOL_SCHEMAS = [
     {
@@ -326,7 +347,12 @@ def answer_question(
     model: str = MODEL,
     max_steps: int = MAX_STEPS,
 ) -> AgentResult:
-    graph    = _get_graph(uri, user, password)
-    tool_fns = _build_tools(graph, db_path)
-    llm_fn   = _groq_llm(groq_key, model)
-    return run_agent(question, llm_fn=llm_fn, tool_fns=tool_fns, max_steps=max_steps)
+    domains       = [d["name"] for d in get_domains(load_schema())]
+    system_prompt = build_system_prompt(domains)
+    graph         = _get_graph(uri, user, password)
+    tool_fns      = _build_tools(graph, db_path)
+    llm_fn        = _groq_llm(groq_key, model)
+    return run_agent(
+        question, llm_fn=llm_fn, tool_fns=tool_fns,
+        system_prompt=system_prompt, max_steps=max_steps,
+    )

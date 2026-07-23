@@ -17,6 +17,7 @@ from text2sql.agent.agent import (
     ToolCall,
     _next_wait,
     _retry_after_seconds,
+    build_system_prompt,
     run_agent,
 )
 from text2sql.agent.tools import read_only_violation
@@ -167,3 +168,20 @@ def test_next_wait_raises_on_sustained_quota():
     # cumulative waits crossing the budget also fail fast rather than block on
     with pytest.raises(RateLimitExhausted):
         _next_wait(55.0, 8.0, max_wait=60.0)
+
+
+# ── system prompt derives the domain list from the catalog ──────────────────
+
+def test_build_system_prompt_lists_the_given_domains():
+    prompt = build_system_prompt(["Sales", "IT", "HR", "Marketing", "Security"])
+    assert "Sales, IT, HR, Marketing, and Security data" in prompt
+
+
+def test_build_system_prompt_absorbs_a_new_domain_without_template_edits():
+    # adding a domain to the catalog flows into the prompt with no code change
+    prompt = build_system_prompt(["Sales", "Logistics"])
+    assert "Sales, and Logistics data" in prompt
+
+
+def test_build_system_prompt_falls_back_when_no_domains():
+    assert "multiple business domains" in build_system_prompt([])

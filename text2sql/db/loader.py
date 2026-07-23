@@ -1,21 +1,38 @@
-"""Step 3 — SQLite loader.
+"""Step 3 — SQLite loader (LOAD layer).
 
-Creates tables from schema.json DDL and bulk-loads CSVs.
-Works with the v2 multi-domain schema via metadata.utils helpers.
+Creates tables from schema.json DDL and bulk-loads the generated CSVs. Fully
+schema-driven via ``metadata.utils``. Opens, uses, and closes its own
+connection, returning a ``LoadStats`` (rows per table) rather than a bare
+``sqlite3.Connection``.
 """
+
 from __future__ import annotations
 
+import logging
 import sqlite3
+from dataclasses import dataclass, field
 from pathlib import Path
 
 import pandas as pd
 
 from text2sql.metadata.utils import get_all_tables, load_schema
 
+logger = logging.getLogger(__name__)
+
 DATA_DIR = Path(__file__).parent.parent / "data"
 DB_PATH  = Path(__file__).parent / "sales.db"
 
 _SQL_TYPE = {"INTEGER": "INTEGER", "TEXT": "TEXT", "REAL": "REAL", "DATE": "TEXT", "DATETIME": "TEXT"}
+
+
+@dataclass(frozen=True)
+class LoadStats:
+    db_path: Path
+    rows: dict[str, int] = field(default_factory=dict)
+
+    @property
+    def total_rows(self) -> int:
+        return sum(self.rows.values())
 
 
 def _ddl(table: dict) -> str:
@@ -29,6 +46,8 @@ def _ddl(table: dict) -> str:
 
 
 def _create_tables(conn: sqlite3.Connection, tables: list[dict]) -> None:
+    # Guarantees every declared table exists (as an empty table) even if its CSV
+    # is absent; the bulk load below then replaces those that do have a CSV.
     cur = conn.cursor()
     cur.execute("PRAGMA foreign_keys = ON")
     for table in tables:
@@ -36,28 +55,36 @@ def _create_tables(conn: sqlite3.Connection, tables: list[dict]) -> None:
     conn.commit()
 
 
-def _load_csvs(conn: sqlite3.Connection, tables: list[dict]) -> None:
+def _load_csvs(conn: sqlite3.Connection, tables: list[dict], data_dir: Path) -> dict[str, int]:
+    rows: dict[str, int] = {}
     for table in tables:
-        csv_path = DATA_DIR / f"{table['name']}.csv"
+        csv_path = data_dir / f"{table['name']}.csv"
         if not csv_path.exists():
-            print(f"  [skip] {csv_path.name} not found")
+            logger.warning("skip %s: CSV not found", csv_path.name)
             continue
         df = pd.read_csv(csv_path)
         df.to_sql(table["name"], conn, if_exists="replace", index=False)
-        print(f"  [{table.get('domain', '?'):10s}]  {len(df):>6,} rows  →  {table['name']}")
+        rows[table["name"]] = len(df)
+        logger.info("Loaded %6d rows  %-30s (%s)", len(df), table["name"], table.get("domain", "?"))
+    return rows
 
 
-def load(db_path: Path = DB_PATH) -> sqlite3.Connection:
-    schema = load_schema()
-    tables = get_all_tables(schema)
+def load(db_path: Path | str = DB_PATH, data_dir: Path | str = DATA_DIR) -> LoadStats:
+    db_path = Path(db_path)
+    data_dir = Path(data_dir)
+    tables = get_all_tables(load_schema())
     db_path.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(db_path)
-    _create_tables(conn, tables)
-    _load_csvs(conn, tables)
-    return conn
+    try:
+        _create_tables(conn, tables)
+        rows = _load_csvs(conn, tables, data_dir)
+        conn.commit()
+    finally:
+        conn.close()
+    return LoadStats(db_path=db_path, rows=rows)
 
 
 if __name__ == "__main__":
-    conn = load()
-    conn.close()
-    print(f"\nDatabase ready: {DB_PATH}")
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
+    stats = load()
+    logger.info("Database ready: %s (%d tables, %d rows)", stats.db_path, len(stats.rows), stats.total_rows)
