@@ -34,16 +34,14 @@ uv run uvicorn text2sql.api.main:app --port 8000   # then open http://localhost:
 | `query_engine` | Structured and agentic querying over the graph |
 | `shared` | Cross-cutting config and exceptions |
 
-**Data flow:** `sales_data` (DataFrame) &rarr; `graph` (nx.Graph) &rarr; `query_engine` (QueryResult)
+**Data flow:** `sales_data` (DataFrame) &rarr; `graph` (Neo4j) &rarr; `query_engine` (QueryResult)
 
 ## Tech Stack
 
 - **Python** &ge; 3.10
 - **uv** — package & environment manager
 - **pandas** — tabular data handling
-- **NetworkX** — in-memory knowledge graph
-- **neo4j** *(optional)* — persistent graph database backend
-- **langchain** *(optional)* — LLM-powered agentic queries
+- **neo4j** — persistent graph database backend
 
 ## Quick Start
 
@@ -64,7 +62,7 @@ src/
 ├── shared/          # Config, exceptions
 ├── sales_data/      # Domain models, schema metadata, CSV loading
 ├── graph/           # Graph schema, builder, NetworkX store
-└── query_engine/    # Query models, simple resolver, agentic resolver
+└── query_engine/    # Query models, CLI, ADK agent
 ```
 
 ## License

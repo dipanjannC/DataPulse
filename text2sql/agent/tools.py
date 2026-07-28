@@ -15,7 +15,6 @@ from pathlib import Path
 from text2sql.embeddings.embed import embed_query
 from text2sql.knowledge_graph.retriever import retrieve_context
 from text2sql.metadata.utils import get_all_tables, load_schema
-from text2sql.sql_gen.generator import _format_schema
 
 MAX_ROWS   = 200
 TIMEOUT_S  = 5.0
@@ -107,6 +106,50 @@ def get_schema_context(question: str, graph, top_k: int = 10) -> dict:
         "join_count": len(ctx.get("joins", [])),
         "metrics": [m["name"] for m in ctx.get("metrics", [])],
     }
+
+
+def _format_schema(context: dict) -> str:
+    tables = context.get("tables", {})
+    lines: list[str] = ["## Schema"]
+
+    # Group tables by domain (single unlabelled group if domain is absent).
+    by_domain: dict[str, list[str]] = {}
+    for tname, info in tables.items():
+        by_domain.setdefault(info.get("domain") or "", []).append(tname)
+
+    for domain, tnames in by_domain.items():
+        if domain:
+            lines.append(f"\n### Domain: {domain}")
+        for tname in tnames:
+            info = tables[tname]
+            lines.append(f"\n#### {tname}")
+            if info.get("description"):
+                lines.append(info["description"])
+            lines.append("| Column | Type | PK | Description |")
+            lines.append("|--------|------|----|-------------|")
+            for col in info["columns"]:
+                pk = "Yes" if col.get("is_pk") else ""
+                lines.append(f"| {col['name']} | {col['type']} | {pk} | {col['description']} |")
+
+    joins = context.get("joins") or []
+    if joins:
+        lines.append("\n## Join Paths")
+        lines.append("Use these exact keys when joining tables:")
+        for j in joins:
+            lines.append(
+                f"- {j['from_table']}.{j['from_column']} = {j['to_table']}.{j['to_column']}"
+            )
+
+    metrics = context.get("metrics") or []
+    if metrics:
+        lines.append("\n## Metric definitions")
+        lines.append("When the question asks for one of these business measures, use the exact expression:")
+        for m in metrics:
+            lines.append(f"- {m['name']}: {m['expression']}")
+            if m.get("description"):
+                lines.append(f"    ({m['description']})")
+
+    return "\n".join(lines)
 
 
 def _valid_identifiers(schema: dict | None = None) -> dict[str, set[str]]:

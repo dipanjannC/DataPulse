@@ -23,9 +23,9 @@ env/
 Thumbs.db
 
 # Data directories (keep samples only)
-# data/raw/*
+data/raw/*
 !data/raw/.gitkeep
-# data/processed/*
+data/processed/*
 !data/processed/.gitkeep
 
 # Real synthetic-pipeline config (only .sample.json is tracked)
@@ -48,6 +48,11 @@ htmlcov/
 .coverage.*
 
 .pytest_cache
+.mypy_cache/
+.ruff_cache/
+
+# Logs
+*.log
 
 # Claude Code local config (do not commit)
 .claude/

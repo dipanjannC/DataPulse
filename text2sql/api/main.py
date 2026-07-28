@@ -5,10 +5,6 @@ The `/api/query` endpoint routes through the multi-step tool-calling agent
 categorical filters, and runs read-only SQL by *calling tools* over the
 knowledge graph, so the response carries an explicit reasoning `trace` and a
 natural-language `answer` alongside the SQL and rows.
-
-The single-shot `generate_sql` path is left in the tree as a dormant fallback
-(it is no longer called from here) in case the agent gets rate-limited during a
-live demo.
 """
 from __future__ import annotations
 

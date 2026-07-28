@@ -1,11 +1,11 @@
-"""Tests for the SQL-generator prompt formatting.
+"""Tests for the agent's schema-formatting helper.
 
-Only `_format_schema` is exercised (pure). `generate_sql` calls the Groq API and
-is intentionally left to the live acceptance check.
+Only `_format_schema` is exercised here (it is pure). The other tools in
+`text2sql.agent.tools` touch SQLite / the KG and are covered via the agent tests.
 """
 from __future__ import annotations
 
-from text2sql.sql_gen.generator import _format_schema, generate_sql
+from text2sql.agent.tools import _format_schema
 
 
 def _ctx() -> dict:
@@ -70,13 +70,3 @@ def test_format_schema_backward_compatible_without_joins_or_domain():
     assert "## Join Paths" not in out
     assert "### Domain:" not in out
     assert "## Metric definitions" not in out
-
-
-def test_generate_sql_short_circuits_on_empty_retrieval():
-    """Empty KG retrieval returns a clean failure without touching Groq (this
-    call would raise if it tried to reach the network with a bogus key)."""
-    result = generate_sql("anything", {"tables": {}}, api_key="not-used")
-
-    assert result["success"] is False
-    assert result["attempts"] == 0
-    assert "No relevant tables" in result["error"]
