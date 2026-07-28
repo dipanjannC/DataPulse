@@ -12,9 +12,9 @@ import sqlite3
 import time
 from pathlib import Path
 
-from text2sql.embeddings.embed import embed_query
-from text2sql.knowledge_graph.retriever import retrieve_context
-from text2sql.metadata.utils import get_all_tables, load_schema
+from src.embeddings.embed import embed_query
+from src.knowledge_graph.retriever import retrieve_context
+from src.metadata.utils import get_all_tables, load_schema
 
 MAX_ROWS   = 200
 TIMEOUT_S  = 5.0

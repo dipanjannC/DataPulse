@@ -1,6 +1,6 @@
 # Legacy stack (`src/`) — reference only
 
-> **Status: legacy / being retired.** `text2sql/` is the single path forward (see
+> **Status: legacy / retired.** The active stack under `src/` + `text2sql/agent/` is the single path forward (see
 > [architecture.md](architecture.md)). This file preserves the documentation for the older
 > `src/` graph-querying stack — a *different* system: sales-only, data loaded **into** Neo4j,
 > answered by a google-adk **Gemini** agent writing **Cypher**. It is kept for reference while

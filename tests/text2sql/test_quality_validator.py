@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import pandas as pd
 
-from text2sql.quality.validator import validate_frames
+from src.quality.validator import validate_frames
 
 
 def _schema() -> dict:

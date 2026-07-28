@@ -1,15 +1,15 @@
 # Architecture
 
-This documents the **active** stack, `text2sql/`. For a task-oriented quickstart (run it, add a
+This documents the **active** stack. For a task-oriented quickstart (run it, add a
 domain), see [`../text2sql/README.md`](../text2sql/README.md). For the older `src/` graph stack,
 see [legacy_src.md](legacy_src.md).
 
 ## Overview
 
-`text2sql/` turns a plain-English business question into SQL and rows. A Groq-backed agent plans
+The stack turns a plain-English business question into SQL and rows. A Groq-backed agent plans
 the query by *calling tools* against a **Neo4j knowledge graph of the schema** (tables, columns,
 join keys, canonical metrics), then executes read-only SQL against **SQLite**. It spans five
-domains — Sales, IT, HR, Marketing, Security — and is standalone (imports nothing from `src/`,
+domains — Sales, IT, HR, Marketing, Security — and is self-contained (imports nothing from the other `src/` contexts,
 deploys via `render.yaml`).
 
 ## The four layers
@@ -64,13 +64,13 @@ is why changing the generator seed never requires rebuilding the graph.
 | Data | pandas | CSV generation + bulk load |
 | API / UI | FastAPI serving a static `frontend/` | One process serves `/api/*` and the UI at `/` |
 
-## Internal seams (import direction within `text2sql/`)
+## Internal seams (import direction within the codebase)
 
 The layers depend one-directionally, mediated by the catalog:
 
 - `metadata/` depends on nothing else (the contract).
 - `datagen/` reads only `metadata/` (via the registry/generators); it does **not** import `quality`, `db`, or `agent`.
-- `quality/` reads `metadata/` + its own `reports.py`; no DB, no network. `reports.py` is a **verbatim copy** of `src/datagen/reports.py` (copy, not import — text2sql imports nothing from `src`).
+- `quality/` reads `metadata/` + its own `reports.py`; no DB, no network. `reports.py` is a **verbatim copy** of `src/datagen/reports.py` (copy, not import — the codebase imports nothing from the other `src/` contexts).
 - `db/` and `knowledge_graph/` read `metadata/`.
 - `agent/` uses `knowledge_graph/` (tools) + `metadata/` (prompt domain list); `run_agent` itself is provider-agnostic.
 - `pipeline.py` (orchestrator) is the only module that wires generate + quality + load together.

@@ -37,10 +37,10 @@ data/sample/synthetic_config.json
 
 # SQLite databases (regeneratable from CSVs)
 *.db
-!text2sql/db/sales.db
+!src/db/sales.db
 
 # Derived data-quality report (regeneratable from CSVs + schema.json)
-text2sql/data/quality_report.json
+src/data/quality_report.json
 
 # Coverage
 htmlcov/
@@ -53,6 +53,10 @@ htmlcov/
 
 # Logs
 *.log
+
+# Presentation deck + any generator (local only — do not push to remote)
+docs/*.pptx
+docs/_deck/
 
 # Claude Code local config (do not commit)
 .claude/

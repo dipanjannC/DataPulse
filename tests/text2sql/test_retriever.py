@@ -8,7 +8,7 @@ on each SchemaGraph method so the two cannot silently drift.
 """
 from __future__ import annotations
 
-from text2sql.knowledge_graph.retriever import (
+from src.knowledge_graph.retriever import (
     MAX_SEEDS,
     _build_context,
     _collect_paths,

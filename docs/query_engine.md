@@ -1,6 +1,6 @@
 # Query Engine (CONSUME)
 
-How a natural-language question becomes SQL and rows in the active `text2sql/` stack. For the
+How a natural-language question becomes SQL and rows in the active stack. For the
 legacy `src/` google-adk/Cypher engine see [legacy_src.md](legacy_src.md).
 
 ## The agent loop
@@ -80,7 +80,7 @@ Required env: `NEO4J_URI`, `NEO4J_USERNAME`, `NEO4J_PASSWORD`, `GROQ_API_KEY`.
 
 ```python
 from text2sql.agent.agent import answer_question
-from text2sql.db.loader import DB_PATH
+from src.db.loader import DB_PATH
 
 result = answer_question(
     "What is total revenue by region for 2024?",
@@ -92,5 +92,5 @@ for step in result.trace:      # inspect the tool-call reasoning
     print(step.kind, step.tool, step.observation)
 ```
 
-Run the API with `uv run uvicorn text2sql.api.main:app --reload --port 8000`, then open
+Run the API with `uv run uvicorn src.api.main:app --reload --port 8000`, then open
 `http://localhost:8000/`.

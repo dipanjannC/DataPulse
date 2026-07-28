@@ -10,10 +10,10 @@ from __future__ import annotations
 
 import pytest
 
-from text2sql.datagen.generate import generate
-from text2sql.datagen.registry import DOMAIN_GENERATORS
-from text2sql.metadata.utils import get_domains, load_schema
-from text2sql.quality.validator import validate_dataset
+from src.datagen.generate import generate
+from src.datagen.registry import DOMAIN_GENERATORS
+from src.metadata.utils import get_domains, load_schema
+from src.quality.validator import validate_dataset
 
 
 @pytest.fixture(scope="module")

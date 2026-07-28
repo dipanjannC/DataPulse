@@ -1,87 +1,64 @@
-"""CLI: generate synthetic sales CSV from config."""
+"""GENERATE — thin runner over the per-domain registry.
+
+Builds a per-run seeded ``random.Random`` + ``Faker`` and hands both to each
+registered ``DomainGenerator``, then writes one CSV per returned table. Seeding
+is per-run and injected — there is no module-global RNG — so two ``generate(seed)``
+calls in the same process produce byte-identical CSVs. (This adopts src's
+determinism *discipline* with text2sql's toolset: stdlib ``random`` + Faker
+``seed_instance``, not numpy's ``Generator``.)
+
+Output goes to ``src/data/`` — one CSV per table.
+"""
 
 from __future__ import annotations
 
-import argparse
 import logging
-import sys
-from dataclasses import replace
+import random
 from pathlib import Path
 
-import numpy as np
+from faker import Faker
 
-from src.datagen.config import load_config
-from src.datagen.generator import generate_orders
-from src.datagen.reports import write_report
-from src.datagen.schema import build_catalog
-from src.datagen.validator import validate
-from src.datagen.writer import write_csv
-
+from src.datagen.registry import DOMAIN_GENERATORS
 
 logger = logging.getLogger(__name__)
 
-
-def _parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Generate synthetic sales CSV")
-    parser.add_argument("--config", default="data/sample/synthetic_config.json", help="Path to synthetic config JSON")
-    parser.add_argument("--seed", type=int, default=None, help="Override config seed")
-    parser.add_argument("--rows", type=int, default=None, help="Override row count")
-    parser.add_argument("--target", default=None, help="Override output CSV path")
-    parser.add_argument(
-        "--validate",
-        action=argparse.BooleanOptionalAction,
-        default=None,
-        help="Run validation after generation",
-    )
-    parser.add_argument(
-        "--fail-on-error",
-        action=argparse.BooleanOptionalAction,
-        default=None,
-        help="Exit non-zero when validation fails",
-    )
-    return parser.parse_args()
+DATA_DIR = Path(__file__).parent.parent / "data"
 
 
-def main() -> int:
-    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
-    args = _parse_args()
-    cfg = load_config(args.config)
-    if args.seed is not None:
-        cfg = replace(cfg, seed=args.seed)
-    if args.rows is not None:
-        cfg = replace(cfg, row_count=args.rows)
-    if args.target is not None:
-        cfg = replace(cfg, target=Path(args.target))
-    if args.validate is not None:
-        cfg = replace(cfg, validation_enabled=args.validate)
-    if args.fail_on_error is not None:
-        cfg = replace(cfg, fail_on_error=args.fail_on_error)
+def generate(
+    seed: int = 42,
+    domains: list[str] | None = None,
+    data_dir: Path | str = DATA_DIR,
+) -> dict[str, int]:
+    """Generate CSVs for the registered domains (optionally a subset).
 
-    rng = np.random.default_rng(cfg.seed)
-    logger.info("Building catalog (%d customers, %d products/category)", cfg.n_customers, cfg.n_products_per_category)
-    catalog = build_catalog(cfg, rng)
+    Returns a ``{table_name: row_count}`` map. Fully determined by ``seed``.
+    """
+    data_dir = Path(data_dir)
+    data_dir.mkdir(parents=True, exist_ok=True)
 
-    logger.info("Generating %d orders", cfg.row_count)
-    orders = generate_orders(catalog, cfg, rng)
+    rng = random.Random(seed)
+    fake = Faker()
+    fake.seed_instance(seed)
 
-    written = write_csv(orders, catalog, cfg.target)
-    logger.info("Wrote %s", written)
+    if domains is None:
+        selected = DOMAIN_GENERATORS
+    else:
+        selected = {name: DOMAIN_GENERATORS[name] for name in domains}
 
-    if cfg.validation_enabled:
-        logger.info("Validating %s", written)
-        report = validate(written, cfg)
-        report_path = write_report(report, cfg.report_path)
-        logger.info(
-            "Quality report at %s: pass=%s schema=%s dist=%s",
-            report_path,
-            report.summary["pass"],
-            report.summary["schema_pass"],
-            report.summary["distribution_pass"],
-        )
-        if cfg.fail_on_error and not report.summary["pass"]:
-            return 1
-    return 0
+    row_counts: dict[str, int] = {}
+    for domain_name, generator in selected.items():
+        for table_name, df in generator(rng, fake).items():
+            # Force LF so output is byte-identical across platforms (pandas would
+            # otherwise emit CRLF on Windows), keeping the determinism guarantee
+            # and the tracked CSVs stable regardless of who regenerates them.
+            df.to_csv(data_dir / f"{table_name}.csv", index=False, lineterminator="\n")
+            row_counts[table_name] = len(df)
+            logger.info("Generated %6d rows  %-30s (%s)", len(df), table_name, domain_name)
+    return row_counts
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
+    counts = generate()
+    logger.info("All domain data generated: %d tables, %d rows", len(counts), sum(counts.values()))

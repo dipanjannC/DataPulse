@@ -4,7 +4,7 @@ Ask a business question in plain English; get back the SQL and the rows. A Groq-
 agent plans the query by *calling tools* against a **knowledge graph** of the schema
 (tables, columns, join keys, canonical metrics), then runs read-only SQL against SQLite.
 
-This stack is **standalone** — it imports nothing from `src/` and deploys on its own
+This stack is **self-contained** — it deploys on its own
 (`render.yaml`). It spans five business domains: **Sales, IT, HR, Marketing, Security**.
 
 ---
@@ -63,13 +63,13 @@ Prereqs: `uv`, and a `.env` with `NEO4J_URI`, `NEO4J_USERNAME`, `NEO4J_PASSWORD`
 
 ```bash
 # 1. Build everything: generate → validate (gate) → SQLite → Neo4j KG
-uv run python text2sql/pipeline.py
+uv run python -m src.pipeline
 #    --seed N          use a different RNG seed (default 42)
 #    --fail-on-error   abort before load if the quality gate finds any violation
 #                      (default is warn-only: log violations and continue)
 
 # 2. Start the API (it also serves the UI)
-uv run uvicorn text2sql.api.main:app --reload --port 8000
+uv run uvicorn src.api.main:app --reload --port 8000
 
 # 3. Open the UI  →  http://localhost:8000/     (FastAPI serves the static frontend/)
 ```
@@ -94,7 +94,7 @@ Domains are pluggable. To add one (say **Finance**), you touch **three** places 
    import random
    import pandas as pd
    from faker import Faker
-   from text2sql.datagen.domains._common import rand_date  # rand_dt too, if needed
+   from src.datagen.domains._common import rand_date  # rand_dt too, if needed
 
    def generate_finance(rng: random.Random, fake: Faker) -> dict[str, pd.DataFrame]:
        # build DataFrames whose columns match the schema; draw ALL randomness
@@ -109,7 +109,7 @@ Domains are pluggable. To add one (say **Finance**), you touch **three** places 
    DOMAIN_GENERATORS["Finance"] = generate_finance   # key MUST match the schema domain name
    ```
 
-Then `uv run python text2sql/pipeline.py`. That's it — SQLite loading, the Neo4j KG, the
+Then `uv run python -m src.pipeline`. That's it — SQLite loading, the Neo4j KG, the
 agent's domain list, and validation all pick the new domain up automatically. The **quality
 gate is what verifies your generator and your schema agree** (missing column? wrong type?
 orphaned FK? it fails). `tests/text2sql/test_datagen_registry.py` also asserts the registry
@@ -133,7 +133,7 @@ you deliberately change the seed or a generator — regenerate and commit that a
 ## Quality gate
 
 `validate_dataset` emits a `QualityReport` (`quality/reports.py`, harvested from
-`src/datagen/reports.py`). It checks, per the schema:
+`src/quality/reports.py` is a standalone copy — no cross-layer import).. It checks, per the schema:
 
 - **Schema conformance** — every declared column present and typed; PKs unique + non-null;
   `nullable: false` honored.
@@ -164,5 +164,5 @@ uv run pytest tests/text2sql/      # all layers; no live Neo4j/Groq/SQLite (fake
 
 ## Deploy
 
-`render.yaml` (repo root) runs `uvicorn text2sql.api.main:app`; the build step pre-downloads
+`render.yaml` (repo root) runs `uvicorn src.api.main:app`; the build step pre-downloads
 the `all-MiniLM-L6-v2` embedding model. `NEO4J_*` and `GROQ_API_KEY` are set as Render env vars.

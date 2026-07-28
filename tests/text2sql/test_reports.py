@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 
-from text2sql.quality.reports import (
+from src.quality.reports import (
     DistributionCheck,
     QualityReport,
     SchemaCheck,

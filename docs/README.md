@@ -2,10 +2,9 @@
 
 This repo has two stacks:
 
-- **`text2sql/` — the active application** (natural-language → SQL over a schema knowledge graph;
-  5 domains; Groq + SQLite + Neo4j). All docs here describe this stack.
+- **The active application** — natural-language → SQL over a schema knowledge graph; 5 domains; Groq + SQLite + Neo4j. All docs here describe this stack (`src/`, `text2sql/agent/`, `frontend/`).
 - **`src/` — a legacy graph-querying stack**, being retired. Preserved in
-  [legacy_src.md](legacy_src.md); `src/datagen` remains a harvest source.
+  [legacy_src.md](legacy_src.md).
 
 ## Start here
 

@@ -1,6 +1,6 @@
 # Quality Layer
 
-The `text2sql/quality/` layer validates generated data against the catalog before it is loaded. It
+The `src/quality/` layer validates generated data against the catalog before it is loaded. It
 is pure over the schema + CSVs — no DB, no network — so it runs anywhere and is unit-tested with
 crafted DataFrames.
 
@@ -25,8 +25,8 @@ emitted empty — a documented deferral, not an oversight.
 
 ## Why the dtype checks differ from `src`
 
-`quality/reports.py` is a **verbatim copy** of `src/datagen/reports.py` (copy, not import — text2sql
-imports nothing from `src`). The *validator*, though, adapts src's mechanisms for a CSV round-trip:
+`quality/reports.py` is a **verbatim copy** of `src/datagen/reports.py` (copy, not import — the codebase
+imports nothing from the other `src/` contexts). The *validator*, though, adapts src's mechanisms for a CSV round-trip:
 
 - A **nullable INTEGER** column is read back by pandas as `float64` (a single NULL forces the float
   dtype), so a naive `is_integer_dtype` check would false-positive on every nullable FK. The checker
@@ -73,12 +73,12 @@ _should_abort(report, fail_on_error) == fail_on_error and not report.schema.pass
 
 ```bash
 # as part of the pipeline
-uv run python text2sql/pipeline.py                 # warn-only
-uv run python text2sql/pipeline.py --fail-on-error # hard gate
+uv run python -m src.pipeline                 # warn-only
+uv run python -m src.pipeline --fail-on-error # hard gate
 
 # standalone, in code
-python -c "from text2sql.quality.validator import validate_dataset; \
-           r = validate_dataset('text2sql/data'); print(r.summary)"
+python -c "from src.quality.validator import validate_dataset; \
+           r = validate_dataset('src/data'); print(r.summary)"
 ```
 
 Tests: `tests/text2sql/test_quality_validator.py` (each failure kind + RI, on tiny in-memory

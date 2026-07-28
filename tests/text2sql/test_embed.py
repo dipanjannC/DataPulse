@@ -6,7 +6,7 @@ the sentence-transformer model (a download) and are left to the live pipeline.
 """
 from __future__ import annotations
 
-from text2sql.embeddings.embed import _column_text, _domain_text, _table_text
+from src.embeddings.embed import _column_text, _domain_text, _table_text
 
 
 def test_column_text():

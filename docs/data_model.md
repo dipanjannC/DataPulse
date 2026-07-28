@@ -1,12 +1,12 @@
 # Data Model
 
-The data model for the active `text2sql/` stack. The single source of truth is
-`text2sql/metadata/schema.json` (v2.0); this doc is a human-readable projection of it. For the
+The data model for the active stack. The single source of truth is
+`src/metadata/schema.json` (v2.0); this doc is a human-readable projection of it. For the
 legacy `src/` sales model see [legacy_src.md](legacy_src.md).
 
 ## The contract: `schema.json`
 
-Read only through `text2sql/metadata/utils.py` — never parse the JSON directly elsewhere.
+Read only through `src/metadata/utils.py` — never parse the JSON directly elsewhere.
 
 ```jsonc
 {
@@ -127,7 +127,7 @@ on `Domain.name`, `Table.name`, `Column.key`, `Metric.name`. The build is idempo
 ## Reading it in code
 
 ```python
-from text2sql.metadata.utils import load_schema, get_all_tables, get_all_relationships
+from src.metadata.utils import load_schema, get_all_tables, get_all_relationships
 
 schema = load_schema()
 for t in get_all_tables(schema):

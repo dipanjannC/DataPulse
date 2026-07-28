@@ -21,8 +21,8 @@ from pathlib import Path
 from groq import BadRequestError, Groq, RateLimitError
 
 from text2sql.agent import tools as _tools
-from text2sql.knowledge_graph.retriever import _get_graph
-from text2sql.metadata.utils import get_domains, load_schema
+from src.knowledge_graph.retriever import _get_graph
+from src.metadata.utils import get_domains, load_schema
 
 MODEL     = "llama-3.3-70b-versatile"
 MAX_STEPS = 6

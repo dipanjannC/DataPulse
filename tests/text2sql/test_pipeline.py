@@ -7,8 +7,8 @@ decision is extracted into a pure helper and unit-tested here across all four
 
 from __future__ import annotations
 
-from text2sql.pipeline import _should_abort
-from text2sql.quality.reports import QualityReport, SchemaCheck, Violation
+from src.pipeline import _should_abort
+from src.quality.reports import QualityReport, SchemaCheck, Violation
 
 
 def _report(passed: bool) -> QualityReport:
