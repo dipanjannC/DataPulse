@@ -9,6 +9,7 @@ import pandas as pd
 from faker import Faker
 
 from src.datagen.domains._common import rand_date
+from src.datagen.vocab import values_for
 
 
 def generate_hr(rng: random.Random, fake: Faker) -> dict[str, pd.DataFrame]:
@@ -28,7 +29,7 @@ def generate_hr(rng: random.Random, fake: Faker) -> dict[str, pd.DataFrame]:
     dept_ids = list(departments["department_id"])
 
     # positions
-    levels = ["Junior", "Mid", "Senior", "Lead", "Director"]
+    levels = values_for("positions", "level")
     position_titles = [
         "Software Engineer", "Data Analyst", "HR Manager", "Marketing Specialist", "Sales Executive",
         "DevOps Engineer", "Product Manager", "Financial Analyst", "Legal Counsel", "UX Designer",
@@ -50,7 +51,7 @@ def generate_hr(rng: random.Random, fake: Faker) -> dict[str, pd.DataFrame]:
     pos_ids = list(positions["position_id"])
 
     # employees
-    emp_types = ["Full-Time", "Part-Time", "Contractor", "Intern"]
+    emp_types = values_for("employees", "employment_type")
     employees = pd.DataFrame([{
         "employee_id":     i + 1,
         "first_name":      fake.first_name(),
@@ -86,7 +87,7 @@ def generate_hr(rng: random.Random, fake: Faker) -> dict[str, pd.DataFrame]:
     tables["payroll"] = pd.DataFrame(payroll_rows)
 
     # leave_requests
-    leave_types = ["Annual", "Sick", "Maternity", "Paternity", "Unpaid"]
+    leave_types = values_for("leave_requests", "leave_type")
     leave_rows = []
     for i in range(500):
         sd  = date.fromisoformat(rand_date(rng, date(2023, 1, 1), date(2024, 12, 31)))
@@ -127,13 +128,13 @@ def generate_hr(rng: random.Random, fake: Faker) -> dict[str, pd.DataFrame]:
         "provider":        rng.choice(["Coursera", "Udemy", "LinkedIn Learning", "Internal", "Pluralsight"]),
         "start_date":      rand_date(rng, date(2023, 1, 1), date(2024, 6, 30)),
         "completion_date": None if rng.random() < 0.2 else rand_date(rng, date(2023, 2, 1), date(2025, 1, 1)),
-        "status":          rng.choices(["Completed", "In Progress", "Enrolled", "Dropped"], weights=[60, 20, 12, 8])[0],
+        "status":          rng.choices(values_for("training_programs", "status"), weights=[60, 20, 12, 8])[0],
         "cost":            round(rng.uniform(50.0, 3_000.0), 2),
     } for i in range(400)])
     tables["training_programs"] = training
 
     # employee_benefits
-    benefit_types = ["Health", "Dental", "Vision", "Retirement", "Life Insurance"]
+    benefit_types = values_for("employee_benefits", "benefit_type")
     benefits = pd.DataFrame([{
         "benefit_id":            i + 1,
         "employee_id":           rng.choice(emp_ids),
@@ -152,7 +153,7 @@ def generate_hr(rng: random.Random, fake: Faker) -> dict[str, pd.DataFrame]:
         "department_id":   rng.choice(dept_ids),
         "posted_date":     rand_date(rng, date(2023, 1, 1), date(2024, 12, 31)),
         "closing_date":    rand_date(rng, date(2024, 1, 1), date(2025, 6, 30)),
-        "status":          rng.choices(["Open", "Closed", "On Hold", "Filled"], weights=[30, 25, 10, 35])[0],
+        "status":          rng.choices(values_for("job_postings", "status"), weights=[30, 25, 10, 35])[0],
         "applicant_count": rng.randint(5, 200),
     } for i in range(50)])
     tables["job_postings"] = postings
@@ -164,7 +165,7 @@ def generate_hr(rng: random.Random, fake: Faker) -> dict[str, pd.DataFrame]:
             d = date(2024, 6, 1) + timedelta(days=day_offset)
             if d.weekday() >= 5:
                 continue
-            status = rng.choices(["Present", "Absent", "Half Day", "On Leave"], weights=[80, 5, 10, 5])[0]
+            status = rng.choices(values_for("attendance", "status"), weights=[80, 5, 10, 5])[0]
             check_in  = f"{rng.randint(8, 10):02d}:{rng.randint(0, 59):02d}" if status in ("Present", "Half Day") else None
             check_out = f"{rng.randint(16, 19):02d}:{rng.randint(0, 59):02d}" if status == "Present" else None
             att_rows.append({

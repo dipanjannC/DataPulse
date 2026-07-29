@@ -176,3 +176,48 @@ def test_self_referential_fk_resolves_within_the_same_table():
 
     report = validate_frames(frames, schema)
     assert report.schema.passed is True
+
+
+# ── value-domain conformance (declared allowed_values) ──────────────────────────
+
+def _vocab_schema() -> dict:
+    return {
+        "version": "test",
+        "domains": [{
+            "name": "Test", "description": "d",
+            "tables": [{
+                "name": "orders", "description": "o",
+                "columns": [
+                    {"name": "id", "type": "INTEGER", "primary_key": True, "nullable": False},
+                    {"name": "status", "type": "TEXT", "primary_key": False, "nullable": False,
+                     "allowed_values": ["Open", "Closed"]},
+                ],
+            }],
+        }],
+    }
+
+
+def test_value_domain_violation_flagged_and_is_structural():
+    frames = {"orders": pd.DataFrame({"id": [1, 2, 3], "status": ["Open", "Closed", "Bogus"]})}
+    report = validate_frames(frames, _vocab_schema())
+
+    vd = [v for v in report.schema.violations if v.kind == "value_domain"]
+    assert len(vd) == 1
+    assert vd[0].field == "orders.status"
+    assert "Bogus" in vd[0].detail
+    # value_domain counts as structural -> schema_pass reflects it
+    assert report.summary["schema_pass"] is False
+
+
+def test_value_domain_clean_dataset_passes():
+    frames = {"orders": pd.DataFrame({"id": [1, 2, 3], "status": ["Open", "Closed", "Open"]})}
+    report = validate_frames(frames, _vocab_schema())
+    assert not any(v.kind == "value_domain" for v in report.schema.violations)
+
+
+def test_value_domain_ignores_nulls():
+    schema = _vocab_schema()
+    schema["domains"][0]["tables"][0]["columns"][1]["nullable"] = True
+    frames = {"orders": pd.DataFrame({"id": [1, 2, 3], "status": ["Open", None, "Closed"]})}
+    report = validate_frames(frames, schema)
+    assert not any(v.kind == "value_domain" for v in report.schema.violations)

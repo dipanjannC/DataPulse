@@ -1,0 +1,66 @@
+[
+  {
+    "channel_id": 1,
+    "channel_name": "Google Ads",
+    "channel_type": "Paid",
+    "cost_per_click": 1.85,
+    "cost_per_impression": 3.5,
+    "monthly_budget": 20000
+  },
+  {
+    "channel_id": 2,
+    "channel_name": "Facebook Ads",
+    "channel_type": "Paid",
+    "cost_per_click": 0.95,
+    "cost_per_impression": 1.2,
+    "monthly_budget": 15000
+  },
+  {
+    "channel_id": 3,
+    "channel_name": "LinkedIn",
+    "channel_type": "Social",
+    "cost_per_click": 5.5,
+    "cost_per_impression": 8.0,
+    "monthly_budget": 10000
+  },
+  {
+    "channel_id": 4,
+    "channel_name": "Email",
+    "channel_type": "Email",
+    "cost_per_click": 0.1,
+    "cost_per_impression": null,
+    "monthly_budget": 2000
+  },
+  {
+    "channel_id": 5,
+    "channel_name": "SEO / Organic",
+    "channel_type": "Organic",
+    "cost_per_click": null,
+    "cost_per_impression": null,
+    "monthly_budget": 5000
+  },
+  {
+    "channel_id": 6,
+    "channel_name": "Instagram",
+    "channel_type": "Social",
+    "cost_per_click": 1.2,
+    "cost_per_impression": 2.0,
+    "monthly_budget": 8000
+  },
+  {
+    "channel_id": 7,
+    "channel_name": "Twitter/X",
+    "channel_type": "Social",
+    "cost_per_click": 0.6,
+    "cost_per_impression": 0.9,
+    "monthly_budget": 5000
+  },
+  {
+    "channel_id": 8,
+    "channel_name": "Events",
+    "channel_type": "Events",
+    "cost_per_click": null,
+    "cost_per_impression": null,
+    "monthly_budget": 30000
+  }
+]

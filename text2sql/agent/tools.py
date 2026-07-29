@@ -129,7 +129,11 @@ def _format_schema(context: dict) -> str:
             lines.append("|--------|------|----|-------------|")
             for col in info["columns"]:
                 pk = "Yes" if col.get("is_pk") else ""
-                lines.append(f"| {col['name']} | {col['type']} | {pk} | {col['description']} |")
+                desc = col["description"]
+                allowed = col.get("allowed_values")
+                if allowed:
+                    desc = f"{desc} (one of: {', '.join(allowed)})"
+                lines.append(f"| {col['name']} | {col['type']} | {pk} | {desc} |")
 
     joins = context.get("joins") or []
     if joins:

@@ -22,7 +22,8 @@ def _ctx() -> dict:
                 "description": "customer master", "domain": "Sales",
                 "columns": [
                     {"name": "customer_id", "type": "INTEGER", "description": "id", "is_pk": True},
-                    {"name": "loyalty_tier", "type": "TEXT", "description": "tier", "is_pk": False},
+                    {"name": "loyalty_tier", "type": "TEXT", "description": "tier", "is_pk": False,
+                     "allowed_values": ["Bronze", "Silver", "Gold", "Platinum"]},
                 ],
             },
         },
@@ -70,3 +71,12 @@ def test_format_schema_backward_compatible_without_joins_or_domain():
     assert "## Join Paths" not in out
     assert "### Domain:" not in out
     assert "## Metric definitions" not in out
+
+
+def test_format_schema_renders_allowed_values_inline():
+    """A column's declared vocabulary is surfaced on its row so the agent can
+    filter categoricals without a sample_values round-trip."""
+    out = _format_schema(_ctx())
+    assert "tier (one of: Bronze, Silver, Gold, Platinum)" in out
+    # a column without a vocabulary is not annotated
+    assert "| order_id | INTEGER | Yes | id |" in out

@@ -36,3 +36,17 @@ def get_domains(schema: dict) -> list[dict]:
 def get_metrics(schema: dict) -> list[dict]:
     """Return the canonical business-metric glossary (may be empty)."""
     return schema.get("metrics", [])
+
+
+def get_categorical_values(schema: dict) -> dict[str, list[str]]:
+    """Return {"table.column": allowed_values} for every column declaring a
+    controlled vocabulary. The canonical source of valid categorical values —
+    consumed by datagen (generation membership), the KG builder (Column nodes),
+    and the quality validator (value-domain conformance)."""
+    values: dict[str, list[str]] = {}
+    for table in get_all_tables(schema):
+        for col in table["columns"]:
+            allowed = col.get("allowed_values")
+            if allowed:
+                values[f"{table['name']}.{col['name']}"] = list(allowed)
+    return values

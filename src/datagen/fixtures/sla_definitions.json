@@ -1,0 +1,98 @@
+[
+  {
+    "sla_id": 1,
+    "service_name": "Email",
+    "priority": "Low",
+    "response_time_hours": 24,
+    "resolution_time_hours": 72,
+    "uptime_pct_target": 99.0
+  },
+  {
+    "sla_id": 2,
+    "service_name": "Email",
+    "priority": "Medium",
+    "response_time_hours": 8,
+    "resolution_time_hours": 24,
+    "uptime_pct_target": 99.0
+  },
+  {
+    "sla_id": 3,
+    "service_name": "Email",
+    "priority": "High",
+    "response_time_hours": 4,
+    "resolution_time_hours": 8,
+    "uptime_pct_target": 99.0
+  },
+  {
+    "sla_id": 4,
+    "service_name": "Email",
+    "priority": "Critical",
+    "response_time_hours": 1,
+    "resolution_time_hours": 4,
+    "uptime_pct_target": 99.0
+  },
+  {
+    "sla_id": 5,
+    "service_name": "Core Network",
+    "priority": "High",
+    "response_time_hours": 2,
+    "resolution_time_hours": 6,
+    "uptime_pct_target": 99.9
+  },
+  {
+    "sla_id": 6,
+    "service_name": "Core Network",
+    "priority": "Critical",
+    "response_time_hours": 0.5,
+    "resolution_time_hours": 2,
+    "uptime_pct_target": 99.9
+  },
+  {
+    "sla_id": 7,
+    "service_name": "ERP System",
+    "priority": "High",
+    "response_time_hours": 4,
+    "resolution_time_hours": 12,
+    "uptime_pct_target": 99.5
+  },
+  {
+    "sla_id": 8,
+    "service_name": "ERP System",
+    "priority": "Critical",
+    "response_time_hours": 1,
+    "resolution_time_hours": 4,
+    "uptime_pct_target": 99.5
+  },
+  {
+    "sla_id": 9,
+    "service_name": "Helpdesk",
+    "priority": "Low",
+    "response_time_hours": 48,
+    "resolution_time_hours": 120,
+    "uptime_pct_target": 98.0
+  },
+  {
+    "sla_id": 10,
+    "service_name": "Helpdesk",
+    "priority": "Medium",
+    "response_time_hours": 12,
+    "resolution_time_hours": 48,
+    "uptime_pct_target": 98.0
+  },
+  {
+    "sla_id": 11,
+    "service_name": "Cloud Storage",
+    "priority": "High",
+    "response_time_hours": 2,
+    "resolution_time_hours": 8,
+    "uptime_pct_target": 99.99
+  },
+  {
+    "sla_id": 12,
+    "service_name": "Cloud Storage",
+    "priority": "Critical",
+    "response_time_hours": 0.5,
+    "resolution_time_hours": 2,
+    "uptime_pct_target": 99.99
+  }
+]

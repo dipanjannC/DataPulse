@@ -44,7 +44,7 @@
             {"name": "city",         "type": "TEXT",    "description": "City where the customer resides.",                                               "primary_key": false, "nullable": true},
             {"name": "country",      "type": "TEXT",    "description": "Country where the customer resides.",                                            "primary_key": false, "nullable": true},
             {"name": "signup_date",  "type": "DATE",    "description": "Date when the customer first registered.",                                       "primary_key": false, "nullable": false},
-            {"name": "loyalty_tier", "type": "TEXT",    "description": "Customer loyalty tier: Bronze, Silver, Gold, or Platinum.",                     "primary_key": false, "nullable": true, "aliases": ["membership level", "loyalty level", "customer tier"]},
+            {"name": "loyalty_tier", "type": "TEXT",    "description": "Customer loyalty tier: Bronze, Silver, Gold, or Platinum.",                     "primary_key": false, "nullable": true, "aliases": ["membership level", "loyalty level", "customer tier"], "allowed_values": ["Bronze", "Silver", "Gold", "Platinum"]},
             {"name": "is_active",    "type": "INTEGER", "description": "Whether the customer account is active: 1 for active, 0 for inactive.",          "primary_key": false, "nullable": false}
           ]
         },
@@ -80,8 +80,8 @@
             {"name": "customer_id",   "type": "INTEGER", "description": "Customer who placed the order.",                                                "primary_key": false, "nullable": false, "foreign_key": {"table": "customers", "column": "customer_id"}},
             {"name": "rep_id",        "type": "INTEGER", "description": "Sales representative who managed the order.",                                   "primary_key": false, "nullable": true,  "foreign_key": {"table": "sales_reps", "column": "rep_id"}},
             {"name": "order_date",    "type": "DATE",    "description": "Date the order was placed.",                                                    "primary_key": false, "nullable": false},
-            {"name": "status",        "type": "TEXT",    "description": "Order status: Pending, Processing, Shipped, Delivered, or Cancelled.",          "primary_key": false, "nullable": false},
-            {"name": "channel",       "type": "TEXT",    "description": "Sales channel: Online, In-Store, or Phone.",                                   "primary_key": false, "nullable": false},
+            {"name": "status",        "type": "TEXT",    "description": "Order status: Pending, Processing, Shipped, Delivered, or Cancelled.",          "primary_key": false, "nullable": false, "allowed_values": ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"]},
+            {"name": "channel",       "type": "TEXT",    "description": "Sales channel: Online, In-Store, or Phone.",                                   "primary_key": false, "nullable": false, "allowed_values": ["Online", "In-Store", "Phone"]},
             {"name": "discount_pct",  "type": "REAL",    "description": "Percentage discount applied to the entire order.",                              "primary_key": false, "nullable": true},
             {"name": "shipping_cost", "type": "REAL",    "description": "Shipping cost charged for the order in USD.",                                   "primary_key": false, "nullable": true},
             {"name": "region_id",     "type": "INTEGER", "description": "Region where the order was fulfilled.",                                         "primary_key": false, "nullable": true,  "foreign_key": {"table": "regions", "column": "region_id"}}
@@ -143,7 +143,7 @@
             {"name": "order_id",      "type": "INTEGER", "description": "Original order the returned item was part of.",                                 "primary_key": false, "nullable": false, "foreign_key": {"table": "orders", "column": "order_id"}},
             {"name": "product_id",    "type": "INTEGER", "description": "Product being returned.",                                                       "primary_key": false, "nullable": false, "foreign_key": {"table": "products", "column": "product_id"}},
             {"name": "return_date",   "type": "DATE",    "description": "Date the return was initiated by the customer.",                                "primary_key": false, "nullable": false},
-            {"name": "reason",        "type": "TEXT",    "description": "Reason for the return, e.g. Defective, Wrong item, Changed mind.",              "primary_key": false, "nullable": true},
+            {"name": "reason",        "type": "TEXT",    "description": "Reason for the return, e.g. Defective, Wrong item, Changed mind.",              "primary_key": false, "nullable": true, "allowed_values": ["Defective", "Wrong item", "Changed mind", "Not as described"]},
             {"name": "quantity",      "type": "INTEGER", "description": "Number of units returned.",                                                     "primary_key": false, "nullable": false},
             {"name": "refund_amount", "type": "REAL",    "description": "Refund amount issued to the customer in USD.",                                  "primary_key": false, "nullable": true}
           ]
@@ -157,8 +157,8 @@
             {"name": "invoice_date",    "type": "DATE",    "description": "Date the invoice was issued.",                                                "primary_key": false, "nullable": false},
             {"name": "due_date",        "type": "DATE",    "description": "Payment due date for the invoice.",                                           "primary_key": false, "nullable": false},
             {"name": "amount",          "type": "REAL",    "description": "Total invoice amount billed in USD. Amount invoiced to the customer, distinct from recognized sales revenue (see order_items.line_total).", "primary_key": false, "nullable": false, "aliases": ["invoiced amount", "billed amount", "invoice total"]},
-            {"name": "status",          "type": "TEXT",    "description": "Invoice payment status: Unpaid, Paid, Overdue, or Void.",                     "primary_key": false, "nullable": false},
-            {"name": "payment_method",  "type": "TEXT",    "description": "Payment method used: Credit Card, Bank Transfer, or Cash.",                   "primary_key": false, "nullable": true}
+            {"name": "status",          "type": "TEXT",    "description": "Invoice payment status: Unpaid, Paid, Overdue, or Void.",                     "primary_key": false, "nullable": false, "allowed_values": ["Unpaid", "Paid", "Overdue", "Void"]},
+            {"name": "payment_method",  "type": "TEXT",    "description": "Payment method used: Credit Card, Bank Transfer, or Cash.",                   "primary_key": false, "nullable": true, "allowed_values": ["Credit Card", "Bank Transfer", "Cash"]}
           ]
         }
       ],
@@ -188,13 +188,13 @@
           "columns": [
             {"name": "asset_id",       "type": "INTEGER", "description": "Unique identifier for each IT asset.",                                         "primary_key": true,  "nullable": false},
             {"name": "asset_name",     "type": "TEXT",    "description": "Descriptive name of the asset, e.g. Dell Laptop 15, Cisco Switch 24-port.",    "primary_key": false, "nullable": false},
-            {"name": "asset_type",     "type": "TEXT",    "description": "Type of asset: Laptop, Desktop, Server, Network Device, or Software.",         "primary_key": false, "nullable": false},
+            {"name": "asset_type",     "type": "TEXT",    "description": "Type of asset: Laptop, Desktop, Server, Network Device, or Software.",         "primary_key": false, "nullable": false, "allowed_values": ["Laptop", "Desktop", "Server", "Network Device", "Software"]},
             {"name": "serial_number",  "type": "TEXT",    "description": "Manufacturer serial number for hardware assets.",                              "primary_key": false, "nullable": true},
             {"name": "purchase_date",  "type": "DATE",    "description": "Date the asset was purchased or acquired.",                                    "primary_key": false, "nullable": true},
             {"name": "purchase_cost",  "type": "REAL",    "description": "Original purchase cost of the asset in USD.",                                  "primary_key": false, "nullable": true},
             {"name": "assigned_to",    "type": "TEXT",    "description": "Username or employee name to whom the asset is assigned.",                     "primary_key": false, "nullable": true},
             {"name": "location",       "type": "TEXT",    "description": "Physical or logical location of the asset, e.g. Office Floor 2, Data Center.", "primary_key": false, "nullable": true},
-            {"name": "status",         "type": "TEXT",    "description": "Current status of the asset: Active, In Repair, Retired, or In Storage.",      "primary_key": false, "nullable": false}
+            {"name": "status",         "type": "TEXT",    "description": "Current status of the asset: Active, In Repair, Retired, or In Storage.",      "primary_key": false, "nullable": false, "allowed_values": ["Active", "In Repair", "Retired", "In Storage"]}
           ]
         },
         {
@@ -203,9 +203,9 @@
           "columns": [
             {"name": "incident_id",   "type": "INTEGER", "description": "Unique identifier for each IT incident.",                                       "primary_key": true,  "nullable": false},
             {"name": "title",         "type": "TEXT",    "description": "Short summary title describing the incident.",                                  "primary_key": false, "nullable": false},
-            {"name": "severity",      "type": "TEXT",    "description": "Incident severity level: Critical, High, Medium, or Low.",                      "primary_key": false, "nullable": false},
-            {"name": "category",      "type": "TEXT",    "description": "Incident category: Network, Hardware, Software, Security, or Access.",          "primary_key": false, "nullable": true},
-            {"name": "status",        "type": "TEXT",    "description": "Current status of the incident: Open, In Progress, Resolved, or Closed.",       "primary_key": false, "nullable": false},
+            {"name": "severity",      "type": "TEXT",    "description": "Incident severity level: Critical, High, Medium, or Low.",                      "primary_key": false, "nullable": false, "allowed_values": ["Critical", "High", "Medium", "Low"]},
+            {"name": "category",      "type": "TEXT",    "description": "Incident category: Network, Hardware, Software, Security, or Access.",          "primary_key": false, "nullable": true, "allowed_values": ["Network", "Hardware", "Software", "Security", "Access"]},
+            {"name": "status",        "type": "TEXT",    "description": "Current status of the incident: Open, In Progress, Resolved, or Closed.",       "primary_key": false, "nullable": false, "allowed_values": ["Open", "In Progress", "Resolved", "Closed"]},
             {"name": "reported_by",   "type": "TEXT",    "description": "Username of the person who reported the incident.",                             "primary_key": false, "nullable": false},
             {"name": "assigned_to",   "type": "TEXT",    "description": "IT team member assigned to resolve the incident.",                              "primary_key": false, "nullable": true},
             {"name": "created_at",    "type": "DATETIME","description": "Timestamp when the incident was first reported.",                               "primary_key": false, "nullable": false},
@@ -221,7 +221,7 @@
             {"name": "description",     "type": "TEXT",    "description": "Detailed description of the project scope and objectives.",                   "primary_key": false, "nullable": true},
             {"name": "start_date",      "type": "DATE",    "description": "Planned or actual project start date.",                                       "primary_key": false, "nullable": true},
             {"name": "end_date",        "type": "DATE",    "description": "Planned or actual project end date.",                                         "primary_key": false, "nullable": true},
-            {"name": "status",          "type": "TEXT",    "description": "Project status: Planning, Active, On Hold, Completed, or Cancelled.",         "primary_key": false, "nullable": false},
+            {"name": "status",          "type": "TEXT",    "description": "Project status: Planning, Active, On Hold, Completed, or Cancelled.",         "primary_key": false, "nullable": false, "allowed_values": ["Planning", "Active", "On Hold", "Completed", "Cancelled"]},
             {"name": "budget",          "type": "REAL",    "description": "Approved project budget in USD.",                                             "primary_key": false, "nullable": true},
             {"name": "project_manager", "type": "TEXT",    "description": "Name of the IT project manager responsible for delivery.",                    "primary_key": false, "nullable": true}
           ]
@@ -237,8 +237,8 @@
             {"name": "cpu_cores",     "type": "INTEGER", "description": "Number of CPU cores available on the server.",                                  "primary_key": false, "nullable": true},
             {"name": "ram_gb",        "type": "INTEGER", "description": "Total RAM installed on the server in gigabytes.",                               "primary_key": false, "nullable": true},
             {"name": "storage_gb",    "type": "INTEGER", "description": "Total storage capacity of the server in gigabytes.",                            "primary_key": false, "nullable": true},
-            {"name": "environment",   "type": "TEXT",    "description": "Deployment environment: Production, Staging, Development, or DR.",              "primary_key": false, "nullable": false},
-            {"name": "status",        "type": "TEXT",    "description": "Operational status of the server: Running, Stopped, Maintenance, or Decommissioned.", "primary_key": false, "nullable": false}
+            {"name": "environment",   "type": "TEXT",    "description": "Deployment environment: Production, Staging, Development, or DR.",              "primary_key": false, "nullable": false, "allowed_values": ["Production", "Staging", "Development", "DR"]},
+            {"name": "status",        "type": "TEXT",    "description": "Operational status of the server: Running, Stopped, Maintenance, or Decommissioned.", "primary_key": false, "nullable": false, "allowed_values": ["Running", "Stopped", "Maintenance", "Decommissioned"]}
           ]
         },
         {
@@ -248,7 +248,7 @@
             {"name": "license_id",     "type": "INTEGER", "description": "Unique identifier for each software license record.",                          "primary_key": true,  "nullable": false},
             {"name": "software_name",  "type": "TEXT",    "description": "Name of the licensed software product.",                                       "primary_key": false, "nullable": false},
             {"name": "vendor",         "type": "TEXT",    "description": "Software vendor or publisher name.",                                           "primary_key": false, "nullable": false},
-            {"name": "license_type",   "type": "TEXT",    "description": "License type: Perpetual, Subscription, Per Seat, or Site License.",            "primary_key": false, "nullable": false},
+            {"name": "license_type",   "type": "TEXT",    "description": "License type: Perpetual, Subscription, Per Seat, or Site License.",            "primary_key": false, "nullable": false, "allowed_values": ["Subscription", "Per Seat", "Site License", "Perpetual"]},
             {"name": "quantity",       "type": "INTEGER", "description": "Number of licensed seats or instances.",                                       "primary_key": false, "nullable": false},
             {"name": "expiry_date",    "type": "DATE",    "description": "Date the license expires; NULL for perpetual licenses.",                        "primary_key": false, "nullable": true},
             {"name": "cost",           "type": "REAL",    "description": "Annual or total license cost in USD.",                                         "primary_key": false, "nullable": true},
@@ -261,9 +261,9 @@
           "columns": [
             {"name": "cr_id",          "type": "INTEGER", "description": "Unique identifier for each change request.",                                   "primary_key": true,  "nullable": false},
             {"name": "title",          "type": "TEXT",    "description": "Short title describing the change being requested.",                            "primary_key": false, "nullable": false},
-            {"name": "change_type",    "type": "TEXT",    "description": "Type of change: Standard, Emergency, or Normal.",                              "primary_key": false, "nullable": false},
-            {"name": "priority",       "type": "TEXT",    "description": "Change priority: Low, Medium, High, or Critical.",                             "primary_key": false, "nullable": false},
-            {"name": "status",         "type": "TEXT",    "description": "Change request status: Draft, Pending Approval, Approved, Implemented, or Rejected.", "primary_key": false, "nullable": false},
+            {"name": "change_type",    "type": "TEXT",    "description": "Type of change: Standard, Emergency, or Normal.",                              "primary_key": false, "nullable": false, "allowed_values": ["Standard", "Emergency", "Normal"]},
+            {"name": "priority",       "type": "TEXT",    "description": "Change priority: Low, Medium, High, or Critical.",                             "primary_key": false, "nullable": false, "allowed_values": ["Low", "Medium", "High", "Critical"]},
+            {"name": "status",         "type": "TEXT",    "description": "Change request status: Draft, Pending Approval, Approved, Implemented, or Rejected.", "primary_key": false, "nullable": false, "allowed_values": ["Draft", "Pending Approval", "Approved", "Implemented", "Rejected"]},
             {"name": "requested_by",   "type": "TEXT",    "description": "Username of the person who submitted the change request.",                     "primary_key": false, "nullable": false},
             {"name": "approved_by",    "type": "TEXT",    "description": "Username of the approver; NULL if not yet approved.",                          "primary_key": false, "nullable": true},
             {"name": "planned_date",   "type": "DATE",    "description": "Scheduled date to implement the change.",                                      "primary_key": false, "nullable": true}
@@ -276,7 +276,7 @@
             {"name": "vendor_id",       "type": "INTEGER", "description": "Unique identifier for each IT vendor.",                                       "primary_key": true,  "nullable": false},
             {"name": "vendor_name",     "type": "TEXT",    "description": "Legal name of the vendor company.",                                           "primary_key": false, "nullable": false},
             {"name": "contact_email",   "type": "TEXT",    "description": "Primary email address for vendor contact.",                                   "primary_key": false, "nullable": true},
-            {"name": "service_type",    "type": "TEXT",    "description": "Type of service: Hardware, Software, Cloud, Networking, or Managed Services.", "primary_key": false, "nullable": false},
+            {"name": "service_type",    "type": "TEXT",    "description": "Type of service: Hardware, Software, Cloud, Networking, or Managed Services.", "primary_key": false, "nullable": false, "allowed_values": ["Hardware", "Software", "Cloud", "Networking", "Managed Services"]},
             {"name": "contract_start",  "type": "DATE",    "description": "Start date of the vendor contract.",                                          "primary_key": false, "nullable": true},
             {"name": "contract_end",    "type": "DATE",    "description": "End date of the vendor contract.",                                            "primary_key": false, "nullable": true},
             {"name": "annual_spend",    "type": "REAL",    "description": "Annual spend with this vendor in USD.",                                       "primary_key": false, "nullable": true}
@@ -288,11 +288,11 @@
           "columns": [
             {"name": "deployment_id",  "type": "INTEGER", "description": "Unique identifier for each deployment.",                                       "primary_key": true,  "nullable": false},
             {"name": "project_id",     "type": "INTEGER", "description": "IT project this deployment belongs to.",                                       "primary_key": false, "nullable": true,  "foreign_key": {"table": "it_projects", "column": "project_id"}},
-            {"name": "environment",    "type": "TEXT",    "description": "Target environment: Development, Staging, or Production.",                     "primary_key": false, "nullable": false},
+            {"name": "environment",    "type": "TEXT",    "description": "Target environment: Development, Staging, or Production.",                     "primary_key": false, "nullable": false, "allowed_values": ["Development", "Staging", "Production"]},
             {"name": "version",        "type": "TEXT",    "description": "Version tag or release number deployed, e.g. v2.4.1.",                         "primary_key": false, "nullable": false},
             {"name": "deployed_at",    "type": "DATETIME","description": "Timestamp when the deployment was executed.",                                  "primary_key": false, "nullable": false},
             {"name": "deployed_by",    "type": "TEXT",    "description": "Username of the engineer who performed the deployment.",                       "primary_key": false, "nullable": false},
-            {"name": "status",         "type": "TEXT",    "description": "Deployment outcome: Success, Failed, or Rolled Back.",                         "primary_key": false, "nullable": false}
+            {"name": "status",         "type": "TEXT",    "description": "Deployment outcome: Success, Failed, or Rolled Back.",                         "primary_key": false, "nullable": false, "allowed_values": ["Success", "Failed", "Rolled Back"]}
           ]
         },
         {
@@ -301,7 +301,7 @@
           "columns": [
             {"name": "sla_id",                  "type": "INTEGER", "description": "Unique identifier for each SLA definition.",                          "primary_key": true,  "nullable": false},
             {"name": "service_name",            "type": "TEXT",    "description": "Name of the IT service this SLA governs.",                            "primary_key": false, "nullable": false},
-            {"name": "priority",                "type": "TEXT",    "description": "Ticket priority level this SLA applies to: Low, Medium, High, or Critical.", "primary_key": false, "nullable": false},
+            {"name": "priority",                "type": "TEXT",    "description": "Ticket priority level this SLA applies to: Low, Medium, High, or Critical.", "primary_key": false, "nullable": false, "allowed_values": ["Low", "Medium", "High", "Critical"]},
             {"name": "response_time_hours",     "type": "REAL",    "description": "Maximum allowed time in hours before first response to an incident.",  "primary_key": false, "nullable": false},
             {"name": "resolution_time_hours",   "type": "REAL",    "description": "Maximum allowed time in hours to fully resolve an incident.",          "primary_key": false, "nullable": false},
             {"name": "uptime_pct_target",       "type": "REAL",    "description": "Target uptime percentage for the service, e.g. 99.9.",                "primary_key": false, "nullable": true}
@@ -313,11 +313,11 @@
           "columns": [
             {"name": "ticket_id",      "type": "INTEGER", "description": "Unique identifier for each helpdesk ticket.",                                  "primary_key": true,  "nullable": false},
             {"name": "incident_id",    "type": "INTEGER", "description": "Related incident if the ticket escalated to an incident; NULL otherwise.",     "primary_key": false, "nullable": true,  "foreign_key": {"table": "it_incidents", "column": "incident_id"}},
-            {"name": "ticket_type",    "type": "TEXT",    "description": "Type of request: Incident, Service Request, or Problem.",                      "primary_key": false, "nullable": false},
+            {"name": "ticket_type",    "type": "TEXT",    "description": "Type of request: Incident, Service Request, or Problem.",                      "primary_key": false, "nullable": false, "allowed_values": ["Incident", "Service Request", "Problem"]},
             {"name": "raised_by",      "type": "TEXT",    "description": "Username of the employee who submitted the ticket.",                           "primary_key": false, "nullable": false},
             {"name": "assigned_team",  "type": "TEXT",    "description": "IT team assigned to handle the ticket, e.g. Network, Desktop Support, Security.", "primary_key": false, "nullable": true},
-            {"name": "priority",       "type": "TEXT",    "description": "Ticket priority: Low, Medium, High, or Critical.",                             "primary_key": false, "nullable": false},
-            {"name": "status",         "type": "TEXT",    "description": "Ticket status: Open, In Progress, Pending, Resolved, or Closed.",              "primary_key": false, "nullable": false},
+            {"name": "priority",       "type": "TEXT",    "description": "Ticket priority: Low, Medium, High, or Critical.",                             "primary_key": false, "nullable": false, "allowed_values": ["Low", "Medium", "High", "Critical"]},
+            {"name": "status",         "type": "TEXT",    "description": "Ticket status: Open, In Progress, Pending, Resolved, or Closed.",              "primary_key": false, "nullable": false, "allowed_values": ["Open", "In Progress", "Pending", "Resolved", "Closed"]},
             {"name": "created_at",     "type": "DATETIME","description": "Timestamp when the ticket was created.",                                       "primary_key": false, "nullable": false},
             {"name": "closed_at",      "type": "DATETIME","description": "Timestamp when the ticket was closed; NULL if still open.",                    "primary_key": false, "nullable": true}
           ]
@@ -344,7 +344,7 @@
             {"name": "department_id",     "type": "INTEGER", "description": "Department the employee belongs to.",                                       "primary_key": false, "nullable": false, "foreign_key": {"table": "departments", "column": "department_id"}},
             {"name": "position_id",       "type": "INTEGER", "description": "Job position or role of the employee.",                                     "primary_key": false, "nullable": false, "foreign_key": {"table": "positions", "column": "position_id"}},
             {"name": "hire_date",         "type": "DATE",    "description": "Date the employee was hired.",                                              "primary_key": false, "nullable": false},
-            {"name": "employment_type",   "type": "TEXT",    "description": "Employment type: Full-Time, Part-Time, Contractor, or Intern.",             "primary_key": false, "nullable": false},
+            {"name": "employment_type",   "type": "TEXT",    "description": "Employment type: Full-Time, Part-Time, Contractor, or Intern.",             "primary_key": false, "nullable": false, "allowed_values": ["Full-Time", "Part-Time", "Contractor", "Intern"]},
             {"name": "manager_id",        "type": "INTEGER", "description": "Employee ID of the direct manager; NULL for top-level employees.",          "primary_key": false, "nullable": true,  "foreign_key": {"table": "employees", "column": "employee_id"}}
           ]
         },
@@ -366,7 +366,7 @@
             {"name": "position_id",    "type": "INTEGER", "description": "Unique identifier for each job position.",                                     "primary_key": true,  "nullable": false},
             {"name": "title",          "type": "TEXT",    "description": "Job title, e.g. Software Engineer, HR Manager, Sales Analyst.",               "primary_key": false, "nullable": false},
             {"name": "department_id",  "type": "INTEGER", "description": "Department this position belongs to.",                                        "primary_key": false, "nullable": false, "foreign_key": {"table": "departments", "column": "department_id"}},
-            {"name": "level",          "type": "TEXT",    "description": "Seniority level: Junior, Mid, Senior, Lead, or Director.",                    "primary_key": false, "nullable": true},
+            {"name": "level",          "type": "TEXT",    "description": "Seniority level: Junior, Mid, Senior, Lead, or Director.",                    "primary_key": false, "nullable": true, "allowed_values": ["Junior", "Mid", "Senior", "Lead", "Director"]},
             {"name": "min_salary",     "type": "REAL",    "description": "Minimum annual salary for this position in USD.",                              "primary_key": false, "nullable": true},
             {"name": "max_salary",     "type": "REAL",    "description": "Maximum annual salary for this position in USD.",                              "primary_key": false, "nullable": true}
           ]
@@ -390,11 +390,11 @@
           "columns": [
             {"name": "leave_id",     "type": "INTEGER", "description": "Unique identifier for each leave request.",                                      "primary_key": true,  "nullable": false},
             {"name": "employee_id",  "type": "INTEGER", "description": "Employee who submitted the leave request.",                                      "primary_key": false, "nullable": false, "foreign_key": {"table": "employees", "column": "employee_id"}},
-            {"name": "leave_type",   "type": "TEXT",    "description": "Type of leave: Annual, Sick, Maternity, Paternity, or Unpaid.",                  "primary_key": false, "nullable": false},
+            {"name": "leave_type",   "type": "TEXT",    "description": "Type of leave: Annual, Sick, Maternity, Paternity, or Unpaid.",                  "primary_key": false, "nullable": false, "allowed_values": ["Annual", "Sick", "Maternity", "Paternity", "Unpaid"]},
             {"name": "start_date",   "type": "DATE",    "description": "Start date of the leave period.",                                               "primary_key": false, "nullable": false},
             {"name": "end_date",     "type": "DATE",    "description": "End date of the leave period.",                                                 "primary_key": false, "nullable": false},
             {"name": "days_count",   "type": "INTEGER", "description": "Total number of working days covered by the leave.",                             "primary_key": false, "nullable": false},
-            {"name": "status",       "type": "TEXT",    "description": "Approval status of the leave: Pending, Approved, or Rejected.",                  "primary_key": false, "nullable": false},
+            {"name": "status",       "type": "TEXT",    "description": "Approval status of the leave: Pending, Approved, or Rejected.",                  "primary_key": false, "nullable": false, "allowed_values": ["Pending", "Approved", "Rejected"]},
             {"name": "approved_by",  "type": "INTEGER", "description": "Employee ID of the manager who approved or rejected the request.",               "primary_key": false, "nullable": true,  "foreign_key": {"table": "employees", "column": "employee_id"}}
           ]
         },
@@ -421,7 +421,7 @@
             {"name": "provider",          "type": "TEXT",    "description": "Training provider or institution delivering the program.",                  "primary_key": false, "nullable": true},
             {"name": "start_date",        "type": "DATE",    "description": "Date the training program started.",                                        "primary_key": false, "nullable": true},
             {"name": "completion_date",   "type": "DATE",    "description": "Date the employee completed the training; NULL if still in progress.",      "primary_key": false, "nullable": true},
-            {"name": "status",            "type": "TEXT",    "description": "Training status: Enrolled, In Progress, Completed, or Dropped.",            "primary_key": false, "nullable": false},
+            {"name": "status",            "type": "TEXT",    "description": "Training status: Enrolled, In Progress, Completed, or Dropped.",            "primary_key": false, "nullable": false, "allowed_values": ["Completed", "In Progress", "Enrolled", "Dropped"]},
             {"name": "cost",              "type": "REAL",    "description": "Cost of the training program in USD.",                                      "primary_key": false, "nullable": true}
           ]
         },
@@ -431,7 +431,7 @@
           "columns": [
             {"name": "benefit_id",               "type": "INTEGER", "description": "Unique identifier for each benefit enrollment record.",              "primary_key": true,  "nullable": false},
             {"name": "employee_id",              "type": "INTEGER", "description": "Employee enrolled in the benefit plan.",                             "primary_key": false, "nullable": false, "foreign_key": {"table": "employees", "column": "employee_id"}},
-            {"name": "benefit_type",             "type": "TEXT",    "description": "Type of benefit: Health, Dental, Vision, Retirement, or Life Insurance.", "primary_key": false, "nullable": false},
+            {"name": "benefit_type",             "type": "TEXT",    "description": "Type of benefit: Health, Dental, Vision, Retirement, or Life Insurance.", "primary_key": false, "nullable": false, "allowed_values": ["Health", "Dental", "Vision", "Retirement", "Life Insurance"]},
             {"name": "plan_name",                "type": "TEXT",    "description": "Specific plan name, e.g. Blue Cross PPO, Fidelity 401k.",            "primary_key": false, "nullable": false},
             {"name": "enrollment_date",          "type": "DATE",    "description": "Date the employee enrolled in the benefit plan.",                    "primary_key": false, "nullable": false},
             {"name": "employer_contribution",    "type": "REAL",    "description": "Monthly employer contribution toward the benefit in USD.",           "primary_key": false, "nullable": true},
@@ -447,7 +447,7 @@
             {"name": "department_id",   "type": "INTEGER", "description": "Department the role belongs to.",                                             "primary_key": false, "nullable": false, "foreign_key": {"table": "departments", "column": "department_id"}},
             {"name": "posted_date",     "type": "DATE",    "description": "Date the job posting was published.",                                         "primary_key": false, "nullable": false},
             {"name": "closing_date",    "type": "DATE",    "description": "Application deadline date for the posting.",                                  "primary_key": false, "nullable": true},
-            {"name": "status",          "type": "TEXT",    "description": "Posting status: Open, Closed, On Hold, or Filled.",                           "primary_key": false, "nullable": false},
+            {"name": "status",          "type": "TEXT",    "description": "Posting status: Open, Closed, On Hold, or Filled.",                           "primary_key": false, "nullable": false, "allowed_values": ["Open", "Closed", "On Hold", "Filled"]},
             {"name": "applicant_count", "type": "INTEGER", "description": "Total number of applications received for this posting.",                     "primary_key": false, "nullable": true}
           ]
         },
@@ -461,7 +461,7 @@
             {"name": "check_in",       "type": "TEXT",    "description": "Time the employee checked in, e.g. 09:02.",                                   "primary_key": false, "nullable": true},
             {"name": "check_out",      "type": "TEXT",    "description": "Time the employee checked out, e.g. 18:15.",                                  "primary_key": false, "nullable": true},
             {"name": "hours_worked",   "type": "REAL",    "description": "Total hours worked calculated from check-in and check-out times.",             "primary_key": false, "nullable": true},
-            {"name": "status",         "type": "TEXT",    "description": "Attendance status: Present, Absent, Half Day, or On Leave.",                   "primary_key": false, "nullable": false}
+            {"name": "status",         "type": "TEXT",    "description": "Attendance status: Present, Absent, Half Day, or On Leave.",                   "primary_key": false, "nullable": false, "allowed_values": ["Present", "Absent", "Half Day", "On Leave"]}
           ]
         }
       ],
@@ -494,12 +494,12 @@
           "columns": [
             {"name": "campaign_id",   "type": "INTEGER", "description": "Unique identifier for each marketing campaign.",                                "primary_key": true,  "nullable": false},
             {"name": "campaign_name", "type": "TEXT",    "description": "Name or title of the marketing campaign.",                                      "primary_key": false, "nullable": false},
-            {"name": "campaign_type", "type": "TEXT",    "description": "Type of campaign: Brand Awareness, Lead Generation, Product Launch, or Retention.", "primary_key": false, "nullable": false},
+            {"name": "campaign_type", "type": "TEXT",    "description": "Type of campaign: Brand Awareness, Lead Generation, Product Launch, or Retention.", "primary_key": false, "nullable": false, "allowed_values": ["Brand Awareness", "Lead Generation", "Product Launch", "Retention"]},
             {"name": "channel_id",    "type": "INTEGER", "description": "Primary marketing channel used for this campaign.",                              "primary_key": false, "nullable": true,  "foreign_key": {"table": "marketing_channels", "column": "channel_id"}},
             {"name": "start_date",    "type": "DATE",    "description": "Campaign start date.",                                                          "primary_key": false, "nullable": false},
             {"name": "end_date",      "type": "DATE",    "description": "Campaign end date.",                                                            "primary_key": false, "nullable": true},
             {"name": "budget",        "type": "REAL",    "description": "Total budget allocated to the campaign in USD.",                                "primary_key": false, "nullable": true},
-            {"name": "status",        "type": "TEXT",    "description": "Campaign status: Draft, Active, Paused, or Completed.",                         "primary_key": false, "nullable": false},
+            {"name": "status",        "type": "TEXT",    "description": "Campaign status: Draft, Active, Paused, or Completed.",                         "primary_key": false, "nullable": false, "allowed_values": ["Draft", "Active", "Paused", "Completed"]},
             {"name": "owner",         "type": "TEXT",    "description": "Name or username of the marketing team member owning the campaign.",            "primary_key": false, "nullable": true}
           ]
         },
@@ -511,9 +511,9 @@
             {"name": "first_name",    "type": "TEXT",    "description": "Lead's first name.",                                                            "primary_key": false, "nullable": true},
             {"name": "last_name",     "type": "TEXT",    "description": "Lead's last name.",                                                             "primary_key": false, "nullable": true},
             {"name": "email",         "type": "TEXT",    "description": "Lead's email address.",                                                         "primary_key": false, "nullable": false},
-            {"name": "source",        "type": "TEXT",    "description": "Lead acquisition source: Organic Search, Paid Ad, Social Media, Referral, or Event.", "primary_key": false, "nullable": true},
+            {"name": "source",        "type": "TEXT",    "description": "Lead acquisition source: Organic Search, Paid Ad, Social Media, Referral, or Event.", "primary_key": false, "nullable": true, "allowed_values": ["Organic Search", "Paid Ad", "Social Media", "Referral", "Event"]},
             {"name": "campaign_id",   "type": "INTEGER", "description": "Campaign that generated this lead.",                                            "primary_key": false, "nullable": true,  "foreign_key": {"table": "campaigns", "column": "campaign_id"}},
-            {"name": "status",        "type": "TEXT",    "description": "Lead status: New, Contacted, Qualified, Converted, or Lost.",                   "primary_key": false, "nullable": false},
+            {"name": "status",        "type": "TEXT",    "description": "Lead status: New, Contacted, Qualified, Converted, or Lost.",                   "primary_key": false, "nullable": false, "allowed_values": ["New", "Contacted", "Qualified", "Converted", "Lost"]},
             {"name": "created_at",    "type": "DATE",    "description": "Date the lead record was created.",                                             "primary_key": false, "nullable": false},
             {"name": "converted_at",  "type": "DATE",    "description": "Date the lead was converted to a customer; NULL if not yet converted.",          "primary_key": false, "nullable": true}
           ]
@@ -524,7 +524,7 @@
           "columns": [
             {"name": "channel_id",           "type": "INTEGER", "description": "Unique identifier for each marketing channel.",                          "primary_key": true,  "nullable": false},
             {"name": "channel_name",         "type": "TEXT",    "description": "Name of the channel, e.g. Google Ads, Facebook, Email, SEO.",            "primary_key": false, "nullable": false},
-            {"name": "channel_type",         "type": "TEXT",    "description": "Channel category: Paid, Organic, Social, Email, or Events.",             "primary_key": false, "nullable": false},
+            {"name": "channel_type",         "type": "TEXT",    "description": "Channel category: Paid, Organic, Social, Email, or Events.",             "primary_key": false, "nullable": false, "allowed_values": ["Paid", "Organic", "Social", "Email", "Events"]},
             {"name": "cost_per_click",       "type": "REAL",    "description": "Average cost per click for paid channels in USD.",                       "primary_key": false, "nullable": true},
             {"name": "cost_per_impression",  "type": "REAL",    "description": "Cost per thousand impressions (CPM) for display channels in USD.",       "primary_key": false, "nullable": true},
             {"name": "monthly_budget",       "type": "REAL",    "description": "Monthly budget allocated to this channel in USD.",                       "primary_key": false, "nullable": true}
@@ -536,11 +536,11 @@
           "columns": [
             {"name": "asset_id",      "type": "INTEGER", "description": "Unique identifier for each content asset.",                                     "primary_key": true,  "nullable": false},
             {"name": "title",         "type": "TEXT",    "description": "Title of the content asset.",                                                   "primary_key": false, "nullable": false},
-            {"name": "asset_type",    "type": "TEXT",    "description": "Type of content: Blog Post, Video, Infographic, Landing Page, or Whitepaper.",  "primary_key": false, "nullable": false},
+            {"name": "asset_type",    "type": "TEXT",    "description": "Type of content: Blog Post, Video, Infographic, Landing Page, or Whitepaper.",  "primary_key": false, "nullable": false, "allowed_values": ["Blog Post", "Video", "Infographic", "Landing Page", "Whitepaper"]},
             {"name": "campaign_id",   "type": "INTEGER", "description": "Campaign this content asset supports.",                                         "primary_key": false, "nullable": true,  "foreign_key": {"table": "campaigns", "column": "campaign_id"}},
             {"name": "created_by",    "type": "TEXT",    "description": "Username or name of the content creator.",                                      "primary_key": false, "nullable": true},
             {"name": "publish_date",  "type": "DATE",    "description": "Date the content was published or made live.",                                  "primary_key": false, "nullable": true},
-            {"name": "status",        "type": "TEXT",    "description": "Content status: Draft, In Review, Published, or Archived.",                     "primary_key": false, "nullable": false}
+            {"name": "status",        "type": "TEXT",    "description": "Content status: Draft, In Review, Published, or Archived.",                     "primary_key": false, "nullable": false, "allowed_values": ["Draft", "In Review", "Published", "Archived"]}
           ]
         },
         {
@@ -548,7 +548,7 @@
           "description": "Social media posts published as part of marketing campaigns across platforms.",
           "columns": [
             {"name": "post_id",       "type": "INTEGER", "description": "Unique identifier for each social media post.",                                 "primary_key": true,  "nullable": false},
-            {"name": "platform",      "type": "TEXT",    "description": "Social media platform: LinkedIn, Twitter, Facebook, or Instagram.",             "primary_key": false, "nullable": false},
+            {"name": "platform",      "type": "TEXT",    "description": "Social media platform: LinkedIn, Twitter, Facebook, or Instagram.",             "primary_key": false, "nullable": false, "allowed_values": ["LinkedIn", "Twitter", "Facebook", "Instagram"]},
             {"name": "content_text",  "type": "TEXT",    "description": "Text body of the social media post.",                                           "primary_key": false, "nullable": true},
             {"name": "campaign_id",   "type": "INTEGER", "description": "Campaign this post supports.",                                                  "primary_key": false, "nullable": true,  "foreign_key": {"table": "campaigns", "column": "campaign_id"}},
             {"name": "published_at",  "type": "DATETIME","description": "Timestamp when the post was published.",                                        "primary_key": false, "nullable": true},
@@ -577,7 +577,7 @@
           "columns": [
             {"name": "event_id",        "type": "INTEGER", "description": "Unique identifier for each marketing event.",                                 "primary_key": true,  "nullable": false},
             {"name": "event_name",      "type": "TEXT",    "description": "Name or title of the event.",                                                 "primary_key": false, "nullable": false},
-            {"name": "event_type",      "type": "TEXT",    "description": "Type of event: Webinar, Trade Show, Conference, Workshop, or Product Demo.",  "primary_key": false, "nullable": false},
+            {"name": "event_type",      "type": "TEXT",    "description": "Type of event: Webinar, Trade Show, Conference, Workshop, or Product Demo.",  "primary_key": false, "nullable": false, "allowed_values": ["Webinar", "Trade Show", "Conference", "Workshop", "Product Demo"]},
             {"name": "campaign_id",     "type": "INTEGER", "description": "Campaign this event is associated with.",                                     "primary_key": false, "nullable": true,  "foreign_key": {"table": "campaigns", "column": "campaign_id"}},
             {"name": "start_date",      "type": "DATE",    "description": "Event start date.",                                                           "primary_key": false, "nullable": false},
             {"name": "end_date",        "type": "DATE",    "description": "Event end date.",                                                             "primary_key": false, "nullable": true},
@@ -673,11 +673,11 @@
             {"name": "log_id",      "type": "INTEGER", "description": "Unique identifier for each access log entry.",                                    "primary_key": true,  "nullable": false},
             {"name": "user_id",     "type": "INTEGER", "description": "User who performed the access action.",                                           "primary_key": false, "nullable": false, "foreign_key": {"table": "sec_users", "column": "user_id"}},
             {"name": "resource",    "type": "TEXT",    "description": "Name or path of the resource accessed, e.g. /admin/users, finance-db.",           "primary_key": false, "nullable": false},
-            {"name": "action",      "type": "TEXT",    "description": "Action performed: Login, Logout, Read, Write, Delete, or Export.",                "primary_key": false, "nullable": false},
+            {"name": "action",      "type": "TEXT",    "description": "Action performed: Login, Logout, Read, Write, Delete, or Export.",                "primary_key": false, "nullable": false, "allowed_values": ["Login", "Logout", "Read", "Write", "Delete", "Export"]},
             {"name": "ip_address",  "type": "TEXT",    "description": "IP address from which the action was performed.",                                 "primary_key": false, "nullable": true},
             {"name": "timestamp",   "type": "DATETIME","description": "Exact timestamp of the access event.",                                            "primary_key": false, "nullable": false},
-            {"name": "status",      "type": "TEXT",    "description": "Outcome of the access attempt: Success or Failure.",                              "primary_key": false, "nullable": false},
-            {"name": "device_type", "type": "TEXT",    "description": "Device type used: Desktop, Mobile, or Server.",                                  "primary_key": false, "nullable": true}
+            {"name": "status",      "type": "TEXT",    "description": "Outcome of the access attempt: Success or Failure.",                              "primary_key": false, "nullable": false, "allowed_values": ["Success", "Failure"]},
+            {"name": "device_type", "type": "TEXT",    "description": "Device type used: Desktop, Mobile, or Server.",                                  "primary_key": false, "nullable": true, "allowed_values": ["Desktop", "Mobile", "Server"]}
           ]
         },
         {
@@ -686,11 +686,11 @@
           "columns": [
             {"name": "incident_id",   "type": "INTEGER", "description": "Unique identifier for each security incident.",                                 "primary_key": true,  "nullable": false},
             {"name": "title",         "type": "TEXT",    "description": "Short title summarising the security incident.",                                "primary_key": false, "nullable": false},
-            {"name": "severity",      "type": "TEXT",    "description": "Incident severity: Critical, High, Medium, or Low.",                            "primary_key": false, "nullable": false},
-            {"name": "category",      "type": "TEXT",    "description": "Incident category: Phishing, Ransomware, Data Breach, Insider Threat, or DDoS.", "primary_key": false, "nullable": false},
+            {"name": "severity",      "type": "TEXT",    "description": "Incident severity: Critical, High, Medium, or Low.",                            "primary_key": false, "nullable": false, "allowed_values": ["Critical", "High", "Medium", "Low"]},
+            {"name": "category",      "type": "TEXT",    "description": "Incident category: Phishing, Ransomware, Data Breach, Insider Threat, or DDoS.", "primary_key": false, "nullable": false, "allowed_values": ["Phishing", "Ransomware", "Data Breach", "Insider Threat", "DDoS"]},
             {"name": "detected_at",   "type": "DATETIME","description": "Timestamp when the incident was first detected.",                               "primary_key": false, "nullable": false},
             {"name": "resolved_at",   "type": "DATETIME","description": "Timestamp when the incident was resolved; NULL if still open.",                 "primary_key": false, "nullable": true},
-            {"name": "status",        "type": "TEXT",    "description": "Incident status: Open, Investigating, Contained, or Closed.",                   "primary_key": false, "nullable": false},
+            {"name": "status",        "type": "TEXT",    "description": "Incident status: Open, Investigating, Contained, or Closed.",                   "primary_key": false, "nullable": false, "allowed_values": ["Open", "Investigating", "Contained", "Closed"]},
             {"name": "assigned_to",   "type": "TEXT",    "description": "Security analyst or team assigned to handle the incident.",                    "primary_key": false, "nullable": true}
           ]
         },
@@ -701,10 +701,10 @@
             {"name": "vuln_id",          "type": "INTEGER", "description": "Unique identifier for each vulnerability record.",                           "primary_key": true,  "nullable": false},
             {"name": "cve_id",           "type": "TEXT",    "description": "CVE identifier for the vulnerability, e.g. CVE-2024-12345.",                 "primary_key": false, "nullable": true},
             {"name": "title",            "type": "TEXT",    "description": "Short description of the vulnerability.",                                   "primary_key": false, "nullable": false},
-            {"name": "severity",         "type": "TEXT",    "description": "Vulnerability severity: Critical, High, Medium, or Low based on CVSS score.", "primary_key": false, "nullable": false},
+            {"name": "severity",         "type": "TEXT",    "description": "Vulnerability severity: Critical, High, Medium, or Low based on CVSS score.", "primary_key": false, "nullable": false, "allowed_values": ["Critical", "High", "Medium", "Low"]},
             {"name": "affected_asset",   "type": "TEXT",    "description": "Name or type of the system or application affected.",                        "primary_key": false, "nullable": false},
             {"name": "discovery_date",   "type": "DATE",    "description": "Date the vulnerability was discovered or disclosed.",                        "primary_key": false, "nullable": false},
-            {"name": "patch_status",     "type": "TEXT",    "description": "Patch status: Unpatched, In Progress, Patched, or Accepted Risk.",           "primary_key": false, "nullable": false},
+            {"name": "patch_status",     "type": "TEXT",    "description": "Patch status: Unpatched, In Progress, Patched, or Accepted Risk.",           "primary_key": false, "nullable": false, "allowed_values": ["Unpatched", "In Progress", "Patched", "Accepted Risk"]},
             {"name": "risk_score",       "type": "REAL",    "description": "CVSS-based risk score from 0.0 to 10.0.",                                    "primary_key": false, "nullable": true}
           ]
         },
@@ -714,11 +714,11 @@
           "columns": [
             {"name": "policy_id",       "type": "INTEGER", "description": "Unique identifier for each security policy.",                                 "primary_key": true,  "nullable": false},
             {"name": "policy_name",     "type": "TEXT",    "description": "Name of the security policy, e.g. Acceptable Use Policy, Password Policy.",  "primary_key": false, "nullable": false},
-            {"name": "category",        "type": "TEXT",    "description": "Policy category: Access Control, Data Protection, Incident Response, or Compliance.", "primary_key": false, "nullable": false},
+            {"name": "category",        "type": "TEXT",    "description": "Policy category: Access Control, Data Protection, Incident Response, or Compliance.", "primary_key": false, "nullable": false, "allowed_values": ["Access Control", "Data Protection", "Incident Response", "Compliance"]},
             {"name": "effective_date",  "type": "DATE",    "description": "Date the policy became effective.",                                           "primary_key": false, "nullable": false},
             {"name": "review_date",     "type": "DATE",    "description": "Scheduled next review date for the policy.",                                  "primary_key": false, "nullable": true},
             {"name": "owner",           "type": "TEXT",    "description": "Name of the team or person responsible for maintaining the policy.",          "primary_key": false, "nullable": true},
-            {"name": "status",          "type": "TEXT",    "description": "Policy status: Active, Under Review, or Retired.",                            "primary_key": false, "nullable": false}
+            {"name": "status",          "type": "TEXT",    "description": "Policy status: Active, Under Review, or Retired.",                            "primary_key": false, "nullable": false, "allowed_values": ["Active", "Under Review", "Retired"]}
           ]
         },
         {
@@ -727,12 +727,12 @@
           "columns": [
             {"name": "asset_id",        "type": "INTEGER", "description": "Unique identifier for each monitored asset.",                                 "primary_key": true,  "nullable": false},
             {"name": "asset_name",      "type": "TEXT",    "description": "Name or hostname of the monitored asset.",                                    "primary_key": false, "nullable": false},
-            {"name": "asset_type",      "type": "TEXT",    "description": "Type of asset: Server, Endpoint, Network Device, Cloud Resource, or Application.", "primary_key": false, "nullable": false},
+            {"name": "asset_type",      "type": "TEXT",    "description": "Type of asset: Server, Endpoint, Network Device, Cloud Resource, or Application.", "primary_key": false, "nullable": false, "allowed_values": ["Server", "Endpoint", "Network Device", "Cloud Resource", "Application"]},
             {"name": "ip_address",      "type": "TEXT",    "description": "IP address of the asset being monitored.",                                    "primary_key": false, "nullable": true},
-            {"name": "criticality",     "type": "TEXT",    "description": "Business criticality of the asset: Critical, High, Medium, or Low.",         "primary_key": false, "nullable": false},
+            {"name": "criticality",     "type": "TEXT",    "description": "Business criticality of the asset: Critical, High, Medium, or Low.",         "primary_key": false, "nullable": false, "allowed_values": ["Critical", "High", "Medium", "Low"]},
             {"name": "owner",           "type": "TEXT",    "description": "Team or individual responsible for this asset.",                              "primary_key": false, "nullable": true},
             {"name": "last_scan_date",  "type": "DATE",    "description": "Date of the most recent security scan performed on the asset.",               "primary_key": false, "nullable": true},
-            {"name": "risk_level",      "type": "TEXT",    "description": "Current risk level assessed for the asset: High, Medium, or Low.",            "primary_key": false, "nullable": true}
+            {"name": "risk_level",      "type": "TEXT",    "description": "Current risk level assessed for the asset: High, Medium, or Low.",            "primary_key": false, "nullable": true, "allowed_values": ["High", "Medium", "Low"]}
           ]
         },
         {
@@ -740,13 +740,13 @@
           "description": "Security alerts generated by monitoring tools and SIEM systems.",
           "columns": [
             {"name": "alert_id",         "type": "INTEGER", "description": "Unique identifier for each security alert.",                                 "primary_key": true,  "nullable": false},
-            {"name": "alert_type",       "type": "TEXT",    "description": "Type of alert: Intrusion Detection, Malware, Anomalous Login, or Data Exfiltration.", "primary_key": false, "nullable": false},
+            {"name": "alert_type",       "type": "TEXT",    "description": "Type of alert: Intrusion Detection, Malware, Anomalous Login, or Data Exfiltration.", "primary_key": false, "nullable": false, "allowed_values": ["Intrusion Detection", "Malware", "Anomalous Login", "Data Exfiltration", "Policy Violation"]},
             {"name": "source",           "type": "TEXT",    "description": "Monitoring tool or system that generated the alert, e.g. SIEM, IDS, EDR.",   "primary_key": false, "nullable": false},
-            {"name": "severity",         "type": "TEXT",    "description": "Alert severity: Critical, High, Medium, or Low.",                            "primary_key": false, "nullable": false},
+            {"name": "severity",         "type": "TEXT",    "description": "Alert severity: Critical, High, Medium, or Low.",                            "primary_key": false, "nullable": false, "allowed_values": ["Critical", "High", "Medium", "Low"]},
             {"name": "message",          "type": "TEXT",    "description": "Detailed alert message describing what was detected.",                       "primary_key": false, "nullable": true},
             {"name": "triggered_at",     "type": "DATETIME","description": "Timestamp when the alert was triggered.",                                    "primary_key": false, "nullable": false},
             {"name": "acknowledged_at",  "type": "DATETIME","description": "Timestamp when the alert was acknowledged by a security analyst.",           "primary_key": false, "nullable": true},
-            {"name": "status",           "type": "TEXT",    "description": "Alert status: New, Acknowledged, Investigating, or Closed.",                 "primary_key": false, "nullable": false},
+            {"name": "status",           "type": "TEXT",    "description": "Alert status: New, Acknowledged, Investigating, or Closed.",                 "primary_key": false, "nullable": false, "allowed_values": ["New", "Acknowledged", "Investigating", "Closed"]},
             {"name": "asset_id",         "type": "INTEGER", "description": "Asset the alert is associated with.",                                        "primary_key": false, "nullable": true,  "foreign_key": {"table": "monitored_assets", "column": "asset_id"}}
           ]
         },
@@ -755,13 +755,13 @@
           "description": "Periodic security audits evaluating compliance with policies and standards.",
           "columns": [
             {"name": "audit_id",        "type": "INTEGER", "description": "Unique identifier for each security audit.",                                  "primary_key": true,  "nullable": false},
-            {"name": "audit_type",      "type": "TEXT",    "description": "Type of audit: Internal, External, Penetration Test, or Compliance Audit.",   "primary_key": false, "nullable": false},
+            {"name": "audit_type",      "type": "TEXT",    "description": "Type of audit: Internal, External, Penetration Test, or Compliance Audit.",   "primary_key": false, "nullable": false, "allowed_values": ["Internal", "External", "Penetration Test", "Compliance Audit"]},
             {"name": "auditor",         "type": "TEXT",    "description": "Name of the auditor or auditing firm.",                                       "primary_key": false, "nullable": false},
             {"name": "start_date",      "type": "DATE",    "description": "Date the audit commenced.",                                                   "primary_key": false, "nullable": false},
             {"name": "end_date",        "type": "DATE",    "description": "Date the audit concluded.",                                                   "primary_key": false, "nullable": true},
             {"name": "scope",           "type": "TEXT",    "description": "Description of systems and processes covered by the audit.",                  "primary_key": false, "nullable": true},
             {"name": "findings_count",  "type": "INTEGER", "description": "Total number of findings or issues identified in the audit.",                 "primary_key": false, "nullable": true},
-            {"name": "status",          "type": "TEXT",    "description": "Audit status: Planned, In Progress, Completed, or Report Issued.",            "primary_key": false, "nullable": false}
+            {"name": "status",          "type": "TEXT",    "description": "Audit status: Planned, In Progress, Completed, or Report Issued.",            "primary_key": false, "nullable": false, "allowed_values": ["Planned", "In Progress", "Completed", "Report Issued"]}
           ]
         },
         {
@@ -769,10 +769,10 @@
           "description": "Compliance control requirements mapped to frameworks such as ISO 27001, SOC 2, and GDPR.",
           "columns": [
             {"name": "control_id",     "type": "INTEGER", "description": "Unique identifier for each compliance control record.",                        "primary_key": true,  "nullable": false},
-            {"name": "framework",      "type": "TEXT",    "description": "Compliance framework: ISO 27001, SOC 2, GDPR, HIPAA, or PCI-DSS.",             "primary_key": false, "nullable": false},
+            {"name": "framework",      "type": "TEXT",    "description": "Compliance framework: ISO 27001, SOC 2, GDPR, HIPAA, or PCI-DSS.",             "primary_key": false, "nullable": false, "allowed_values": ["ISO 27001", "SOC 2", "GDPR", "HIPAA", "PCI-DSS"]},
             {"name": "control_ref",    "type": "TEXT",    "description": "Control reference number from the framework, e.g. A.9.1.1 or CC6.1.",         "primary_key": false, "nullable": false},
             {"name": "description",    "type": "TEXT",    "description": "Description of what the control requires.",                                   "primary_key": false, "nullable": false},
-            {"name": "status",         "type": "TEXT",    "description": "Implementation status: Compliant, Non-Compliant, Partially Compliant, or Not Applicable.", "primary_key": false, "nullable": false},
+            {"name": "status",         "type": "TEXT",    "description": "Implementation status: Compliant, Non-Compliant, Partially Compliant, or Not Applicable.", "primary_key": false, "nullable": false, "allowed_values": ["Compliant", "Non-Compliant", "Partially Compliant", "Not Applicable"]},
             {"name": "last_assessed",  "type": "DATE",    "description": "Date this control was last assessed for compliance.",                          "primary_key": false, "nullable": true},
             {"name": "assigned_to",    "type": "TEXT",    "description": "Team or individual responsible for implementing this control.",                "primary_key": false, "nullable": true},
             {"name": "due_date",       "type": "DATE",    "description": "Deadline for achieving or re-validating compliance for this control.",         "primary_key": false, "nullable": true}

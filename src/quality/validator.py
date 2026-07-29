@@ -113,6 +113,16 @@ def _check_table(table: dict, df: pd.DataFrame | None) -> list[Violation]:
         if col.get("primary_key") and not series.dropna().is_unique:
             violations.append(Violation("duplicate", field, "duplicate values in primary key"))
 
+        allowed = col.get("allowed_values")
+        if allowed:
+            observed = set(series.dropna().astype(str).unique())
+            out_of_domain = sorted(observed - set(map(str, allowed)))
+            if out_of_domain:
+                violations.append(Violation(
+                    "value_domain", field,
+                    f"{len(out_of_domain)} value(s) outside declared vocabulary: {out_of_domain[:10]}",
+                ))
+
     return violations
 
 
@@ -161,7 +171,7 @@ def validate_frames(frames: Mapping[str, pd.DataFrame], schema: dict) -> Quality
             violations.append(v)
 
     schema_check = SchemaCheck(passed=not violations, violations=violations)
-    structural = {"missing_table", "missing_column", "dtype", "null", "duplicate"}
+    structural = {"missing_table", "missing_column", "dtype", "null", "duplicate", "value_domain"}
     summary = {
         "pass": schema_check.passed,
         "schema_pass": not any(v.kind in structural for v in violations),

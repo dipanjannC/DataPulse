@@ -9,34 +9,23 @@ import pandas as pd
 from faker import Faker
 
 from src.datagen.domains._common import rand_date
+from src.datagen.fixtures import load_fixture
+from src.datagen.vocab import values_for
 
 
 def generate_sales(rng: random.Random, fake: Faker) -> dict[str, pd.DataFrame]:
     tables: dict[str, pd.DataFrame] = {}
 
-    # regions (fixed)
-    regions = pd.DataFrame([
-        {"region_id": 1, "region_name": "North",   "country": "USA",    "manager_name": fake.name(), "timezone": "America/New_York"},
-        {"region_id": 2, "region_name": "South",   "country": "USA",    "manager_name": fake.name(), "timezone": "America/Chicago"},
-        {"region_id": 3, "region_name": "East",    "country": "USA",    "manager_name": fake.name(), "timezone": "America/New_York"},
-        {"region_id": 4, "region_name": "West",    "country": "USA",    "manager_name": fake.name(), "timezone": "America/Los_Angeles"},
-        {"region_id": 5, "region_name": "Central", "country": "Canada", "manager_name": fake.name(), "timezone": "America/Chicago"},
-    ])
+    # regions — reference data in fixtures/regions.json; manager_name filled per row
+    region_rows = load_fixture("regions")
+    for row in region_rows:
+        row["manager_name"] = fake.name()
+    regions = pd.DataFrame(region_rows)
     tables["regions"] = regions
     region_ids = list(regions["region_id"])
 
-    # categories (fixed)
-    categories = pd.DataFrame([
-        {"category_id": 1, "category_name": "Electronics",      "parent_category_id": None, "description": "Consumer electronics and gadgets"},
-        {"category_id": 2, "category_name": "Clothing",         "parent_category_id": None, "description": "Apparel and fashion items"},
-        {"category_id": 3, "category_name": "Home & Garden",    "parent_category_id": None, "description": "Home furnishings and garden supplies"},
-        {"category_id": 4, "category_name": "Sports",           "parent_category_id": None, "description": "Sports and outdoor equipment"},
-        {"category_id": 5, "category_name": "Books",            "parent_category_id": None, "description": "Books and digital media"},
-        {"category_id": 6, "category_name": "Laptops",          "parent_category_id": 1,    "description": "Portable personal computers"},
-        {"category_id": 7, "category_name": "Smartphones",      "parent_category_id": 1,    "description": "Mobile phones and accessories"},
-        {"category_id": 8, "category_name": "Men's Clothing",   "parent_category_id": 2,    "description": "Men's apparel"},
-        {"category_id": 9, "category_name": "Women's Clothing", "parent_category_id": 2,    "description": "Women's apparel"},
-    ])
+    # categories — reference data in fixtures/categories.json
+    categories = pd.DataFrame(load_fixture("categories"))
     tables["categories"] = categories
     cat_ids = list(categories["category_id"])
 
@@ -50,7 +39,7 @@ def generate_sales(rng: random.Random, fake: Faker) -> dict[str, pd.DataFrame]:
         "city":         fake.city(),
         "country":      rng.choice(["USA", "Canada", "UK"]),
         "signup_date":  rand_date(rng, date(2020, 1, 1), date(2023, 12, 31)),
-        "loyalty_tier": rng.choice(["Bronze", "Silver", "Gold", "Platinum"]),
+        "loyalty_tier": rng.choice(values_for("customers", "loyalty_tier")),
         "is_active":    rng.choices([1, 0], weights=[92, 8])[0],
     } for i in range(500)])
     tables["customers"] = customers
@@ -91,8 +80,8 @@ def generate_sales(rng: random.Random, fake: Faker) -> dict[str, pd.DataFrame]:
         "customer_id":   rng.choice(cust_ids),
         "rep_id":        rng.choice(rep_ids),
         "order_date":    rand_date(rng, date(2022, 1, 1), date(2024, 12, 31)),
-        "status":        rng.choice(["Pending", "Processing", "Shipped", "Delivered", "Cancelled"]),
-        "channel":       rng.choice(["Online", "In-Store", "Phone"]),
+        "status":        rng.choice(values_for("orders", "status")),
+        "channel":       rng.choice(values_for("orders", "channel")),
         "discount_pct":  rng.choice([0, 0, 0, 5.0, 10.0, 15.0, 20.0]),
         "shipping_cost": round(rng.uniform(0.0, 25.0), 2),
         "region_id":     rng.choice(region_ids),
@@ -127,7 +116,7 @@ def generate_sales(rng: random.Random, fake: Faker) -> dict[str, pd.DataFrame]:
         "order_id":      return_order_sample[i],
         "product_id":    rng.choice(prod_ids),
         "return_date":   rand_date(rng, date(2022, 3, 1), date(2025, 1, 31)),
-        "reason":        rng.choice(["Defective", "Wrong item", "Changed mind", "Not as described"]),
+        "reason":        rng.choice(values_for("returns", "reason")),
         "quantity":      rng.randint(1, 3),
         "refund_amount": round(rng.uniform(10.0, 500.0), 2),
     } for i in range(200)])
@@ -145,7 +134,7 @@ def generate_sales(rng: random.Random, fake: Faker) -> dict[str, pd.DataFrame]:
             "due_date":       str(due_date),
             "amount":         round(rng.uniform(20.0, 2000.0), 2),
             "status":         rng.choice(["Paid", "Paid", "Paid", "Unpaid", "Overdue"]),
-            "payment_method": rng.choice(["Credit Card", "Bank Transfer", "Cash"]),
+            "payment_method": rng.choice(values_for("invoices", "payment_method")),
         })
     tables["invoices"] = pd.DataFrame(invoices)
 

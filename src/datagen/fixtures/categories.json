@@ -1,0 +1,56 @@
+[
+  {
+    "category_id": 1,
+    "category_name": "Electronics",
+    "parent_category_id": null,
+    "description": "Consumer electronics and gadgets"
+  },
+  {
+    "category_id": 2,
+    "category_name": "Clothing",
+    "parent_category_id": null,
+    "description": "Apparel and fashion items"
+  },
+  {
+    "category_id": 3,
+    "category_name": "Home & Garden",
+    "parent_category_id": null,
+    "description": "Home furnishings and garden supplies"
+  },
+  {
+    "category_id": 4,
+    "category_name": "Sports",
+    "parent_category_id": null,
+    "description": "Sports and outdoor equipment"
+  },
+  {
+    "category_id": 5,
+    "category_name": "Books",
+    "parent_category_id": null,
+    "description": "Books and digital media"
+  },
+  {
+    "category_id": 6,
+    "category_name": "Laptops",
+    "parent_category_id": 1,
+    "description": "Portable personal computers"
+  },
+  {
+    "category_id": 7,
+    "category_name": "Smartphones",
+    "parent_category_id": 1,
+    "description": "Mobile phones and accessories"
+  },
+  {
+    "category_id": 8,
+    "category_name": "Men's Clothing",
+    "parent_category_id": 2,
+    "description": "Men's apparel"
+  },
+  {
+    "category_id": 9,
+    "category_name": "Women's Clothing",
+    "parent_category_id": 2,
+    "description": "Women's apparel"
+  }
+]
