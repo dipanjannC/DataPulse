@@ -434,6 +434,22 @@ textarea::placeholder { color: var(--muted); }
   padding: 2px 7px; border-radius: var(--radius); word-break: break-word;
 }
 
+/* Categorical value domains the graph carries — valid filter values, inline */
+.schema-values { margin-top: 12px; padding-top: 11px; border-top: 1px solid var(--border); }
+.schema-values-label {
+  font-family: var(--sans); font-size: 9px; font-weight: 600; color: var(--muted);
+  letter-spacing: 1.4px; text-transform: uppercase; margin-bottom: 8px;
+}
+.value-def { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+.value-def:last-child { margin-bottom: 0; }
+.value-col { font-family: var(--mono); font-size: 11px; color: var(--accent-soft); font-weight: 600; }
+.value-chips { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.value-chip {
+  font-family: var(--mono); font-size: 10px; color: var(--text-dim);
+  background: var(--surface-2); border: 1px solid var(--border);
+  padding: 1px 6px; border-radius: var(--radius);
+}
+
 /* SQL block */
 .sql-block {
   background: var(--surface); border: 1px solid var(--border);

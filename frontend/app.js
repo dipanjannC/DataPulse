@@ -215,6 +215,17 @@
   function buildSchemaToggle(tables, metrics) {
     const names = Object.keys(tables);
     const mlist = metrics || [];
+    // Categorical value domains the KG carries on each column — the valid filter
+    // values. Surfacing them here is what lets a reader see (not just the agent)
+    // exactly which literals a status/tier/severity filter may take.
+    const vlist = [];
+    for (const n of names) {
+      for (const col of (tables[n]?.columns || [])) {
+        if (col.allowed_values && col.allowed_values.length) {
+          vlist.push({ col: `${n}.${col.name}`, values: col.allowed_values });
+        }
+      }
+    }
     const el    = document.createElement('div');
     el.className = 'schema-toggle';
     let open = false;
@@ -226,6 +237,10 @@
         </button>
         ${open?`<div class="schema-body">
           <div class="schema-pills">${names.map(n=>`<span class="table-pill" title="${esc(tables[n]?.description||n)}">${esc(n)}</span>`).join('')}</div>
+          ${vlist.length?`<div class="schema-values">
+            <div class="schema-values-label">Categorical values from the graph</div>
+            ${vlist.map(v=>`<div class="value-def"><code class="value-col">${esc(v.col)}</code><span class="value-chips">${v.values.map(x=>`<span class="value-chip">${esc(x)}</span>`).join('')}</span></div>`).join('')}
+          </div>`:''}
           ${mlist.length?`<div class="schema-metrics">
             <div class="schema-metrics-label">Metric definitions resolved</div>
             ${mlist.map(m=>`<div class="metric-def" title="${esc(m.description||'')}"><code class="metric-name">${esc(m.name)}</code><span class="metric-eq">=</span><code class="metric-expr">${esc(m.expression)}</code></div>`).join('')}
@@ -366,6 +381,18 @@
     return el;
   }
 
+  // Friendly titles for the classified backend failures (data.error_kind); the
+  // message body (data.error) is already human-readable, no stack traces.
+  const ERROR_TITLES = {
+    kg_unavailable:  'Knowledge graph unavailable',
+    llm_unavailable: 'Language model unavailable',
+    rate_limited:    'Rate limited',
+    config:          'Server not configured',
+    network:         'Cannot reach DataPulse',
+    no_result:       'No result',
+    internal:        'Something went wrong',
+  };
+
   function buildAssistantBubble(data) {
     const wrapper = document.createElement('div');
     wrapper.className = 'msg-assistant';
@@ -381,8 +408,9 @@
     if (!data.success) {
       const err = document.createElement('div');
       err.className = 'msg-error';
+      const errTitle = ERROR_TITLES[data.error_kind] || 'Query failed';
       err.innerHTML = `
-        <div class="error-title">Query failed</div>
+        <div class="error-title">${esc(errTitle)}</div>
         <div class="error-body">${esc(data.error||data.detail||'Unknown error')}</div>
         ${data.sql?`<div class="error-sql">${esc(data.sql)}</div>`:''}
       `;
@@ -593,7 +621,9 @@
     // as the real outcome confirms. Only real details are ever shown, and a step
     // is never checked green above a step that errored.
     const apiPromise = api.query(question)
-      .catch(err => ({ success: false, error: err.message, sql: '', schema_context: {}, columns: [], rows: [] }));
+      .catch(() => ({ success: false, error_kind: 'network',
+        error: "Cannot reach the DataPulse API server. Make sure it's running, then try again.",
+        sql: '', schema_context: {}, columns: [], rows: [] }));
 
     const t0 = performance.now();
     const reveal = 160;
