@@ -7,7 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/static/style.css?v=7" />
+  <link rel="stylesheet" href="/static/style.css?v=8" />
+  <link rel="stylesheet" href="/static/quality.css?v=1" />
 </head>
 <body>
 
@@ -81,6 +82,13 @@
       </div>
     </div>
 
+    <!-- ── Data Quality (opens the profile overlay) ── -->
+    <button id="quality-btn" class="quality-btn" title="Inspect the generated dataset's quality">
+      <span class="quality-btn-tick" aria-hidden="true"></span>
+      <span class="quality-btn-label">Data Quality</span>
+      <span class="quality-btn-arrow" aria-hidden="true">→</span>
+    </button>
+
     <!-- ── Footer ── -->
     <div class="sidebar-footer">
       <span>50 tables</span>
@@ -115,5 +123,6 @@
   </main>
 
   <script src="/static/app.js?v=6"></script>
+  <script src="/static/quality.js?v=1"></script>
 </body>
 </html>

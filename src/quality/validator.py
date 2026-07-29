@@ -26,6 +26,7 @@ from src.metadata.utils import (
     get_all_tables,
     load_schema,
 )
+from src.quality.profiler import profile_frames
 from src.quality.reports import (
     QualityReport,
     SchemaCheck,
@@ -186,6 +187,7 @@ def validate_frames(frames: Mapping[str, pd.DataFrame], schema: dict) -> Quality
         summary=summary,
         schema=schema_check,
         distributions={},  # chi-square distributional checks deliberately skipped (see module docstring)
+        profile=profile_frames(frames, schema),  # descriptive, scipy-free (see profiler.py)
         config_hash=_schema_hash(schema),
     )
 

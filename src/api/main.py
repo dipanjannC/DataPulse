@@ -31,10 +31,12 @@ from src.knowledge_graph.retriever import retrieve_schema_context
 from src.knowledge_graph.freshness import is_kg_fresh
 from src.embeddings.embed import MODEL_NAME
 from src.metadata.utils import get_domains, load_schema
+from src.quality.validator import validate_dataset
 
 logger = logging.getLogger(__name__)
 
 DB_PATH = Path(__file__).parent.parent / "db" / "sales.db"
+DATA_DIR = Path(__file__).parent.parent / "data"
 
 # A cold/paused Aura instance must not hang the health poll; bound it tight.
 _HEALTH_TIMEOUT_S = 5
@@ -115,6 +117,48 @@ def list_domains():
             for d in get_domains(schema)
         ]
     }
+
+
+# ── data-quality report (validator verdict + descriptive profile) ────────────
+# Computed live over the generated CSVs and cached until they change (a cheap
+# stat of ~50 small files), so opening the panel repeatedly is instant while a
+# regenerate is still picked up. Read-only over the tracked CSVs — it never
+# perturbs generation or the determinism guard.
+
+_quality_cache: dict[str, Any] = {"sig": None, "payload": None}
+
+
+def _data_signature(data_dir: Path) -> str:
+    """A cheap fingerprint of the CSV set — names, sizes, mtimes. Changes when the
+    data is regenerated, so the cached report invalidates. Empty when unreadable."""
+    try:
+        return "|".join(sorted(
+            f"{p.name}:{p.stat().st_size}:{p.stat().st_mtime_ns}"
+            for p in data_dir.glob("*.csv")
+        ))
+    except OSError:
+        return ""
+
+
+@app.get("/api/quality")
+def quality() -> dict[str, Any]:
+    """Descriptive data-quality report over the generated CSVs: the validator's
+    verdict (schema conformance + referential integrity) plus a per-column
+    profile (completeness, cardinality, numeric spread, categorical frequency)."""
+    sig = _data_signature(DATA_DIR)
+    if not sig:
+        return {"available": False,
+                "error": "No generated data found. Run the pipeline to build the dataset first."}
+    if _quality_cache["sig"] != sig:
+        try:
+            report = validate_dataset(DATA_DIR)
+        except Exception:
+            logger.exception("failed to compute the data-quality report")
+            return {"available": False,
+                    "error": "Could not compute the data-quality report from the generated CSVs."}
+        _quality_cache["sig"] = sig
+        _quality_cache["payload"] = {"available": True, **report.to_dict()}
+    return _quality_cache["payload"]
 
 
 # ── agent result -> UI contract ─────────────────────────────────────────────

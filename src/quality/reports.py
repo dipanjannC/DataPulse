@@ -61,12 +61,18 @@ class QualityReport:
     schema: SchemaCheck
     distributions: dict[str, DistributionCheck]
     config_hash: str
+    # Descriptive per-table/per-column profile (see quality/profiler.py). A plain
+    # JSON-ready dict like `summary` — not a DistributionCheck — because it carries
+    # no pass/fail verdict; it *describes* the data rather than gating it. Defaults
+    # empty so a bare QualityReport (e.g. in older callers/tests) still constructs.
+    profile: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "summary": dict(self.summary),
             "schema": self.schema.to_dict(),
             "distributions": {k: v.to_dict() for k, v in self.distributions.items()},
+            "profile": dict(self.profile),
             "config_hash": self.config_hash,
         }
 

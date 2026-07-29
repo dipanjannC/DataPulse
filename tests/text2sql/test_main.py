@@ -192,3 +192,61 @@ def test_query_final_answer_without_sql_is_not_success(monkeypatch):
     assert body["grounded"] is False
     assert body["error_kind"] == "no_result"
     assert body["answer"]  # the explanation is still surfaced to the user
+
+
+# ── /api/quality (validator verdict + descriptive profile) ──────────────────
+
+from src.quality.reports import QualityReport, SchemaCheck
+
+
+def _fake_quality_report() -> QualityReport:
+    return QualityReport(
+        summary={"schema_pass": True, "referential_integrity_pass": True,
+                 "table_count": 1, "total_rows": 2, "violation_count": 0},
+        schema=SchemaCheck(passed=True, violations=[]),
+        distributions={},
+        profile={"customers": {"domain": "Sales", "row_count": 2, "column_count": 1,
+                               "columns": {"id": {"type": "INTEGER", "role": "key",
+                                                  "count": 2, "nulls": 0, "null_pct": 0.0,
+                                                  "distinct": 2, "distinct_pct": 100.0}}}},
+        config_hash="sha256:test",
+    )
+
+
+def test_quality_returns_verdict_and_profile(monkeypatch):
+    monkeypatch.setattr(main, "_quality_cache", {"sig": None, "payload": None})
+    monkeypatch.setattr(main, "_data_signature", lambda d: "sig-1")
+    monkeypatch.setattr(main, "validate_dataset", lambda d: _fake_quality_report())
+    body = TestClient(main.app).get("/api/quality").json()
+
+    assert body["available"] is True
+    assert body["summary"]["schema_pass"] is True
+    assert body["profile"]["customers"]["columns"]["id"]["role"] == "key"
+    assert body["config_hash"] == "sha256:test"
+
+
+def test_quality_reports_missing_data_gracefully(monkeypatch):
+    # No CSVs on disk -> empty signature -> a friendly, non-crashing envelope.
+    monkeypatch.setattr(main, "_quality_cache", {"sig": None, "payload": None})
+    monkeypatch.setattr(main, "_data_signature", lambda d: "")
+    body = TestClient(main.app).get("/api/quality").json()
+
+    assert body["available"] is False
+    assert "no generated data" in body["error"].lower()
+
+
+def test_quality_caches_until_signature_changes(monkeypatch):
+    # A stable data signature must serve the second hit from cache (no recompute).
+    monkeypatch.setattr(main, "_quality_cache", {"sig": None, "payload": None})
+    monkeypatch.setattr(main, "_data_signature", lambda d: "stable-sig")
+    calls = {"n": 0}
+
+    def counting(_):
+        calls["n"] += 1
+        return _fake_quality_report()
+
+    monkeypatch.setattr(main, "validate_dataset", counting)
+    client = TestClient(main.app)
+    client.get("/api/quality")
+    client.get("/api/quality")
+    assert calls["n"] == 1
