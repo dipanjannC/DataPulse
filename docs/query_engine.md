@@ -1,14 +1,16 @@
 # Query Engine (CONSUME)
 
-How a natural-language question becomes SQL and rows in the active stack. For the
+How a natural-language question becomes SQL and rows in the active stack — the request
+**flow** and the operational surface. For the agent's internal **design** (loop mechanics,
+tool signatures, the DI seam, dataclasses) see [agents_design.md](agents_design.md). For the
 legacy `src/` google-adk/Cypher engine see [legacy_src.md](legacy_src.md).
 
 ## The agent loop
 
-The core is `run_agent` in `text2sql/agent/agent.py` — a small, **dependency-injected** loop. It
-takes an `llm_fn(messages, tool_schemas) -> LLMResponse` and a `tool_fns` registry, so the
-iteration / trace / guard logic is unit-tested with a scripted fake model and fake tools (no live
-Groq/Neo4j/SQLite). The model works by calling tools in a loop until it can answer:
+The core is `run_agent` in `text2sql/agent/agent.py` — a small, dependency-injected loop (its
+mechanics, the DI seam, and the result/trace dataclasses live in
+[agents_design.md](agents_design.md)). The model works by calling tools in a loop until it can
+answer:
 
 ```
 NL question
@@ -24,44 +26,40 @@ llm_fn (Groq: llama-3.3-70b-versatile)
 final natural-language answer + the SQL + the rows + an inspectable trace
 ```
 
-Because reasoning is a **trace of explicit tool calls**, you can see exactly which tables the model
-discovered, what SQL it tried, and where it corrected itself — not one opaque generation.
+That reasoning trace — the tables discovered, the SQL attempted, the corrections — comes back in
+the `trace` field of every response, so an answer is never one opaque generation.
 
 ## The three tools
 
-| Tool | Backed by | Purpose |
-|---|---|---|
-| `get_schema_context(question)` | Neo4j KG (`knowledge_graph/retriever.py`) | Vector-search columns/tables + walk `REFERENCES` join paths. Returns the relevant tables, **exact join keys**, and **canonical metric definitions**. The prompt requires calling this first. |
-| `sample_values(table, column)` | SQLite | Up to 20 distinct non-null values, to resolve a categorical filter instead of guessing the literal. |
-| `run_sql(sql)` | SQLite | Execute a read-only `SELECT`/`WITH` query; returns `{columns, rows, row_count, truncated}`. |
+The loop calls three tools — `get_schema_context` (Neo4j KG), `sample_values` (SQLite), and
+`run_sql` (SQLite, read-only) — shown as steps in the diagram above. Their signatures, backends,
+return shapes, and guardrails are documented once in
+[agents_design.md § The three tools](agents_design.md#the-three-tools-capabilities). Three facts
+that matter to the *flow*:
 
-The system prompt's domain list is **derived from the catalog** at wiring time
-(`build_system_prompt(get_domains(load_schema()))`), so adding a domain needs no prompt edit.
-
-## Read-only guard
-
-`run_sql` refuses to run anything but a single read query. `read_only_violation(sql)`
-(`agent/tools.py`) rejects: writes/DDL (`INSERT`, `UPDATE`, `DELETE`, `DROP`, `ALTER`, `CREATE`,
-`ATTACH`, ...), multiple statements (`;`-separated), and empty input; it allows `SELECT` / `WITH`,
-a single trailing semicolon, and trailing comments. A rejection is returned as a structured error
-the agent reads and reforms — a bad query never crashes the run.
+- The prompt **requires calling `get_schema_context` first** — the agent discovers the relevant
+  tables and join keys before it writes any SQL.
+- `run_sql` runs **only a single read-only `SELECT`/`WITH`**; a rejected query comes back as a
+  structured error the agent reforms, never a crash.
+- The prompt's domain list is **derived from the catalog** at wiring time
+  (`build_system_prompt(get_domains(load_schema()))`), so adding a domain needs no prompt edit.
 
 ## Two entry points
 
-- **`run_agent(question, *, llm_fn, tool_fns, tool_schemas=None, system_prompt=..., max_steps=6)`** —
-  the pure, provider-agnostic loop. This is the crown-jewel seam; leave it as-is. Swapping Groq for
-  another provider means swapping `llm_fn`, nothing else.
-- **`answer_question(question, *, groq_key, uri, user, password, db_path, model=..., max_steps=...)`** —
-  the real wiring: builds the Groq `llm_fn`, the KG-backed `tool_fns`, and the catalog-derived
-  prompt, then calls `run_agent`. Returns an `AgentResult(answer, trace, stopped, last_sql, last_result)`.
+`run_agent` (the pure, provider-agnostic loop) and `answer_question` (the wiring that binds
+Groq + Neo4j + SQLite and calls it) — the full breakdown is in
+[agents_design.md § One agent, two faces](agents_design.md#one-agent-two-faces). The example
+below calls `answer_question`, which returns an
+`AgentResult(answer, trace, stopped, last_sql, last_result)`.
 
 ## Rate-limit handling (Groq)
 
 Groq's free tier throttles quickly. The `llm_fn` honors `Retry-After` for **transient** per-minute
 limits, but raises `RateLimitExhausted` if a single wait would exceed a per-call budget
 (`MAX_WAIT_PER_CALL_S = 60`) — i.e. a daily/token quota, where blocking is pointless. Callers (the
-API, a batch eval) should surface it and resume later rather than hammer. Llama's occasional
-malformed tool-call token is recovered from `failed_generation` rather than crashing.
+API, a batch eval) should surface it and resume later rather than hammer. (The mechanism, alongside
+the SQL guard and Llama malformed-tool-call recovery, is in
+[agents_design.md § Built to survive a flaky model](agents_design.md#built-to-survive-a-flaky-model).)
 
 ## HTTP surface (`api/main.py`)
 

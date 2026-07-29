@@ -78,5 +78,5 @@ The layers depend one-directionally, mediated by the catalog:
 ## See also
 
 - [`../text2sql/README.md`](../text2sql/README.md) — quickstart, and how to add a new domain
-- [data_model.md](data_model.md) · [query_engine.md](query_engine.md) · [quality.md](quality.md)
+- [data_model.md](data_model.md) · [query_engine.md](query_engine.md) · [agents_design.md](agents_design.md) · [quality.md](quality.md)
 - [legacy_src.md](legacy_src.md) — the retiring `src/` stack

@@ -14,9 +14,12 @@ New to the project? Read in this order:
    the data flow, and why there are two databases.
 2. **[data_model.md](data_model.md)** — the `schema.json` contract, the 5 domains × 10 tables, the
    40 FK edges, the metric glossary, and the SQLite + Neo4j mappings.
-3. **[query_engine.md](query_engine.md)** — how a question becomes SQL: the agent loop, its three
-   KG-backed tools, the read-only guard, and the HTTP surface.
-4. **[quality.md](quality.md)** — what the validation gate checks and how to run it.
+3. **[query_engine.md](query_engine.md)** — how a question becomes SQL and rows end-to-end: the
+   agent-loop flow, the HTTP surface, and calling it from code.
+4. **[agents_design.md](agents_design.md)** — the agent's internals: the two faces (`run_agent`
+   loop + `answer_question` wiring), the three tools' signatures and backends, the ReAct loop
+   mechanics, the DI seam, and the guardrails.
+5. **[quality.md](quality.md)** — what the validation gate checks and how to run it.
 
 Want to *run it or extend it* rather than understand the internals? Go straight to the
 task-oriented guide: **[`../text2sql/README.md`](../text2sql/README.md)** (quickstart + how to add
@@ -28,7 +31,8 @@ a new domain).
 |---|---|
 | [architecture.md](architecture.md) | How is the system structured? What talks to what? |
 | [data_model.md](data_model.md) | What are the tables, columns, FKs, and metrics? |
-| [query_engine.md](query_engine.md) | How is a question answered? What's the API? |
+| [query_engine.md](query_engine.md) | How is a question answered end-to-end? What's the API? |
+| [agents_design.md](agents_design.md) | How is the agent built inside? (loop, tools, DI seam, guardrails) |
 | [quality.md](quality.md) | How is generated data validated, and how does the gate behave? |
 | [`../text2sql/README.md`](../text2sql/README.md) | How do I run the pipeline / add a domain? |
 | [legacy_src.md](legacy_src.md) | The retiring `src/` stack (reference only) |
