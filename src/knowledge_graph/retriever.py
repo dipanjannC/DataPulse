@@ -81,11 +81,13 @@ class SchemaGraph:
             ).data()
 
     def join_paths(self, seeds: list[str], max_hops: int) -> list[dict]:
-        """Rows: {tables: [str], edges: [{start, end, from_column, to_column}]}.
+        """Rows: {tables: [str], edges: [{start, end, from_column, to_column,
+        cardinality}]}.
 
         Each edge is a stored REFERENCES relationship (child -> parent), so
-        start/end are always child/parent regardless of traversal direction.
-        Fakes must match this shape.
+        start/end are always child/parent regardless of traversal direction;
+        cardinality is the edge's stored fan-out hint (may be null on an
+        older/not-yet-rebuilt graph). Fakes must match this shape.
         """
         # Variable-length bounds cannot be parameterised in Cypher; max_hops is an
         # int constant we control, coerced here to keep it non-injectable.
@@ -102,23 +104,26 @@ class SchemaGraph:
                            start:       startNode(r).name,
                            end:         endNode(r).name,
                            from_column: r.from_column,
-                           to_column:   r.to_column
+                           to_column:   r.to_column,
+                           cardinality: r.cardinality
                        }}] AS edges
                 """,
                 seeds=seeds,
             ).data()
 
     def self_joins(self, tables: list[str]) -> list[dict]:
-        """Rows: {name, from_column, to_column} — self-referential REFERENCES
-        loops (e.g. employees.manager_id -> employees.employee_id) that pairwise
-        shortest paths between distinct tables cannot surface. Fakes must match
-        this shape."""
+        """Rows: {name, from_column, to_column, cardinality} — self-referential
+        REFERENCES loops (e.g. employees.manager_id -> employees.employee_id) that
+        pairwise shortest paths between distinct tables cannot surface.
+        cardinality may be null on an older/not-yet-rebuilt graph. Fakes must
+        match this shape."""
         with self._driver.session() as s:
             return s.run(
                 """
                 MATCH (t:Table)-[r:REFERENCES]->(t)
                 WHERE t.name IN $tables
-                RETURN t.name AS name, r.from_column AS from_column, r.to_column AS to_column
+                RETURN t.name AS name, r.from_column AS from_column,
+                       r.to_column AS to_column, r.cardinality AS cardinality
                 """,
                 tables=tables,
             ).data()
@@ -216,6 +221,7 @@ def retrieve_context(graph, q_vec: list[float], top_k: int = DEFAULT_TOP_K) -> d
                 "from_column": sj["from_column"],
                 "to_table":    sj["name"],
                 "to_column":   sj["to_column"],
+                "cardinality": sj.get("cardinality"),
             })
 
     rows    = graph.fetch_tables(all_tables) if all_tables else []
@@ -253,6 +259,7 @@ def _collect_paths(paths: list[dict], seeds: list[str]) -> tuple[list[str], list
                     "from_column": e["from_column"],
                     "to_table":    e["end"],
                     "to_column":   e["to_column"],
+                    "cardinality": e.get("cardinality"),
                 })
     return tables, joins
 
@@ -291,4 +298,25 @@ def _build_context(
             {"name": m["name"], "expression": m["expression"], "description": m.get("description", "")}
             for m in (metrics or [])
         ],
+        "cross_domain_unjoinable": cross_domain_unjoinable(tables, joins),
     }
+
+
+def cross_domain_unjoinable(tables: dict, joins: list[dict]) -> bool:
+    """True when the retrieved tables span >= 2 domains and no join edge links two
+    *different* domains — the question straddles domains that share no defined
+    join key.
+
+    DataPulse's domains are deliberately islands (cross-domain links are only
+    soft, free-text fields like it_assets.assigned_to / sec_users.email, never
+    join keys). Detecting this lets the schema context tell the model to answer
+    each part separately instead of fabricating a cross-domain join."""
+    domains = {info.get("domain") for info in tables.values() if info.get("domain")}
+    if len(domains) < 2:
+        return False
+    for j in joins:
+        df = tables.get(j["from_table"], {}).get("domain")
+        dt = tables.get(j["to_table"], {}).get("domain")
+        if df and dt and df != dt:
+            return False
+    return True

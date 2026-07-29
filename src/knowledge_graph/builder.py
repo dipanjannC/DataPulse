@@ -188,17 +188,21 @@ def _upsert_fk_relationships(session, relationships: list[dict]) -> None:
 
 
 def _upsert_table_references(session, relationships: list[dict]) -> None:
-    """Table-to-table projection of the column FKs, carrying the join keys."""
+    """Table-to-table projection of the column FKs, carrying the join keys and
+    (as an edge attribute, not part of its identity) the join cardinality so the
+    retriever can warn the LLM about fan-out when aggregating across the join."""
     for rel in relationships:
         session.run(
             """
             MATCH (ft:Table {name: $from_table}), (tt:Table {name: $to_table})
             MERGE (ft)-[r:REFERENCES {from_column: $from_col, to_column: $to_col}]->(tt)
+            SET r.cardinality = $cardinality
             """,
             from_table=rel["from_table"],
             to_table=rel["to_table"],
             from_col=rel["from_column"],
             to_col=rel["to_column"],
+            cardinality=rel.get("cardinality"),
         )
 
 

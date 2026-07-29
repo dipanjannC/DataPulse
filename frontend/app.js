@@ -319,6 +319,20 @@
     return el;
   }
 
+  // A soft, advisory caveat (amber) — distinct from a hard red error. Used when
+  // the answer is shown but couldn't be verified against the query rows
+  // (grounded === false) or the run didn't conclude with a data-backed result.
+  function buildCaveat(title, body, sql) {
+    const el = document.createElement('div');
+    el.className = 'msg-caveat';
+    el.innerHTML = `
+      <div class="caveat-title">${esc(title)}</div>
+      <div class="caveat-body">${esc(body)}</div>
+      ${sql ? `<div class="error-sql">${esc(sql)}</div>` : ''}
+    `;
+    return el;
+  }
+
   // Which backend system each tool touches, plus a plain-language label for it.
   // get_schema_context is the ONLY tool that queries the Neo4j knowledge graph;
   // sample_values and run_sql read the SQLite database. This mapping is static and
@@ -393,6 +407,11 @@
     internal:        'Something went wrong',
   };
 
+  // Infra outages get the red error card; everything else (a soft no_result) is
+  // shown as an advisory amber caveat instead of an alarm.
+  const HARD_ERROR_KINDS = new Set(
+    ['kg_unavailable', 'llm_unavailable', 'rate_limited', 'config', 'network', 'internal']);
+
   function buildAssistantBubble(data) {
     const wrapper = document.createElement('div');
     wrapper.className = 'msg-assistant';
@@ -406,17 +425,34 @@
     if (data.answer && data.answer.trim()) wrapper.appendChild(buildAnswerBlock(data.answer));
 
     if (!data.success) {
-      const err = document.createElement('div');
-      err.className = 'msg-error';
-      const errTitle = ERROR_TITLES[data.error_kind] || 'Query failed';
-      err.innerHTML = `
-        <div class="error-title">${esc(errTitle)}</div>
-        <div class="error-body">${esc(data.error||data.detail||'Unknown error')}</div>
-        ${data.sql?`<div class="error-sql">${esc(data.sql)}</div>`:''}
-      `;
-      wrapper.appendChild(err);
+      // Two kinds of failure: hard infra outages (Neo4j/Groq/config) get the red
+      // error card; a soft "no_result" (the agent ran but couldn't conclude with
+      // a data-backed answer — e.g. cross-domain, unjoinable) gets an amber
+      // caveat, since the answer above may still be useful and it isn't an outage.
+      if (HARD_ERROR_KINDS.has(data.error_kind)) {
+        const err = document.createElement('div');
+        err.className = 'msg-error';
+        const errTitle = ERROR_TITLES[data.error_kind] || 'Query failed';
+        err.innerHTML = `
+          <div class="error-title">${esc(errTitle)}</div>
+          <div class="error-body">${esc(data.error||data.detail||'Unknown error')}</div>
+          ${data.sql?`<div class="error-sql">${esc(data.sql)}</div>`:''}
+        `;
+        wrapper.appendChild(err);
+      } else {
+        wrapper.appendChild(buildCaveat('No verified result',
+          data.error || data.detail || 'The run did not produce a data-backed answer.',
+          data.sql));
+      }
       wrapper.appendChild(buildReasoningTrace(data.trace));
       return wrapper;
+    }
+
+    // Success, but grounding is advisory: if the answer's figures were not found
+    // in the rows, show the results AND an "unverified against data" caveat.
+    if (data.grounded === false && data.answer && data.answer.trim()) {
+      wrapper.appendChild(buildCaveat('Unverified against data',
+        data.grounded_reason || "The answer's figures were not found in the query results."));
     }
 
     const metrics = (data.schema_context && data.schema_context.metrics) || [];

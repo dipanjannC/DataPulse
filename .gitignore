@@ -42,6 +42,10 @@ data/sample/synthetic_config.json
 # Derived data-quality report (regeneratable from CSVs + schema.json)
 src/data/quality_report.json
 
+# Eval harness outputs (regeneratable; live checkpoint is resume state)
+eval_report.json
+eval_checkpoint.jsonl
+
 # Coverage
 htmlcov/
 .coverage

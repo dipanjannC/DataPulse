@@ -8,7 +8,11 @@ vocabulary is passed through; a column without one defaults to [].
 from __future__ import annotations
 
 from src.embeddings.embed import MODEL_NAME
-from src.knowledge_graph.builder import _upsert_meta, _upsert_table_and_column_nodes
+from src.knowledge_graph.builder import (
+    _upsert_meta,
+    _upsert_table_and_column_nodes,
+    _upsert_table_references,
+)
 from src.knowledge_graph.freshness import kg_fingerprint
 
 
@@ -63,6 +67,30 @@ def test_allowed_values_set_in_the_column_merge_query():
 
     status_query = next(q for q, p in session.calls if p.get("key") == "orders.status")
     assert "c.allowed_values = $allowed_values" in status_query
+
+
+# ── join cardinality on the REFERENCES edge (anti-fan-out) ──────────────────────
+
+def test_table_reference_stamps_cardinality():
+    session = _FakeSession()
+    rels = [{"from_table": "order_items", "from_column": "order_id",
+             "to_table": "orders", "to_column": "order_id", "cardinality": "many-to-one"}]
+    _upsert_table_references(session, rels)
+
+    assert len(session.calls) == 1
+    query, params = session.calls[0]
+    assert "SET r.cardinality = $cardinality" in query
+    assert params["cardinality"] == "many-to-one"
+
+
+def test_table_reference_cardinality_defaults_to_none_when_absent():
+    # a relationship declared before cardinality existed must not crash the build
+    session = _FakeSession()
+    rels = [{"from_table": "a", "from_column": "x", "to_table": "b", "to_column": "y"}]
+    _upsert_table_references(session, rels)
+
+    _, params = session.calls[0]
+    assert params["cardinality"] is None
 
 
 # ── build stamp / KG-freshness anchor ───────────────────────────────────────────

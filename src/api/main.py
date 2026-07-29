@@ -26,6 +26,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from text2sql.agent.agent import RateLimitExhausted, answer_question
+from text2sql.agent.grounding import check_grounding
 from src.knowledge_graph.retriever import retrieve_schema_context
 from src.knowledge_graph.freshness import is_kg_fresh
 from src.embeddings.embed import MODEL_NAME
@@ -149,12 +150,21 @@ def _trace_payload(trace) -> list[dict]:
 
 
 def _failure_message(result) -> str:
-    """A non-empty error for the UI: the agent's own words if it gave any, else
-    a stop-reason line (a max_steps stop returns answer='')."""
-    if result.answer.strip():
-        return result.answer.strip()
-    steps = sum(1 for s in result.trace if s.kind == "tool")
-    return f"Stopped after {steps} step(s) without a conclusive result."
+    """A short, non-empty caveat for the UI when the run did not conclude with a
+    data-backed answer. The agent's own words (if any) are returned separately in
+    `answer`, so this is the *reason*, not a repeat of the answer.
+
+    When a query did run, cite it (best-effort synthesis on step-exhaustion)
+    instead of a bare stop line — a max_steps stop returns answer=''."""
+    last = result.last_result
+    if last is not None:
+        rc = last.get("row_count", len(last.get("rows", [])))
+        return (f"The run didn't conclude cleanly, but the last query returned {rc} row(s). "
+                "Treat the answer as unverified against the data.")
+    if result.stopped == "max_steps":
+        steps = sum(1 for s in result.trace if s.kind == "tool")
+        return f"Stopped after {steps} step(s) without reaching a conclusive, data-backed answer."
+    return "The answer wasn't backed by a query result, so it couldn't be verified against the data."
 
 
 # ── graceful, human-friendly failure envelopes ──────────────────────────────
@@ -182,7 +192,8 @@ def _error_response(kind: str, context: dict | None = None, *, detail: str | Non
     if detail:
         logger.warning("query failed [%s]: %s", kind, detail)
     return {
-        "success": False, "answer": "", "sql": "", "columns": [], "rows": [],
+        "success": False, "answer": "", "grounded": None, "grounded_reason": None,
+        "sql": "", "columns": [], "rows": [],
         "schema_context": context or {}, "trace": [], "attempts": 0,
         "stopped": kind, "error_kind": kind, "error": _FRIENDLY[kind],
     }
@@ -225,11 +236,22 @@ def query(req: QueryRequest) -> dict[str, Any]:
         return _error_response("internal", context, detail=str(exc))
 
     last     = result.last_result or {}
-    success  = result.last_result is not None
+    # Honest success: a conclusive final answer that actually ran SQL. `last_result
+    # is not None` alone only means *some* query ran, not that the answer used it;
+    # a max_steps stop (answer="") or a final answer with no SQL is not a success.
+    success  = (result.stopped == "final"
+                and bool(result.answer.strip())
+                and result.last_result is not None)
+    # Advisory grounding signal (deterministic, zero extra LLM calls): do the
+    # answer's figures actually appear in the rows? Never gates success; surfaced
+    # as an "unverified against data" caveat. grounded=False when no SQL backs it.
+    grounding = check_grounding(result.answer, result.last_result)
     attempts = sum(1 for s in result.trace if s.tool == "run_sql")
     return {
         "success":        success,
         "answer":         result.answer,
+        "grounded":       grounding["grounded"],
+        "grounded_reason": grounding["reason"],
         "sql":            result.last_sql or _last_attempted_sql(result.trace),
         "columns":        last.get("columns", []),
         "rows":           last.get("rows", []),

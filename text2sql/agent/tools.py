@@ -13,7 +13,7 @@ import time
 from pathlib import Path
 
 from src.embeddings.embed import embed_query
-from src.knowledge_graph.retriever import retrieve_context
+from src.knowledge_graph.retriever import cross_domain_unjoinable, retrieve_context
 from src.metadata.utils import get_all_tables, load_schema
 
 MAX_ROWS   = 200
@@ -140,9 +140,24 @@ def _format_schema(context: dict) -> str:
         lines.append("\n## Join Paths")
         lines.append("Use these exact keys when joining tables:")
         for j in joins:
-            lines.append(
-                f"- {j['from_table']}.{j['from_column']} = {j['to_table']}.{j['to_column']}"
-            )
+            line = f"- {j['from_table']}.{j['from_column']} = {j['to_table']}.{j['to_column']}"
+            # Fan-out hint, rendered only when the graph carries cardinality (a
+            # not-yet-rebuilt graph returns null -> plain join line, as before).
+            if j.get("cardinality") == "many-to-one":
+                line += (f"  [many {j['from_table']} -> one {j['to_table']}: aggregating a "
+                         f"{j['to_table']}-level measure across this join fans out; "
+                         f"pre-aggregate or use COUNT(DISTINCT) to avoid double-counting]")
+            elif j.get("cardinality"):
+                line += f"  [cardinality: {j['cardinality']}]"
+            lines.append(line)
+
+    if cross_domain_unjoinable(context.get("tables", {}), joins):
+        lines.append("\n## Cross-domain note")
+        lines.append(
+            "These tables are in separate domains with no defined join key between them "
+            "— they cannot be joined. Answer each part separately, or state plainly that "
+            "they are not linked. Do NOT invent a join column."
+        )
 
     metrics = context.get("metrics") or []
     if metrics:

@@ -24,6 +24,60 @@
       "expression": "SUM(sales_targets.achieved_amount) / SUM(sales_targets.target_amount)",
       "tables": ["sales_targets"],
       "description": "Sales-target attainment: achieved amount divided by target amount for sales reps. A ratio of quota performance, not company revenue."
+    },
+    {
+      "name": "deployment success rate",
+      "expression": "100.0 * SUM(CASE WHEN deployments.status = 'Success' THEN 1 ELSE 0 END) / COUNT(*)",
+      "tables": ["deployments"],
+      "description": "Percentage of deployments whose status is 'Success', over all deployment records. A release-quality measure; 'Failed' and 'Rolled Back' count against it."
+    },
+    {
+      "name": "incident MTTR (hours)",
+      "expression": "AVG((JULIANDAY(it_incidents.resolved_at) - JULIANDAY(it_incidents.created_at)) * 24)",
+      "tables": ["it_incidents"],
+      "description": "Mean time to resolution in hours: average elapsed time from created_at to resolved_at over RESOLVED IT incidents only (resolved_at IS NOT NULL). Include unresolved rows and the average is meaningless."
+    },
+    {
+      "name": "headcount",
+      "expression": "COUNT(DISTINCT employees.employee_id)",
+      "tables": ["employees"],
+      "description": "Total number of employees, one row per employee. Do NOT count payroll, attendance, or leave rows, which repeat per employee and would inflate the figure."
+    },
+    {
+      "name": "average salary",
+      "expression": "AVG(payroll.gross_salary)",
+      "tables": ["payroll"],
+      "description": "Average employee gross salary from payroll.gross_salary. Do NOT use positions.min_salary / positions.max_salary (those are pay-band bounds, not actual compensation)."
+    },
+    {
+      "name": "lead conversion rate",
+      "expression": "100.0 * SUM(CASE WHEN leads.status = 'Converted' THEN 1 ELSE 0 END) / COUNT(*)",
+      "tables": ["leads"],
+      "description": "Percentage of leads whose status is 'Converted', over all leads. The core funnel-efficiency measure for marketing."
+    },
+    {
+      "name": "email open rate",
+      "expression": "100.0 * SUM(email_campaigns.open_count) / SUM(email_campaigns.sent_to_count)",
+      "tables": ["email_campaigns"],
+      "description": "Total email opens divided by total recipients, as a percentage. Aggregate the counts with SUM across sends; do not average per-row rates."
+    },
+    {
+      "name": "open critical incidents",
+      "expression": "SUM(CASE WHEN sec_incidents.severity = 'Critical' AND sec_incidents.status <> 'Closed' THEN 1 ELSE 0 END)",
+      "tables": ["sec_incidents"],
+      "description": "Count of security incidents with severity 'Critical' that are not yet 'Closed' — the active critical-risk backlog. This is sec_incidents (security breaches), not it_incidents (IT outages)."
+    },
+    {
+      "name": "MFA adoption rate",
+      "expression": "100.0 * SUM(sec_users.mfa_enabled) / COUNT(*)",
+      "tables": ["sec_users"],
+      "description": "Percentage of system users with multi-factor authentication enabled (mfa_enabled = 1), over all sec_users."
+    },
+    {
+      "name": "patch compliance rate",
+      "expression": "100.0 * SUM(CASE WHEN vulnerabilities.patch_status = 'Patched' THEN 1 ELSE 0 END) / COUNT(*)",
+      "tables": ["vulnerabilities"],
+      "description": "Percentage of known vulnerabilities whose patch_status is 'Patched'. 'Unpatched', 'In Progress', and 'Accepted Risk' count against compliance."
     }
   ],
   "domains": [
@@ -163,18 +217,18 @@
         }
       ],
       "relationships": [
-        {"from_table": "products",       "from_column": "category_id",        "to_table": "categories",  "to_column": "category_id"},
-        {"from_table": "categories",     "from_column": "parent_category_id", "to_table": "categories",  "to_column": "category_id"},
-        {"from_table": "orders",         "from_column": "customer_id",  "to_table": "customers",   "to_column": "customer_id"},
-        {"from_table": "orders",         "from_column": "rep_id",       "to_table": "sales_reps",  "to_column": "rep_id"},
-        {"from_table": "orders",         "from_column": "region_id",    "to_table": "regions",     "to_column": "region_id"},
-        {"from_table": "order_items",    "from_column": "order_id",     "to_table": "orders",      "to_column": "order_id"},
-        {"from_table": "order_items",    "from_column": "product_id",   "to_table": "products",    "to_column": "product_id"},
-        {"from_table": "sales_reps",     "from_column": "region_id",    "to_table": "regions",     "to_column": "region_id"},
-        {"from_table": "sales_targets",  "from_column": "rep_id",       "to_table": "sales_reps",  "to_column": "rep_id"},
-        {"from_table": "returns",        "from_column": "order_id",     "to_table": "orders",      "to_column": "order_id"},
-        {"from_table": "returns",        "from_column": "product_id",   "to_table": "products",    "to_column": "product_id"},
-        {"from_table": "invoices",       "from_column": "order_id",     "to_table": "orders",      "to_column": "order_id"}
+        {"from_table": "products",       "from_column": "category_id",        "to_table": "categories",  "to_column": "category_id", "cardinality": "many-to-one"},
+        {"from_table": "categories",     "from_column": "parent_category_id", "to_table": "categories",  "to_column": "category_id", "cardinality": "many-to-one"},
+        {"from_table": "orders",         "from_column": "customer_id",  "to_table": "customers",   "to_column": "customer_id", "cardinality": "many-to-one"},
+        {"from_table": "orders",         "from_column": "rep_id",       "to_table": "sales_reps",  "to_column": "rep_id", "cardinality": "many-to-one"},
+        {"from_table": "orders",         "from_column": "region_id",    "to_table": "regions",     "to_column": "region_id", "cardinality": "many-to-one"},
+        {"from_table": "order_items",    "from_column": "order_id",     "to_table": "orders",      "to_column": "order_id", "cardinality": "many-to-one"},
+        {"from_table": "order_items",    "from_column": "product_id",   "to_table": "products",    "to_column": "product_id", "cardinality": "many-to-one"},
+        {"from_table": "sales_reps",     "from_column": "region_id",    "to_table": "regions",     "to_column": "region_id", "cardinality": "many-to-one"},
+        {"from_table": "sales_targets",  "from_column": "rep_id",       "to_table": "sales_reps",  "to_column": "rep_id", "cardinality": "many-to-one"},
+        {"from_table": "returns",        "from_column": "order_id",     "to_table": "orders",      "to_column": "order_id", "cardinality": "many-to-one"},
+        {"from_table": "returns",        "from_column": "product_id",   "to_table": "products",    "to_column": "product_id", "cardinality": "many-to-one"},
+        {"from_table": "invoices",       "from_column": "order_id",     "to_table": "orders",      "to_column": "order_id", "cardinality": "many-to-one"}
       ]
     },
 
@@ -324,8 +378,8 @@
         }
       ],
       "relationships": [
-        {"from_table": "deployments", "from_column": "project_id",  "to_table": "it_projects",  "to_column": "project_id"},
-        {"from_table": "it_tickets",  "from_column": "incident_id", "to_table": "it_incidents", "to_column": "incident_id"}
+        {"from_table": "deployments", "from_column": "project_id",  "to_table": "it_projects",  "to_column": "project_id", "cardinality": "many-to-one"},
+        {"from_table": "it_tickets",  "from_column": "incident_id", "to_table": "it_incidents", "to_column": "incident_id", "cardinality": "many-to-one"}
       ]
     },
 
@@ -466,21 +520,21 @@
         }
       ],
       "relationships": [
-        {"from_table": "employees",          "from_column": "department_id",    "to_table": "departments", "to_column": "department_id"},
-        {"from_table": "employees",          "from_column": "position_id",      "to_table": "positions",   "to_column": "position_id"},
-        {"from_table": "employees",          "from_column": "manager_id",       "to_table": "employees",   "to_column": "employee_id"},
-        {"from_table": "departments",        "from_column": "head_employee_id", "to_table": "employees",   "to_column": "employee_id"},
-        {"from_table": "positions",          "from_column": "department_id",    "to_table": "departments", "to_column": "department_id"},
-        {"from_table": "payroll",            "from_column": "employee_id",   "to_table": "employees",   "to_column": "employee_id"},
-        {"from_table": "leave_requests",     "from_column": "employee_id",   "to_table": "employees",   "to_column": "employee_id"},
-        {"from_table": "leave_requests",     "from_column": "approved_by",   "to_table": "employees",   "to_column": "employee_id"},
-        {"from_table": "performance_reviews","from_column": "employee_id",   "to_table": "employees",   "to_column": "employee_id"},
-        {"from_table": "performance_reviews","from_column": "reviewer_id",   "to_table": "employees",   "to_column": "employee_id"},
-        {"from_table": "training_programs",  "from_column": "employee_id",   "to_table": "employees",   "to_column": "employee_id"},
-        {"from_table": "employee_benefits",  "from_column": "employee_id",   "to_table": "employees",   "to_column": "employee_id"},
-        {"from_table": "job_postings",       "from_column": "position_id",   "to_table": "positions",   "to_column": "position_id"},
-        {"from_table": "job_postings",       "from_column": "department_id", "to_table": "departments", "to_column": "department_id"},
-        {"from_table": "attendance",         "from_column": "employee_id",   "to_table": "employees",   "to_column": "employee_id"}
+        {"from_table": "employees",          "from_column": "department_id",    "to_table": "departments", "to_column": "department_id", "cardinality": "many-to-one"},
+        {"from_table": "employees",          "from_column": "position_id",      "to_table": "positions",   "to_column": "position_id", "cardinality": "many-to-one"},
+        {"from_table": "employees",          "from_column": "manager_id",       "to_table": "employees",   "to_column": "employee_id", "cardinality": "many-to-one"},
+        {"from_table": "departments",        "from_column": "head_employee_id", "to_table": "employees",   "to_column": "employee_id", "cardinality": "many-to-one"},
+        {"from_table": "positions",          "from_column": "department_id",    "to_table": "departments", "to_column": "department_id", "cardinality": "many-to-one"},
+        {"from_table": "payroll",            "from_column": "employee_id",   "to_table": "employees",   "to_column": "employee_id", "cardinality": "many-to-one"},
+        {"from_table": "leave_requests",     "from_column": "employee_id",   "to_table": "employees",   "to_column": "employee_id", "cardinality": "many-to-one"},
+        {"from_table": "leave_requests",     "from_column": "approved_by",   "to_table": "employees",   "to_column": "employee_id", "cardinality": "many-to-one"},
+        {"from_table": "performance_reviews","from_column": "employee_id",   "to_table": "employees",   "to_column": "employee_id", "cardinality": "many-to-one"},
+        {"from_table": "performance_reviews","from_column": "reviewer_id",   "to_table": "employees",   "to_column": "employee_id", "cardinality": "many-to-one"},
+        {"from_table": "training_programs",  "from_column": "employee_id",   "to_table": "employees",   "to_column": "employee_id", "cardinality": "many-to-one"},
+        {"from_table": "employee_benefits",  "from_column": "employee_id",   "to_table": "employees",   "to_column": "employee_id", "cardinality": "many-to-one"},
+        {"from_table": "job_postings",       "from_column": "position_id",   "to_table": "positions",   "to_column": "position_id", "cardinality": "many-to-one"},
+        {"from_table": "job_postings",       "from_column": "department_id", "to_table": "departments", "to_column": "department_id", "cardinality": "many-to-one"},
+        {"from_table": "attendance",         "from_column": "employee_id",   "to_table": "employees",   "to_column": "employee_id", "cardinality": "many-to-one"}
       ]
     },
 
@@ -625,14 +679,14 @@
         }
       ],
       "relationships": [
-        {"from_table": "campaigns",        "from_column": "channel_id",  "to_table": "marketing_channels", "to_column": "channel_id"},
-        {"from_table": "leads",            "from_column": "campaign_id", "to_table": "campaigns",          "to_column": "campaign_id"},
-        {"from_table": "content_assets",   "from_column": "campaign_id", "to_table": "campaigns",          "to_column": "campaign_id"},
-        {"from_table": "social_media_posts","from_column": "campaign_id","to_table": "campaigns",          "to_column": "campaign_id"},
-        {"from_table": "email_campaigns",  "from_column": "campaign_id", "to_table": "campaigns",          "to_column": "campaign_id"},
-        {"from_table": "marketing_events", "from_column": "campaign_id", "to_table": "campaigns",          "to_column": "campaign_id"},
-        {"from_table": "marketing_budgets","from_column": "campaign_id", "to_table": "campaigns",          "to_column": "campaign_id"},
-        {"from_table": "campaign_metrics", "from_column": "campaign_id", "to_table": "campaigns",          "to_column": "campaign_id"}
+        {"from_table": "campaigns",        "from_column": "channel_id",  "to_table": "marketing_channels", "to_column": "channel_id", "cardinality": "many-to-one"},
+        {"from_table": "leads",            "from_column": "campaign_id", "to_table": "campaigns",          "to_column": "campaign_id", "cardinality": "many-to-one"},
+        {"from_table": "content_assets",   "from_column": "campaign_id", "to_table": "campaigns",          "to_column": "campaign_id", "cardinality": "many-to-one"},
+        {"from_table": "social_media_posts","from_column": "campaign_id","to_table": "campaigns",          "to_column": "campaign_id", "cardinality": "many-to-one"},
+        {"from_table": "email_campaigns",  "from_column": "campaign_id", "to_table": "campaigns",          "to_column": "campaign_id", "cardinality": "many-to-one"},
+        {"from_table": "marketing_events", "from_column": "campaign_id", "to_table": "campaigns",          "to_column": "campaign_id", "cardinality": "many-to-one"},
+        {"from_table": "marketing_budgets","from_column": "campaign_id", "to_table": "campaigns",          "to_column": "campaign_id", "cardinality": "many-to-one"},
+        {"from_table": "campaign_metrics", "from_column": "campaign_id", "to_table": "campaigns",          "to_column": "campaign_id", "cardinality": "many-to-one"}
       ]
     },
 
@@ -780,9 +834,9 @@
         }
       ],
       "relationships": [
-        {"from_table": "sec_users",   "from_column": "role_id",   "to_table": "sec_roles",       "to_column": "role_id"},
-        {"from_table": "access_logs", "from_column": "user_id",   "to_table": "sec_users",       "to_column": "user_id"},
-        {"from_table": "sec_alerts",  "from_column": "asset_id",  "to_table": "monitored_assets","to_column": "asset_id"}
+        {"from_table": "sec_users",   "from_column": "role_id",   "to_table": "sec_roles",       "to_column": "role_id", "cardinality": "many-to-one"},
+        {"from_table": "access_logs", "from_column": "user_id",   "to_table": "sec_users",       "to_column": "user_id", "cardinality": "many-to-one"},
+        {"from_table": "sec_alerts",  "from_column": "asset_id",  "to_table": "monitored_assets","to_column": "asset_id", "cardinality": "many-to-one"}
       ]
     }
 

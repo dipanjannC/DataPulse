@@ -13,6 +13,7 @@ from src.knowledge_graph.retriever import (
     _build_context,
     _collect_paths,
     _seed_tables,
+    cross_domain_unjoinable,
     retrieve_context,
 )
 
@@ -156,7 +157,8 @@ def test_self_referential_join_is_surfaced():
             "edges": [{"start": "employees", "end": "positions",
                        "from_column": "position_id", "to_column": "position_id"}],
         }],
-        self_ref=[{"name": "employees", "from_column": "manager_id", "to_column": "employee_id"}],
+        self_ref=[{"name": "employees", "from_column": "manager_id",
+                   "to_column": "employee_id", "cardinality": "many-to-one"}],
         catalog={
             "employees": {"desc": "emp", "domain": "HR", "columns": [
                 ("employee_id", "INTEGER", "id", True),
@@ -171,6 +173,58 @@ def test_self_referential_join_is_surfaced():
 
     pairs = {(j["from_table"], j["from_column"], j["to_table"], j["to_column"]) for j in ctx["joins"]}
     assert ("employees", "manager_id", "employees", "employee_id") in pairs
+    # the self-join carries its cardinality through to the caller
+    sj = next(j for j in ctx["joins"] if j["from_table"] == "employees" and j["to_table"] == "employees")
+    assert sj["cardinality"] == "many-to-one"
+
+
+def test_join_cardinality_flows_from_edges_to_context():
+    """A REFERENCES edge's cardinality must reach the caller so the schema
+    context can warn about fan-out when aggregating across the join."""
+    fake = _FakeSchemaGraph(
+        domains=[{"name": "Sales", "description": "s", "score": 0.9}],
+        columns=[{"table_name": "orders", "domain": "Sales", "score": 0.82},
+                 {"table_name": "order_items", "domain": "Sales", "score": 0.80}],
+        tables=[],
+        paths=[{
+            "tables": ["order_items", "orders"],
+            "edges": [{"start": "order_items", "end": "orders",
+                       "from_column": "order_id", "to_column": "order_id",
+                       "cardinality": "many-to-one"}],
+        }],
+        catalog={
+            "orders":      {"desc": "o", "domain": "Sales", "columns": [("order_id", "INTEGER", "id", True)]},
+            "order_items": {"desc": "li", "domain": "Sales", "columns": [("order_id", "INTEGER", "fk", False)]},
+        },
+    )
+
+    ctx = retrieve_context(fake, Q, top_k=10)
+    j = next(j for j in ctx["joins"] if j["from_table"] == "order_items" and j["to_table"] == "orders")
+    assert j["cardinality"] == "many-to-one"
+
+
+def test_join_cardinality_absent_stays_none_backward_compatible():
+    """Edges from a not-yet-rebuilt graph (no cardinality) must not crash and
+    default to None so `_format_schema` simply omits the fan-out warning."""
+    fake = _FakeSchemaGraph(
+        domains=[{"name": "Sales", "description": "s", "score": 0.9}],
+        columns=[{"table_name": "orders", "domain": "Sales", "score": 0.82},
+                 {"table_name": "order_items", "domain": "Sales", "score": 0.80}],
+        tables=[],
+        paths=[{
+            "tables": ["order_items", "orders"],
+            "edges": [{"start": "order_items", "end": "orders",
+                       "from_column": "order_id", "to_column": "order_id"}],  # no cardinality
+        }],
+        catalog={
+            "orders":      {"desc": "o", "domain": "Sales", "columns": [("order_id", "INTEGER", "id", True)]},
+            "order_items": {"desc": "li", "domain": "Sales", "columns": [("order_id", "INTEGER", "fk", False)]},
+        },
+    )
+
+    ctx = retrieve_context(fake, Q, top_k=10)
+    j = next(j for j in ctx["joins"] if j["from_table"] == "order_items")
+    assert j["cardinality"] is None
 
 
 def test_canonical_metric_surfaces_when_its_table_is_retrieved():
@@ -292,3 +346,38 @@ def test_build_context_defaults_allowed_values_when_absent():
     ]
     ctx = _build_context(rows, [], [])
     assert ctx["tables"]["orders"]["columns"][0]["allowed_values"] == []
+
+
+# ── cross-domain graceful degradation ─────────────────────────────────────────
+
+def test_cross_domain_unjoinable_flags_islands():
+    islands = {"customers": {"domain": "Sales", "columns": []},
+               "sec_users": {"domain": "Security", "columns": []}}
+    assert cross_domain_unjoinable(islands, [])
+    # a single domain is never "unjoinable"
+    same = {"customers": {"domain": "Sales", "columns": []},
+            "orders": {"domain": "Sales", "columns": []}}
+    assert not cross_domain_unjoinable(same, [])
+    # a join actually bridging the two domains makes them joinable
+    bridged_join = [{"from_table": "customers", "to_table": "sec_users"}]
+    assert not cross_domain_unjoinable(islands, bridged_join)
+
+
+def test_build_context_sets_cross_domain_flag_for_two_unlinked_domains():
+    rows = [
+        {"table_name": "customers", "table_desc": "c", "domain": "Sales",
+         "col_name": "customer_id", "dtype": "INTEGER", "col_desc": "id", "is_pk": True},
+        {"table_name": "sec_users", "table_desc": "u", "domain": "Security",
+         "col_name": "user_id", "dtype": "INTEGER", "col_desc": "id", "is_pk": True},
+    ]
+    ctx = _build_context(rows, [], [])
+    assert ctx["cross_domain_unjoinable"] is True
+
+
+def test_build_context_single_domain_is_not_cross_domain():
+    rows = [
+        {"table_name": "orders", "table_desc": "o", "domain": "Sales",
+         "col_name": "order_id", "dtype": "INTEGER", "col_desc": "id", "is_pk": True},
+    ]
+    ctx = _build_context(rows, [], [])
+    assert ctx["cross_domain_unjoinable"] is False

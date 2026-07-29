@@ -80,3 +80,40 @@ def test_format_schema_renders_allowed_values_inline():
     assert "tier (one of: Bronze, Silver, Gold, Platinum)" in out
     # a column without a vocabulary is not annotated
     assert "| order_id | INTEGER | Yes | id |" in out
+
+
+def test_format_schema_adds_cross_domain_note_for_islands():
+    """Two domains with no bridging join -> an explicit 'cannot be joined' note
+    steers the model off a hallucinated cross-domain join."""
+    ctx = {
+        "tables": {
+            "customers": {"description": "c", "domain": "Sales",
+                          "columns": [{"name": "customer_id", "type": "INTEGER", "description": "id", "is_pk": True}]},
+            "sec_users": {"description": "u", "domain": "Security",
+                          "columns": [{"name": "user_id", "type": "INTEGER", "description": "id", "is_pk": True}]},
+        },
+        "joins": [],
+    }
+    out = _format_schema(ctx)
+    assert "## Cross-domain note" in out
+    assert "cannot be joined" in out
+
+
+def test_format_schema_no_cross_domain_note_within_one_domain():
+    # _ctx() is entirely Sales tables joined on customer_id -> no note
+    assert "## Cross-domain note" not in _format_schema(_ctx())
+
+
+def test_format_schema_renders_fanout_warning_when_cardinality_present():
+    ctx = _ctx()
+    ctx["joins"][0]["cardinality"] = "many-to-one"
+    out = _format_schema(ctx)
+    assert "orders.customer_id = customers.customer_id" in out
+    assert "fans out" in out and "COUNT(DISTINCT)" in out
+
+
+def test_format_schema_join_line_is_plain_without_cardinality():
+    # backward-compat: a not-yet-rebuilt graph returns no cardinality -> plain line
+    out = _format_schema(_ctx())
+    assert "orders.customer_id = customers.customer_id" in out
+    assert "fans out" not in out
