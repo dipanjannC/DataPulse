@@ -82,6 +82,7 @@ class _FakeSchemaGraph:
                     "dtype":      dtype,
                     "col_desc":   desc,
                     "is_pk":      pk,
+                    "allowed_values": [],
                 })
         return rows
 
@@ -262,9 +263,32 @@ def test_build_context_shape_and_drops_dangling_joins():
     assert ctx["tables"]["orders"]["domain"] == "Sales"
     assert ctx["tables"]["orders"]["columns"][0] == {
         "name": "order_id", "type": "INTEGER", "description": "id", "is_pk": True,
+        "allowed_values": [],
     }
     # customers was not fetched, so the join referencing it is dropped
     assert ctx["joins"] == []
     assert ctx["domains"] == [{"name": "Sales", "score": 0.9}]
     # metrics key is always present (additive contract), empty when none given
     assert ctx["metrics"] == []
+
+
+def test_build_context_carries_allowed_values():
+    """A column's declared vocabulary reaches the caller so the schema context
+    can surface valid categorical values inline."""
+    rows = [
+        {"table_name": "orders", "table_desc": "hdr", "domain": "Sales",
+         "col_name": "status", "dtype": "TEXT", "col_desc": "order status", "is_pk": False,
+         "allowed_values": ["Pending", "Shipped"]},
+    ]
+    ctx = _build_context(rows, [], [{"name": "Sales", "score": 0.9}])
+    assert ctx["tables"]["orders"]["columns"][0]["allowed_values"] == ["Pending", "Shipped"]
+
+
+def test_build_context_defaults_allowed_values_when_absent():
+    """Rows from an older graph without the field stay backward-compatible."""
+    rows = [
+        {"table_name": "orders", "table_desc": "hdr", "domain": "Sales",
+         "col_name": "order_id", "dtype": "INTEGER", "col_desc": "id", "is_pk": True},
+    ]
+    ctx = _build_context(rows, [], [])
+    assert ctx["tables"]["orders"]["columns"][0]["allowed_values"] == []

@@ -4,8 +4,9 @@ Node model
 ----------
 (:Domain {name, description, embedding})
 (:Table  {name, description, domain, embedding})
-(:Column {key, name, table_name, domain, description, data_type, is_primary_key, aliases, embedding})
+(:Column {key, name, table_name, domain, description, data_type, is_primary_key, aliases, allowed_values, embedding})
 (:Metric {name, expression, description, tables})   # canonical business measures
+(:Meta   {key, schema_fingerprint, model, built_at, domains, tables, columns})  # build stamp -> KG-freshness detection
 
 Relationship model
 ------------------
@@ -21,14 +22,17 @@ and hand the LLM explicit JOIN conditions.
 from __future__ import annotations
 
 import os
+from datetime import datetime, timezone
 
 from neo4j import GraphDatabase
 
 from src.embeddings.embed import (
+    MODEL_NAME,
     build_column_embeddings,
     build_domain_embeddings,
     build_table_embeddings,
 )
+from src.knowledge_graph.freshness import kg_fingerprint
 from src.metadata.utils import (
     get_all_relationships,
     get_all_tables,
@@ -46,7 +50,8 @@ def build(uri: str, user: str, password: str) -> None:
     table_emb   = build_table_embeddings(schema)
     domain_emb  = build_domain_embeddings(schema)
 
-    driver = GraphDatabase.driver(uri, auth=(user, password))
+    driver = GraphDatabase.driver(uri, auth=(user, password),
+                                  notifications_disabled_classifications=["DEPRECATION"])
     with driver.session() as s:
         _create_constraints(s)
         _create_vector_indexes(s)
@@ -55,6 +60,7 @@ def build(uri: str, user: str, password: str) -> None:
         _upsert_fk_relationships(s, get_all_relationships(schema))
         _upsert_table_references(s, get_all_relationships(schema))
         _upsert_metric_nodes(s, get_metrics(schema))
+        _upsert_meta(s, schema)  # LAST: never stamp "fresh" onto a partially built graph
     driver.close()
 
     tables     = get_all_tables(schema)
@@ -63,7 +69,7 @@ def build(uri: str, user: str, password: str) -> None:
     print(
         f"Knowledge Graph built: {len(get_domains(schema))} domains | "
         f"{len(tables)} tables | {col_count} columns | {rel_count} FK edges | "
-        f"{len(get_metrics(schema))} metrics"
+        f"{len(get_metrics(schema))} metrics | fingerprint {kg_fingerprint(schema, MODEL_NAME)}"
     )
 
 
@@ -148,6 +154,7 @@ def _upsert_table_and_column_nodes(
                     c.data_type      = $dtype,
                     c.is_primary_key = $pk,
                     c.aliases        = $aliases,
+                    c.allowed_values = $allowed_values,
                     c.embedding      = $emb
                 WITH c
                 MATCH (t:Table {name: $table_name})
@@ -161,6 +168,7 @@ def _upsert_table_and_column_nodes(
                 dtype=col["type"],
                 pk=col.get("primary_key", False),
                 aliases=col.get("aliases", []),
+                allowed_values=col.get("allowed_values", []),
                 emb=col_emb.get(key, []),
             )
 
@@ -210,6 +218,32 @@ def _upsert_metric_nodes(session, metrics: list[dict]) -> None:
             description=m.get("description", ""),
             tables=m.get("tables", []),
         )
+
+
+def _upsert_meta(session, schema: dict) -> None:
+    """Stamp one (:Meta {key:'kg'}) node with the fingerprint of the catalog +
+    embedding model this KG was built from — the anchor the app uses to detect
+    staleness. Called LAST so a build that dies mid-way never leaves a "fresh"
+    stamp on a partially built graph. built_at is recorded but deliberately
+    excluded from the fingerprint (it is build-event metadata, not an input)."""
+    tables = get_all_tables(schema)
+    session.run(
+        """
+        MERGE (m:Meta {key: 'kg'})
+        SET m.schema_fingerprint = $fingerprint,
+            m.model              = $model,
+            m.built_at           = $built_at,
+            m.domains            = $domains,
+            m.tables             = $tables,
+            m.columns            = $columns
+        """,
+        fingerprint=kg_fingerprint(schema, MODEL_NAME),
+        model=MODEL_NAME,
+        built_at=datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
+        domains=len(get_domains(schema)),
+        tables=len(tables),
+        columns=sum(len(t["columns"]) for t in tables),
+    )
 
 
 if __name__ == "__main__":

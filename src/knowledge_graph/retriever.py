@@ -125,7 +125,7 @@ class SchemaGraph:
 
     def fetch_tables(self, tables: list[str]) -> list[dict]:
         """Rows: one per column — {table_name, table_desc, domain, col_name,
-        dtype, col_desc, is_pk}. Fakes must match this shape."""
+        dtype, col_desc, is_pk, allowed_values}. Fakes must match this shape."""
         with self._driver.session() as s:
             return s.run(
                 """
@@ -137,7 +137,8 @@ class SchemaGraph:
                        c.name        AS col_name,
                        c.data_type   AS dtype,
                        c.description AS col_desc,
-                       c.is_primary_key AS is_pk
+                       c.is_primary_key AS is_pk,
+                       c.allowed_values AS allowed_values
                 """,
                 tables=tables,
             ).data()
@@ -166,7 +167,8 @@ def _get_graph(uri: str, user: str, password: str) -> SchemaGraph:
     key = (uri, user, password)
     graph = _GRAPH_CACHE.get(key)
     if graph is None:
-        driver = GraphDatabase.driver(uri, auth=(user, password))
+        driver = GraphDatabase.driver(uri, auth=(user, password),
+                                      notifications_disabled_classifications=["DEPRECATION"])
         graph = SchemaGraph(driver)
         _GRAPH_CACHE[key] = graph
     return graph
@@ -275,6 +277,7 @@ def _build_context(
             "type":        r["dtype"],
             "description": r["col_desc"],
             "is_pk":       bool(r.get("is_pk")),
+            "allowed_values": r.get("allowed_values") or [],
         })
 
     present = set(tables)
