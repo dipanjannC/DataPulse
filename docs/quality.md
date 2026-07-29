@@ -47,7 +47,8 @@ QualityReport(
   summary = { "pass", "schema_pass", "referential_integrity_pass",
               "table_count", "total_rows", "violation_count", "row_counts", "generated_at" },
   schema  = SchemaCheck(passed: bool, violations: list[Violation]),
-  distributions = {},          # chi-square deliberately skipped
+  distributions = {},          # chi-square deliberately skipped (graded distributions)
+  profile = { table: {...} },  # descriptive per-column profile (see below) — described, not graded
   config_hash = "sha256:...",  # structural hash of the schema (cosmetic edits don't churn it)
 )
 ```
@@ -55,6 +56,32 @@ QualityReport(
 `Violation(kind, field, detail)` kinds: `missing_table`, `missing_column`, `dtype`, `null`,
 `duplicate` (PK), `referential_integrity`. `report.schema.passed` is the single overall gate
 (true only when there are zero violations of any kind).
+
+## Profiling & the Data Quality panel
+
+`quality/profiler.py` (`profile_frames(frames, schema)`) adds a **descriptive** per-table /
+per-column profile alongside the gate — the answer to "what does this generated data actually
+look like?" rather than just "is it valid?". Scipy-free, pure over the frames, driven by each
+column's declared role:
+
+- **completeness** (`nulls`, `null_pct`) and **cardinality** (`distinct`, `distinct_pct`) for every column;
+- **numeric** (`INTEGER`/`REAL`): min/max/mean/std/quartiles + a small `histogram`;
+- **categorical** (declared `allowed_values`) and low-cardinality text: top-N frequency, plus
+  `unused` — declared vocabulary that never appears (a real signal the generator under-samples it);
+- **datetime**: observed min/max range;
+- **key**/**reference** (PK/FK): distinctness / referenced-parent counts.
+
+Every value is a native JSON scalar (numpy types and `NaN` are coerced), so the profile serializes
+straight to the API. It is **described, not graded**: there is still no goodness-of-fit test, because
+the generator declares no expected distribution to grade against (see the deferral above) — we can
+show the observed shape, not gate on an expected one.
+
+**Surfaced live in the app.** `GET /api/quality` (in `src/api/main.py`) returns the validator verdict
++ profile, computed over `src/data/` and cached on a CSV-mtime signature (read-only — never perturbs
+generation). The frontend **Data Quality** panel (`frontend/quality.{css,js}`, opened from the sidebar
+button) renders it: verdict tiles, an honest framing note, and domain-grouped tables with per-column
+completeness meters, categorical bars, and numeric histograms. `tests/text2sql/test_profiler.py`
+covers the per-role stats, null/cardinality accounting, and the JSON-safety guarantee.
 
 ## The gate
 
