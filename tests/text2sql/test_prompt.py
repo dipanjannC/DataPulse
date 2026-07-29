@@ -7,6 +7,8 @@ kept the grounding hardening.
 """
 from __future__ import annotations
 
+import logging
+
 import text2sql.agent.prompt as prompt
 from text2sql.agent.prompt import (
     ENV_VAR,
@@ -67,6 +69,38 @@ def test_load_falls_back_when_all_sources_missing(tmp_path, monkeypatch):
     monkeypatch.delenv(ENV_VAR, raising=False)
     monkeypatch.setattr(prompt, "BUNDLED_PROMPT", tmp_path / "does_not_exist.txt")
     assert load_prompt_template(tmp_path / "also_missing.txt") == prompt._FALLBACK_TEMPLATE
+
+
+# ── hardening: silent-degradation modes must warn ───────────────────────────
+
+def test_fallback_to_in_code_default_warns_loudly(tmp_path, monkeypatch, caplog):
+    # a missing bundled file in a deploy means the configured prompt is NOT in
+    # effect — that must be visible, not silent.
+    monkeypatch.delenv(ENV_VAR, raising=False)
+    monkeypatch.setattr(prompt, "BUNDLED_PROMPT", tmp_path / "missing.txt")
+    with caplog.at_level(logging.WARNING):
+        out = load_prompt_template()
+    assert out == prompt._FALLBACK_TEMPLATE
+    assert "NOT in effect" in caplog.text
+
+
+def test_configured_template_without_domains_marker_warns(tmp_path, caplog):
+    # a business-edited prompt that drops {domains} loses the domain injection —
+    # warn the author rather than silently shipping a marker-less prompt.
+    f = tmp_path / "nomarker.txt"
+    f.write_text("A prompt with no marker at all.", encoding="utf-8")
+    with caplog.at_level(logging.WARNING):
+        out = load_prompt_template(f)
+    assert out == "A prompt with no marker at all."
+    assert "no {domains} marker" in caplog.text
+
+
+def test_valid_template_does_not_warn(tmp_path, caplog):
+    f = tmp_path / "ok.txt"
+    f.write_text("Fine prompt over {domains}.", encoding="utf-8")
+    with caplog.at_level(logging.WARNING):
+        load_prompt_template(f)
+    assert caplog.text == ""
 
 
 def test_env_pointing_at_missing_file_falls_through_to_bundled(tmp_path, monkeypatch):

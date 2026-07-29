@@ -46,7 +46,14 @@ _FALLBACK_TEMPLATE = (
 
 def load_prompt_template(path: str | Path | None = None) -> str:
     """Resolve the system-prompt template text (see the module docstring for the
-    resolution order). Always returns non-empty text."""
+    resolution order). Always returns non-empty text. Read fresh each call so an
+    edit / env change applies on the next request with no restart — the file is
+    tiny and read once per query, far below the LLM/KG latency, so there is no
+    caching to go stale.
+
+    Warns loudly on the two silent-degradation modes: falling back to the in-code
+    default (the bundled file is missing in a deploy, so the configured prompt is
+    NOT in effect) and a configured template that dropped the {domains} marker."""
     for source, candidate in (("path", path),
                               ("env", os.getenv(ENV_VAR)),
                               ("bundled", BUNDLED_PROMPT)):
@@ -61,7 +68,13 @@ def load_prompt_template(path: str | Path | None = None) -> str:
                 logger.warning("system-prompt file %r is unreadable; falling back", str(candidate))
             continue
         if text:
+            if DOMAINS_MARKER not in text:
+                logger.warning("system prompt from %s (%r) has no %s marker; the domain list "
+                               "will not be injected", source, str(candidate), DOMAINS_MARKER)
             return text
+    logger.warning("no system-prompt file resolved (bundled default %r missing?); using the "
+                   "compact in-code fallback — the configured prompt is NOT in effect",
+                   str(BUNDLED_PROMPT))
     return _FALLBACK_TEMPLATE
 
 

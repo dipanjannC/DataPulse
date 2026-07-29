@@ -22,6 +22,9 @@ from text2sql.agent.agent import (
 )
 from text2sql.agent.tools import read_only_violation
 
+# the module itself, to monkeypatch its wiring (answer_question -> run_agent)
+import text2sql.agent.agent as agent
+
 
 # ── read-only guard ─────────────────────────────────────────────────────────
 
@@ -185,3 +188,48 @@ def test_build_system_prompt_absorbs_a_new_domain_without_template_edits():
 
 def test_build_system_prompt_falls_back_when_no_domains():
     assert "multiple business domains" in build_system_prompt([])
+
+
+# ── the configured prompt is actually loaded INTO the agent ─────────────────
+
+def _stub_agent_io(monkeypatch, captured):
+    """Neutralize the live seams so answer_question runs to the run_agent call:
+    fake KG + fake Groq client, and capture the system_prompt run_agent receives."""
+    monkeypatch.setattr(agent, "_get_graph", lambda *a, **k: object())
+    monkeypatch.setattr(agent, "_groq_llm", lambda *a, **k: (lambda messages, tools: None))
+
+    def fake_run_agent(question, *, llm_fn, tool_fns, system_prompt, max_steps):
+        captured["system_prompt"] = system_prompt
+        return "RESULT"
+
+    monkeypatch.setattr(agent, "run_agent", fake_run_agent)
+
+
+def test_answer_question_loads_the_env_configured_prompt_into_run_agent(tmp_path, monkeypatch):
+    """The full path is exercised: DATAPULSE_SYSTEM_PROMPT_PATH -> loader ->
+    build_system_prompt (domains filled from the catalog) -> run_agent.system_prompt.
+    Asserts the env file's *content* reaches the agent, not just that some prompt did."""
+    f = tmp_path / "biz.txt"
+    f.write_text("BIZ PROMPT for {domains}. Follow company policy.", encoding="utf-8")
+    monkeypatch.setenv("DATAPULSE_SYSTEM_PROMPT_PATH", str(f))
+
+    captured: dict = {}
+    _stub_agent_io(monkeypatch, captured)
+
+    out = agent.answer_question("q", groq_key="k", uri="u", user="us",
+                                password="p", db_path="db.sqlite")
+
+    assert out == "RESULT"
+    sp = captured["system_prompt"]
+    assert sp.startswith("BIZ PROMPT for ")      # the env-configured file content
+    assert "Follow company policy." in sp
+    assert "{domains}" not in sp                  # the marker was substituted
+    assert "Sales" in sp                          # the real catalog's domains were injected
+
+
+def test_answer_question_system_prompt_override_bypasses_the_configured_template(monkeypatch):
+    captured: dict = {}
+    _stub_agent_io(monkeypatch, captured)
+    agent.answer_question("q", groq_key="k", uri="u", user="us", password="p",
+                          db_path="db.sqlite", system_prompt="EXACT OVERRIDE")
+    assert captured["system_prompt"] == "EXACT OVERRIDE"
