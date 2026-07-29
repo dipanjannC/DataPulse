@@ -91,6 +91,10 @@ Rules:
 - Only read-only SELECT/WITH queries. If run_sql returns an error or unexpected/empty
   rows, read it, fix the query, and try again.
 - When you have the answer, reply in plain language and state the key number(s).
+- Base the final answer ONLY on the rows your last run_sql call returned. Do not
+  state a number that is not present in, or directly computed from, those rows.
+- Restate the exact figure(s) from those rows (the same numbers). If no query
+  result supports the claim, say so plainly instead of guessing.
 """
 
 
