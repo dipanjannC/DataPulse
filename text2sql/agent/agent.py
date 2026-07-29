@@ -21,6 +21,7 @@ from pathlib import Path
 from groq import BadRequestError, Groq, RateLimitError
 
 from text2sql.agent import tools as _tools
+from text2sql.agent.prompt import build_system_prompt
 from src.knowledge_graph.retriever import _get_graph
 from src.metadata.utils import get_domains, load_schema
 
@@ -70,47 +71,12 @@ class AgentResult:
     last_result: dict | None = None
 
 
-_SYSTEM_PROMPT_TEMPLATE = """\
-You are DataPulse, an analyst that answers business questions by querying a SQLite
-database spanning {domains}. You work by calling
-tools, observing the results, and refining — never guess table or column names.
-
-Tools:
-- get_schema_context(question): returns the relevant tables, exact join keys, and
-  canonical METRIC DEFINITIONS. Call this FIRST, before writing any SQL.
-- sample_values(table, column): distinct values of a column — use it to resolve a
-  categorical filter (e.g. a status or tier) instead of guessing the literal.
-- run_sql(sql): runs a read-only SELECT/WITH query and returns rows.
-
-Rules:
-- Always call get_schema_context before writing SQL, and use the exact join keys it
-  gives you.
-- For a business measure (revenue, margin, attainment, etc.), use the exact expression
-  from the "Metric definitions" section verbatim — do NOT substitute a similar-looking
-  column (e.g. never use invoices.amount for revenue).
-- Only read-only SELECT/WITH queries. If run_sql returns an error or unexpected/empty
-  rows, read it, fix the query, and try again.
-- When you have the answer, reply in plain language and state the key number(s).
-- Base the final answer ONLY on the rows your last run_sql call returned. Do not
-  state a number that is not present in, or directly computed from, those rows.
-- Restate the exact figure(s) from those rows (the same numbers). If no query
-  result supports the claim, say so plainly instead of guessing.
-"""
-
-
-def _domains_phrase(domains: list[str]) -> str:
-    names = [d for d in domains if d]
-    if not names:
-        return "multiple business domains"
-    if len(names) == 1:
-        return f"{names[0]} data"
-    return ", ".join(names[:-1]) + f", and {names[-1]} data"
-
-
-def build_system_prompt(domains: list[str]) -> str:
-    """Fill the system-prompt template with the domain list. Derived from the
-    catalog at wiring time so a new domain needs no prompt edit."""
-    return _SYSTEM_PROMPT_TEMPLATE.format(domains=_domains_phrase(domains))
+# The system-prompt template (with its {domains} marker) is configured OUTSIDE
+# this module so it can be tuned per deployment / business standards without a
+# code change — see text2sql/agent/prompt.py (bundled default:
+# prompts/system_prompt.txt; overridable via the DATAPULSE_SYSTEM_PROMPT_PATH env
+# var). build_system_prompt is imported above and re-exported here so existing
+# importers keep working.
 
 
 # Generic default for run_agent's default param (the fake-LLM tests hit this).
@@ -350,9 +316,12 @@ def answer_question(
     db_path: str | Path,
     model: str = MODEL,
     max_steps: int = MAX_STEPS,
+    system_prompt: str | None = None,
 ) -> AgentResult:
+    # system_prompt override wins; otherwise resolve the configured template
+    # (env / bundled file / fallback) and fill in the catalog's domain list.
     domains       = [d["name"] for d in get_domains(load_schema())]
-    system_prompt = build_system_prompt(domains)
+    system_prompt = system_prompt if system_prompt is not None else build_system_prompt(domains)
     graph         = _get_graph(uri, user, password)
     tool_fns      = _build_tools(graph, db_path)
     llm_fn        = _groq_llm(groq_key, model)
