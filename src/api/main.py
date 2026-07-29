@@ -8,15 +8,18 @@ natural-language `answer` alongside the SQL and rows.
 """
 from __future__ import annotations
 
+import logging
 import os
 from pathlib import Path
 from typing import Any
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from groq import APIConnectionError, APIStatusError
 from neo4j import GraphDatabase
+from neo4j.exceptions import AuthError, ConfigurationError, ServiceUnavailable, SessionExpired
 from pydantic import BaseModel
 from dotenv import load_dotenv
 
@@ -24,7 +27,11 @@ load_dotenv()
 
 from text2sql.agent.agent import RateLimitExhausted, answer_question
 from src.knowledge_graph.retriever import retrieve_schema_context
+from src.knowledge_graph.freshness import is_kg_fresh
+from src.embeddings.embed import MODEL_NAME
 from src.metadata.utils import get_domains, load_schema
+
+logger = logging.getLogger(__name__)
 
 DB_PATH = Path(__file__).parent.parent / "db" / "sales.db"
 
@@ -46,20 +53,34 @@ class QueryRequest(BaseModel):
     top_k: int = 10
 
 
-def _neo4j_reachable(uri: str | None, user: str | None, pwd: str | None) -> bool:
+def _kg_probe(uri: str | None, user: str | None, pwd: str | None) -> dict:
+    """Bounded KG probe -> {'connected', 'fingerprint', 'built_at'}. Never raises.
+    A cold/paused Aura instance must not hang the health poll, so timeouts are
+    tight; the same bounded connection also reads the (:Meta) build stamp used
+    for staleness detection."""
     if not all([uri, user, pwd]):
-        return False
+        return {"connected": False, "fingerprint": None, "built_at": None}
     driver = None
     try:
         driver = GraphDatabase.driver(
             uri, auth=(user, pwd),
             connection_timeout=_HEALTH_TIMEOUT_S,
             connection_acquisition_timeout=_HEALTH_TIMEOUT_S,
+            notifications_disabled_classifications=["DEPRECATION"],
         )
         driver.verify_connectivity()
-        return True
+        with driver.session() as s:
+            rec = s.run(
+                "MATCH (m:Meta {key: 'kg'}) "
+                "RETURN m.schema_fingerprint AS fingerprint, m.built_at AS built_at"
+            ).single()
+        return {
+            "connected": True,
+            "fingerprint": rec["fingerprint"] if rec else None,
+            "built_at": rec["built_at"] if rec else None,
+        }
     except Exception:
-        return False
+        return {"connected": False, "fingerprint": None, "built_at": None}
     finally:
         if driver is not None:
             driver.close()
@@ -68,12 +89,18 @@ def _neo4j_reachable(uri: str | None, user: str | None, pwd: str | None) -> bool
 @app.get("/api/health")
 def health():
     uri = os.getenv("NEO4J_URI")
-    kg_connected = _neo4j_reachable(uri, os.getenv("NEO4J_USERNAME"), os.getenv("NEO4J_PASSWORD"))
+    probe = _kg_probe(uri, os.getenv("NEO4J_USERNAME"), os.getenv("NEO4J_PASSWORD"))
     db_exists = DB_PATH.exists()
+    # kg_fresh: True/False when the graph is reachable (False = stale or unstamped),
+    # None when we couldn't reach it to tell. Informational only — NOT folded into
+    # `status`, so a stale KG never breaks a health-gated deploy.
+    kg_fresh = is_kg_fresh(probe["fingerprint"], load_schema(), MODEL_NAME) if probe["connected"] else None
     return {
-        "status": "ok" if (kg_connected and db_exists) else "degraded",
+        "status": "ok" if (probe["connected"] and db_exists) else "degraded",
         "kg_uri": uri or "not configured",
-        "kg_connected": kg_connected,
+        "kg_connected": probe["connected"],
+        "kg_fresh": kg_fresh,
+        "kg_built_at": probe["built_at"],
         "db_exists": db_exists,
     }
 
@@ -130,6 +157,37 @@ def _failure_message(result) -> str:
     return f"Stopped after {steps} step(s) without a conclusive result."
 
 
+# ── graceful, human-friendly failure envelopes ──────────────────────────────
+# When Neo4j or Groq is unavailable we must not leak a stack trace to the UI.
+# Classify the known infra failures into a small envelope the frontend can
+# present cleanly (title from `error_kind`, message from `error`); the raw cause
+# is logged server-side, never shown. Same envelope shape as a success so the
+# client has one contract.
+
+_KG_DOWN  = (ServiceUnavailable, SessionExpired, AuthError, ConfigurationError)
+_LLM_DOWN = (APIConnectionError, APIStatusError)
+
+_FRIENDLY = {
+    "config":          "DataPulse isn't fully configured on the server. The Neo4j or Groq credentials are missing. Add them to the server's .env and restart.",
+    "kg_unavailable":  "Can't reach the knowledge graph (Neo4j) right now. It may be paused or unreachable. Check the connection and try again in a moment.",
+    "llm_unavailable": "Can't reach the language model (Groq) right now. It may be down, timing out, or the API key may be invalid. Please try again shortly.",
+    "rate_limited":    "The language model (Groq free tier) is rate-limited right now. Wait for the quota window to reset and try again. This is a usage limit, not a bug.",
+    "internal":        "Something went wrong while answering your question. Please try again.",
+}
+
+
+def _error_response(kind: str, context: dict | None = None, *, detail: str | None = None) -> dict[str, Any]:
+    """A friendly, structured failure envelope. `error_kind` lets the UI pick a
+    title; `error` is the human-readable message. The raw cause is logged, not shown."""
+    if detail:
+        logger.warning("query failed [%s]: %s", kind, detail)
+    return {
+        "success": False, "answer": "", "sql": "", "columns": [], "rows": [],
+        "schema_context": context or {}, "trace": [], "attempts": 0,
+        "stopped": kind, "error_kind": kind, "error": _FRIENDLY[kind],
+    }
+
+
 @app.post("/api/query")
 def query(req: QueryRequest) -> dict[str, Any]:
     uri      = os.getenv("NEO4J_URI")
@@ -138,15 +196,18 @@ def query(req: QueryRequest) -> dict[str, Any]:
     groq_key = os.getenv("GROQ_API_KEY")
 
     if not all([uri, user, pwd, groq_key]):
-        raise HTTPException(status_code=500, detail="Missing environment variables")
+        return _error_response("config")
 
     # One retrieval populates the UI's schema panel (domain badges + table pills).
     # It is the same question-level context the agent sees on its first tool call;
     # tables the agent later reaches via sub-questions may differ slightly.
     try:
         context = retrieve_schema_context(req.question, uri, user, pwd, top_k=req.top_k)
+    except _KG_DOWN as exc:
+        return _error_response("kg_unavailable", detail=str(exc))
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"KG retrieval failed: {exc}")
+        logger.exception("unexpected KG-retrieval error")
+        return _error_response("internal", detail=str(exc))
 
     try:
         result = answer_question(
@@ -154,15 +215,14 @@ def query(req: QueryRequest) -> dict[str, Any]:
             groq_key=groq_key, uri=uri, user=user, password=pwd, db_path=DB_PATH,
         )
     except RateLimitExhausted as exc:
-        # A daily/token quota, not a transient blip — surface it cleanly.
-        return {
-            "success": False, "answer": "", "sql": "",
-            "columns": [], "rows": [], "schema_context": context,
-            "trace": [], "attempts": 0, "stopped": "rate_limited",
-            "error": str(exc),
-        }
+        return _error_response("rate_limited", context, detail=str(exc))
+    except _LLM_DOWN as exc:
+        return _error_response("llm_unavailable", context, detail=str(exc))
+    except _KG_DOWN as exc:  # Neo4j dropped mid-run (agent tools)
+        return _error_response("kg_unavailable", context, detail=str(exc))
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"Agent run failed: {exc}")
+        logger.exception("unexpected agent error")
+        return _error_response("internal", context, detail=str(exc))
 
     last     = result.last_result or {}
     success  = result.last_result is not None
@@ -178,6 +238,7 @@ def query(req: QueryRequest) -> dict[str, Any]:
         "attempts":       attempts,
         "stopped":        result.stopped,
         "error":          None if success else _failure_message(result),
+        "error_kind":     None if success else "no_result",
     }
 
 
