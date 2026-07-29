@@ -250,6 +250,8 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 
 **Note on batching:** each node/edge type is one `session.run("UNWIND $rows ...")` (auto-commit). This removes the per-row round-trips (the finding) while keeping each phase its own transaction — so `Meta`-last still means an interrupted build self-heals — and keeps the fake-session (`.run`) test seam identical to today. `session.execute_write` is deliberately not used.
 
+**Re-sync note (concurrent change on this branch):** `builder.py`'s `_upsert_table_references` was concurrently given a `cardinality` edge attribute (`SET r.cardinality = $cardinality`, `cardinality=rel.get("cardinality")`) for the retriever's fan-out warning. This rewrite **preserves** it: the batched `_upsert_references` carries `cardinality` in each row and sets `r.cardinality = row.cardinality`, and two tests cover it. Do not drop it.
+
 - [ ] **Step 1: Rewrite the test file (failing tests)**
 
 Replace the entire contents of `tests/text2sql/test_builder.py`:
@@ -395,6 +397,24 @@ def test_run_build_returns_stats_with_skips():
     assert stats.fk_edges == 1         # only the valid relationship
     assert stats.skipped == list(check_relationships(_schema()).skip_reasons)
     assert stats.build_id == "BID"
+
+
+def test_references_carry_cardinality_defaulting_to_none():
+    # base schema's valid relationship declares no cardinality -> None (a rel
+    # authored before cardinality existed must not crash the build)
+    session = _FakeSession()
+    _run(session, _schema())
+    ref_q = next(q for q, p in session.calls if "REFERENCES" in q and "rows" in p)
+    assert "r.cardinality = row.cardinality" in ref_q
+    assert _rows_for(session, "REFERENCES")[0]["cardinality"] is None
+
+
+def test_references_carry_declared_cardinality():
+    session = _FakeSession()
+    schema = _schema()
+    schema["domains"][0]["relationships"][0]["cardinality"] = "many-to-one"
+    _run(session, schema)
+    assert _rows_for(session, "REFERENCES")[0]["cardinality"] == "many-to-one"
 ```
 
 - [ ] **Step 2: Run tests to verify they fail**
@@ -424,7 +444,7 @@ Relationship model
 (:Domain)-[:HAS_TABLE {build_id}]->(:Table)
 (:Table)-[:HAS_COLUMN {build_id}]->(:Column)
 (:Column)-[:FOREIGN_KEY {build_id}]->(:Column)
-(:Table)-[:REFERENCES {from_column, to_column, build_id}]->(:Table)
+(:Table)-[:REFERENCES {from_column, to_column, cardinality, build_id}]->(:Table)
 
 Robustness model
 ----------------
@@ -718,11 +738,14 @@ def _upsert_foreign_keys(session, relationships: list[dict], build_id: str) -> N
 
 
 def _upsert_references(session, relationships: list[dict], build_id: str) -> None:
-    """Table-to-table projection of the column FKs, carrying the join keys.
-    Only valid relationships reach here, so the join keys always resolve."""
+    """Table-to-table projection of the column FKs, carrying the join keys and
+    the join cardinality (an edge attribute, not part of the edge's identity) so
+    the retriever can warn about fan-out. Only valid relationships reach here, so
+    the join keys always resolve."""
     rows = [
         {"from_table": r["from_table"], "to_table": r["to_table"],
-         "from_column": r["from_column"], "to_column": r["to_column"]}
+         "from_column": r["from_column"], "to_column": r["to_column"],
+         "cardinality": r.get("cardinality")}
         for r in relationships
     ]
     session.run(
@@ -730,7 +753,8 @@ def _upsert_references(session, relationships: list[dict], build_id: str) -> Non
         UNWIND $rows AS row
         MATCH (ft:Table {name: row.from_table}), (tt:Table {name: row.to_table})
         MERGE (ft)-[r:REFERENCES {from_column: row.from_column, to_column: row.to_column}]->(tt)
-        SET r.build_id = $build_id
+        SET r.cardinality = row.cardinality,
+            r.build_id    = $build_id
         """,
         rows=rows, build_id=build_id,
     )
@@ -866,6 +890,7 @@ git commit -m "feat(kg): never-dark, corruption-proof KG build
 - Meta stamped last so an interrupted build self-heals; driver.close in finally
 - UNWIND-batch every upsert (was hundreds of per-row round-trips)
 - build() returns BuildStats; pipeline logs it
+- preserve the REFERENCES cardinality attribute added concurrently on this branch
 
 Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 ```
