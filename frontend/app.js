@@ -475,6 +475,21 @@
     else if (status === 'error') simLog('Backend offline', 'error');
   }
 
+  function setKGSkips(n) {
+    // Surface relationships the KG build skipped (endpoints referencing an
+    // undeclared column) so broken joins are visible in the UI, not silent.
+    const lbl = document.getElementById('kg-label');
+    const status = document.querySelector('.kg-status');
+    if (typeof n === 'number' && n > 0) {
+      lbl.textContent = `Online · ${n} skipped ${n === 1 ? 'join' : 'joins'}`;
+      if (status) status.title =
+        `${n} schema relationship${n === 1 ? '' : 's'} reference an undeclared column and ` +
+        `were skipped during the KG build — some joins may be missing. Fix schema.json and rebuild the KG.`;
+    } else if (status) {
+      status.title = '';
+    }
+  }
+
   function setDomains(domains) {
     document.getElementById('domains-list').innerHTML = domains.map(d => {
       const key   = String(d.name || '').toUpperCase();
@@ -728,7 +743,11 @@
     simLog('DataPulse ready', 'info');
 
     api.health()
-      .then(h => setKGStatus(h.status === 'ok' ? 'connected' : 'error'))
+      .then(h => {
+        const ok = h.status === 'ok';
+        setKGStatus(ok ? 'connected' : 'error');
+        setKGSkips(ok ? h.kg_skipped_relationships : null);
+      })
       .catch(() => setKGStatus('error'));
 
     api.domains()
