@@ -93,11 +93,17 @@ def main(argv: list[str] | None = None) -> int:
 
     logger.info("LOAD — embedding metadata + building the Neo4j knowledge graph")
     from src.knowledge_graph.builder import build
-    build(
+    stats = build(
         uri=os.environ["NEO4J_URI"],
         user=os.environ["NEO4J_USERNAME"],
         password=os.environ["NEO4J_PASSWORD"],
     )
+    logger.info(
+        "KG built: %d tables, %d columns, %d FK edges, %d skipped",
+        stats.tables, stats.columns, stats.fk_edges, len(stats.skipped),
+    )
+    for reason in stats.skipped:
+        logger.warning("  skipped relationship: %s", reason)
 
     logger.info("Setup complete. Start the API (/start-api), then open frontend/index.html.")
     return 0

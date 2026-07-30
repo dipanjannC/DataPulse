@@ -49,3 +49,15 @@ def test_is_kg_fresh_true_on_match_false_on_drift():
 def test_missing_fingerprint_is_not_fresh():
     assert is_kg_fresh(None, _schema(), "m") is False
     assert is_kg_fresh("", _schema(), "m") is False
+
+
+def test_broken_relationship_schema_still_fingerprints_deterministically():
+    # A schema with an invalid relationship must still hash stably, so re-running
+    # the same (broken) schema is idempotent and kg_fresh stays honest — the
+    # skip count, not the fingerprint, is the correctness signal.
+    broken = _schema()
+    broken["domains"][0]["relationships"] = [
+        {"from_table": "t", "from_column": "nope", "to_table": "t", "to_column": "c"}
+    ]
+    assert kg_fingerprint(broken, "m") == kg_fingerprint(broken, "m")
+    assert is_kg_fresh(kg_fingerprint(broken, "m"), broken, "m") is True
