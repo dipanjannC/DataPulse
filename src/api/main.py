@@ -62,7 +62,7 @@ def _kg_probe(uri: str | None, user: str | None, pwd: str | None) -> dict:
     tight; the same bounded connection also reads the (:Meta) build stamp used
     for staleness detection."""
     if not all([uri, user, pwd]):
-        return {"connected": False, "fingerprint": None, "built_at": None}
+        return {"connected": False, "fingerprint": None, "built_at": None, "skipped": None}
     driver = None
     try:
         driver = GraphDatabase.driver(
@@ -75,15 +75,17 @@ def _kg_probe(uri: str | None, user: str | None, pwd: str | None) -> dict:
         with driver.session() as s:
             rec = s.run(
                 "MATCH (m:Meta {key: 'kg'}) "
-                "RETURN m.schema_fingerprint AS fingerprint, m.built_at AS built_at"
+                "RETURN m.schema_fingerprint AS fingerprint, m.built_at AS built_at, "
+                "m.skipped_relationships AS skipped"
             ).single()
         return {
             "connected": True,
             "fingerprint": rec["fingerprint"] if rec else None,
             "built_at": rec["built_at"] if rec else None,
+            "skipped": rec["skipped"] if rec else None,
         }
     except Exception:
-        return {"connected": False, "fingerprint": None, "built_at": None}
+        return {"connected": False, "fingerprint": None, "built_at": None, "skipped": None}
     finally:
         if driver is not None:
             driver.close()
@@ -103,6 +105,7 @@ def health():
         "kg_uri": uri or "not configured",
         "kg_connected": probe["connected"],
         "kg_fresh": kg_fresh,
+        "kg_skipped_relationships": probe.get("skipped"),
         "kg_built_at": probe["built_at"],
         "db_exists": db_exists,
     }

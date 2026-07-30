@@ -56,6 +56,16 @@ def test_health_fresh_unknown_when_unreachable(monkeypatch):
     assert body["status"] == "degraded"
 
 
+def test_health_reports_skipped_relationship_count(monkeypatch):
+    fp = kg_fingerprint(load_schema(), MODEL_NAME)
+    monkeypatch.setattr(main, "_kg_probe",
+                        lambda *a: {"connected": True, "fingerprint": fp,
+                                    "built_at": None, "skipped": 2})
+    body = TestClient(main.app).get("/api/health").json()
+
+    assert body["kg_skipped_relationships"] == 2
+
+
 # ── /api/query graceful failure envelopes ───────────────────────────────────
 
 _CTX = {"tables": {}, "joins": [], "domains": [], "metrics": []}
