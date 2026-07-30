@@ -57,7 +57,7 @@ class QueryRequest(BaseModel):
 
 
 def _kg_probe(uri: str | None, user: str | None, pwd: str | None) -> dict:
-    """Bounded KG probe -> {'connected', 'fingerprint', 'built_at'}. Never raises.
+    """Bounded KG probe -> {'connected', 'fingerprint', 'built_at', 'skipped'}. Never raises.
     A cold/paused Aura instance must not hang the health poll, so timeouts are
     tight; the same bounded connection also reads the (:Meta) build stamp used
     for staleness detection."""

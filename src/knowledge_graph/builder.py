@@ -385,7 +385,7 @@ def _upsert_meta(session, schema: dict, check: RelationshipCheck,
         domains=len(get_domains(schema)),
         tables=len(tables),
         columns=sum(len(t["columns"]) for t in tables),
-        skipped_count=len(check.skipped),
+        skipped_count=len(check.skip_reasons),
         skipped_details=list(check.skip_reasons),
     )
 
