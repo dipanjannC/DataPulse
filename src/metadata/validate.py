@@ -52,11 +52,21 @@ def check_relationships(schema: dict) -> RelationshipCheck:
 def _endpoint_error(
     rel: dict, table_names: set[str], columns: dict[str, set[str]]
 ) -> str | None:
+    """Describe every broken endpoint of ``rel`` (joined with ``; ``), or return
+    None when both sides name a declared table + column. Reports all errors, not
+    just the first, and reads an absent key as "missing" rather than "None"."""
+    errors: list[str] = []
     for side in ("from", "to"):
         table = rel.get(f"{side}_table")
         column = rel.get(f"{side}_column")
+        if table is None:
+            errors.append(f"{side}_table is missing")
+            continue
         if table not in table_names:
-            return f"{side}_table '{table}' is not a declared table"
-        if column not in columns.get(table, set()):
-            return f"{side}_column '{table}.{column}' is not a declared column"
-    return None
+            errors.append(f"{side}_table '{table}' is not a declared table")
+            continue
+        if column is None:
+            errors.append(f"{side}_column is missing")
+        elif column not in columns.get(table, set()):
+            errors.append(f"{side}_column '{table}.{column}' is not a declared column")
+    return "; ".join(errors) if errors else None

@@ -78,3 +78,21 @@ def test_skip_reasons_property_lists_all_reasons():
     check = check_relationships(_schema([_VALID, bad1, bad2]))
     assert len(check.valid) == 1
     assert len(check.skip_reasons) == 2
+
+
+def test_relationship_broken_on_both_endpoints_reports_both():
+    # both endpoints reference undeclared columns -> the reason names BOTH,
+    # not just the first (no more first-error-wins).
+    bad = {"from_table": "orders", "from_column": "nope_a",
+           "to_table": "customers", "to_column": "nope_b"}
+    reason = check_relationships(_schema([bad])).skipped[0].reason
+    assert "orders.nope_a" in reason
+    assert "customers.nope_b" in reason
+
+
+def test_missing_endpoint_key_reads_as_missing_not_none():
+    # a relationship dict that omits an endpoint key must not render as 'None'.
+    bad = {"from_table": "orders", "from_column": "customer_id", "to_table": "customers"}
+    reason = check_relationships(_schema([bad])).skipped[0].reason
+    assert "None" not in reason
+    assert "to_column" in reason and "missing" in reason
