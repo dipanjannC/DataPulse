@@ -18,17 +18,16 @@ import time
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from openai import APIConnectionError, APIStatusError, OpenAI, RateLimitError
+import google.generativeai as genai
 
 from text2sql.agent import tools as _tools
 from text2sql.agent.prompt import build_system_prompt
 from src.knowledge_graph.retriever import _get_graph
 from src.metadata.utils import get_domains, load_schema
 
-# Gemini 2.0 Flash via Google's OpenAI-compatible endpoint.
+# Gemini 2.0 Flash via google-generativeai SDK (official, not beta endpoint).
 # Free tier: 1,500 req/day, 1M tokens/day — no credit card needed.
 MODEL     = "gemini-2.0-flash"
-_GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
 MAX_STEPS = 6
 
 # A transient per-minute limit clears in seconds; if honoring Retry-After would
@@ -253,34 +252,125 @@ def _next_wait(waited: float, retry_after: float | None,
     return wait
 
 
-def _gemini_llm(api_key: str | None = None, model: str = MODEL, *, client=None, sleep=time.sleep):
-    """OpenAI-compatible client pointed at Google's Gemini endpoint.
-    Free tier: gemini-2.0-flash @ 1,500 req/day, 1M tokens/day."""
-    client = client or OpenAI(api_key=api_key, base_url=_GEMINI_BASE_URL)
+def _oai_tools_to_genai(tool_schemas: list):
+    """Convert OpenAI-style tool schemas to google.generativeai FunctionDeclarations."""
+    decls = []
+    for s in tool_schemas:
+        fn = s["function"]
+        props = {
+            k: genai.protos.Schema(
+                type_=genai.protos.Type.STRING,
+                description=v.get("description", ""),
+            )
+            for k, v in fn["parameters"].get("properties", {}).items()
+        }
+        decls.append(genai.protos.FunctionDeclaration(
+            name=fn["name"],
+            description=fn["description"],
+            parameters=genai.protos.Schema(
+                type_=genai.protos.Type.OBJECT,
+                properties=props,
+                required=fn["parameters"].get("required", []),
+            ),
+        ))
+    return [genai.protos.Tool(function_declarations=decls)]
+
+
+def _oai_messages_to_genai(messages: list[dict]):
+    """Convert OpenAI-style messages → (system_instruction, google_history).
+    Tracks tool_call_id → function_name so tool-result parts can name themselves."""
+    system: str | None = None
+    history: list = []
+    tc_id_to_name: dict[str, str] = {}
+
+    for msg in messages:
+        role = msg["role"]
+        if role == "system":
+            system = msg["content"]
+        elif role == "user":
+            history.append(genai.protos.Content(
+                role="user",
+                parts=[genai.protos.Part(text=msg.get("content") or "")],
+            ))
+        elif role == "assistant":
+            parts = []
+            if msg.get("content"):
+                parts.append(genai.protos.Part(text=msg["content"]))
+            for tc in (msg.get("tool_calls") or []):
+                name = tc["function"]["name"]
+                tc_id_to_name[tc["id"]] = name
+                try:
+                    args = json.loads(tc["function"].get("arguments") or "{}")
+                except json.JSONDecodeError:
+                    args = {}
+                parts.append(genai.protos.Part(
+                    function_call=genai.protos.FunctionCall(name=name, args=args),
+                ))
+            if parts:
+                history.append(genai.protos.Content(role="model", parts=parts))
+        elif role == "tool":
+            name = tc_id_to_name.get(msg.get("tool_call_id", ""), "tool")
+            try:
+                result = json.loads(msg.get("content") or "{}")
+            except json.JSONDecodeError:
+                result = {"text": msg.get("content", "")}
+            history.append(genai.protos.Content(
+                role="user",
+                parts=[genai.protos.Part(
+                    function_response=genai.protos.FunctionResponse(
+                        name=name, response=result,
+                    ),
+                )],
+            ))
+    return system, history
+
+
+def _gemini_llm(api_key: str | None = None, model: str = MODEL, *, sleep=time.sleep):
+    """google-generativeai client for Gemini 2.0 Flash.
+    Free tier: 1,500 req/day, 1M tokens/day — no credit card needed."""
+    genai.configure(api_key=api_key)
 
     def llm_fn(messages: list[dict], tool_schemas: list) -> LLMResponse:
-        resp = None
+        system, history = _oai_messages_to_genai(messages)
+        tools = _oai_tools_to_genai(tool_schemas)
+
+        mdl = genai.GenerativeModel(
+            model_name=model,
+            system_instruction=system,
+            tools=tools,
+            generation_config=genai.GenerationConfig(temperature=0.1),
+        )
+        # All messages except the last go into history; last is sent as the new turn.
+        chat = mdl.start_chat(history=history[:-1] if len(history) > 1 else [])
+        last = history[-1] if history else genai.protos.Content(
+            role="user", parts=[genai.protos.Part(text="")]
+        )
+
         waited = 0.0
+        resp = None
         while resp is None:
             try:
-                resp = client.chat.completions.create(
-                    model=model, messages=messages, tools=tool_schemas,
-                    tool_choice="auto", temperature=0.1,
-                )
-            except RateLimitError as exc:
-                wait = _next_wait(waited, _retry_after_seconds(exc))
-                sleep(wait)
-                waited += wait
+                resp = chat.send_message(last)
+            except Exception as exc:
+                s = str(exc)
+                if "429" in s or "RESOURCE_EXHAUSTED" in s or "quota" in s.lower():
+                    wait = _next_wait(waited, _retry_after_seconds(exc))
+                    sleep(wait)
+                    waited += wait
+                else:
+                    raise
 
-        msg = resp.choices[0].message
         calls: list[ToolCall] = []
-        for tc in (msg.tool_calls or []):
-            try:
-                args = json.loads(tc.function.arguments or "{}")
-            except json.JSONDecodeError:
-                args = {}
-            calls.append(ToolCall(id=tc.id, name=tc.function.name, arguments=args))
-        return LLMResponse(content=msg.content, tool_calls=calls)
+        content_text: str | None = None
+        for part in resp.parts:
+            fc = getattr(part, "function_call", None)
+            if fc and getattr(fc, "name", None):
+                calls.append(ToolCall(
+                    id=f"call_{len(calls)}", name=fc.name, arguments=dict(fc.args),
+                ))
+            elif getattr(part, "text", None):
+                content_text = (content_text or "") + part.text
+        return LLMResponse(content=content_text, tool_calls=calls)
 
     return llm_fn
 

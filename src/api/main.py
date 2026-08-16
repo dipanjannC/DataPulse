@@ -17,7 +17,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from openai import APIConnectionError, APIStatusError
+from google.api_core.exceptions import GoogleAPIError as APIConnectionError, GoogleAPIError as APIStatusError
 from neo4j import GraphDatabase
 from neo4j.exceptions import AuthError, ConfigurationError, ServiceUnavailable, SessionExpired
 from pydantic import BaseModel
