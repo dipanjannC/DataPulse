@@ -27,7 +27,7 @@ from src.metadata.utils import get_domains, load_schema
 
 # Gemini 2.0 Flash via google-generativeai SDK (official, not beta endpoint).
 # Free tier: 1,500 req/day, 1M tokens/day — no credit card needed.
-MODEL     = "gemini-2.0-flash"
+MODEL     = "gemini-1.5-flash"
 MAX_STEPS = 6
 
 # A transient per-minute limit clears in seconds; if honoring Retry-After would
