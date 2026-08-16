@@ -230,19 +230,33 @@ def run_scout(question: str, graphos: dict, db_path: Path) -> dict:
 # Agent 4 — FORGE  (SQL Writer Agent)
 # ─────────────────────────────────────────────────────────────────────────────
 
-def run_forge(question: str, graphos: dict, api_key: str) -> dict:
-    """Generate a SQLite-compatible SELECT query from schema context."""
+def run_forge(question: str, graphos: dict, scout: dict, api_key: str) -> dict:
+    """Generate a SQLite-compatible SELECT query from schema context.
+
+    Uses SCOUT's live column discovery so column names are exact SQLite names,
+    not KG-metadata guesses that may diverge from the real DDL.
+    """
     t0 = time.perf_counter()
 
-    tables_list = graphos.get("tables_found",  [])
-    joins       = graphos.get("joins_found",   [])
-    metrics     = graphos.get("metrics_found", [])
+    tables_list        = graphos.get("tables_found",   [])
+    joins              = graphos.get("joins_found",    [])
+    metrics            = graphos.get("metrics_found",  [])
+    columns_discovered = scout.get("columns_discovered", {})   # ← from SCOUT
 
-    # Build readable schema summary for the prompt
-    schema_lines = [
-        f"  - {t['name']} [{t.get('domain','')}]: {t.get('description','')}"
-        for t in tables_list[:8]
-    ]
+    # Build schema with REAL column names from SQLite PRAGMA (SCOUT's discovery)
+    schema_lines = []
+    for t in tables_list[:8]:
+        tname = t["name"]
+        cols  = columns_discovered.get(tname, [])
+        if cols:
+            col_str = ", ".join(
+                f"{c['name']} ({c['type']})" + (" [PK]" if c.get("pk") else "")
+                for c in cols
+            )
+            schema_lines.append(f"  - {tname} [{t.get('domain','')}] — columns: {col_str}")
+        else:
+            schema_lines.append(f"  - {tname} [{t.get('domain','')}]: {t.get('description','')}")
+
     join_lines = [
         f"  - {j['from_table']}.{j['from_column']} = {j['to_table']}.{j['to_column']}"
         for j in joins[:6]
@@ -258,15 +272,16 @@ def run_forge(question: str, graphos: dict, api_key: str) -> dict:
 
     client = Groq(api_key=api_key)
     prompt = (
-        f'You are a SQLite expert. Write a read-only SQL query for this question.\n\n'
+        f'You are a SQLite expert. Write a precise read-only SQL query for this question.\n\n'
         f'Question: "{question}"\n\n'
-        f'Available tables:\n{schema_text}\n\n'
+        f'Available tables (with EXACT column names from the database):\n{schema_text}\n\n'
         f'Available join keys:\n{join_text}\n\n'
         f'Canonical metrics:\n{metric_text}\n\n'
-        'Rules:\n'
+        'CRITICAL RULES:\n'
+        '- Use ONLY the exact column names listed above — do NOT invent column names\n'
         '- SQLite syntax only (strftime, not TO_DATE/EXTRACT)\n'
         '- Only SELECT or WITH…SELECT — no DML\n'
-        '- Use aliases on aggregations\n'
+        '- Alias all aggregations (e.g. SUM(...) AS total_revenue)\n'
         '- Add LIMIT 100 if returning many rows\n'
         '- Use only tables listed above\n\n'
         'Output ONLY the SQL query. No prose, no markdown fences.'
@@ -399,22 +414,24 @@ def run_oracle(
     sql:      str,
     db_path:  Path,
     api_key:  str,
-    sentinel_valid: bool,
+    sentinel_valid: bool,   # informational only — ORACLE always attempts execution  # noqa: ARG001
 ) -> dict:
-    """Execute the SQL and translate the result into a natural-language answer."""
+    """Execute the SQL and translate the result into a natural-language answer.
+
+    ORACLE always attempts execution even when SENTINEL flagged a warning — the
+    real SQLite error (if any) is reported back directly.  Only an empty SQL
+    string stops execution.
+    """
     t0 = time.perf_counter()
 
-    if not sql or not sentinel_valid:
+    if not sql.strip():
         duration_ms = int((time.perf_counter() - t0) * 1000)
         return {
             "executed":    False,
             "rows":        [],
             "columns":     [],
             "row_count":   0,
-            "answer":      (
-                "A valid SQL query could not be generated for this question. "
-                "Try rephrasing or checking that the data domain matches your query."
-            ),
+            "answer":      "FORGE produced no SQL — try rephrasing the question.",
             "grounded":    False,
             "duration_ms": duration_ms,
             "accuracy":    0,
@@ -567,7 +584,7 @@ def run_pipeline(
     # ── FORGE ─────────────────────────────────────────────────────────────────
     yield _emit("FORGE", "active", message="Writing the SQL query…")
     try:
-        results["forge"] = run_forge(question, results["graphos"], api_key)
+        results["forge"] = run_forge(question, results["graphos"], results["scout"], api_key)
         yield _emit("FORGE", "done",
                     result=results["forge"],
                     accuracy=results["forge"]["accuracy"])
