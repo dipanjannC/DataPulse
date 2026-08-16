@@ -1,4 +1,4 @@
-"""Step 4 — Sentence-transformer embedding pipeline.
+"""Step 4 — Embedding pipeline (fastembed / ONNX backend).
 
 Embeds three levels of schema metadata so the retriever can route and seed at
 the right granularity:
@@ -9,24 +9,30 @@ the right granularity:
 Each returns a dict keyed by the node's identity → List[float] (384-dim,
 L2-normalised). Works with both the v1 flat schema and the v2 multi-domain
 schema.
+
+fastembed replaces sentence-transformers: same all-MiniLM-L6-v2 model exported
+to ONNX, ~80 MB RAM vs ~600 MB for the PyTorch version — fits on free-tier hosts.
+Vectors are L2-normalised by default; compatible with the existing Neo4j indexes.
 """
 from __future__ import annotations
 
-from pathlib import Path
-
-from sentence_transformers import SentenceTransformer
+from fastembed import TextEmbedding
 
 from src.metadata.utils import get_all_tables, get_domains, load_schema
 
+# Short name kept for KG freshness-stamp compatibility (stored in Neo4j :Meta node).
 MODEL_NAME = "all-MiniLM-L6-v2"
+# Full HuggingFace model ID used by fastembed's ONNX model registry.
+_FASTEMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
-_model: SentenceTransformer | None = None
+_model: TextEmbedding | None = None
 
 
-def _get_model() -> SentenceTransformer:
+def _get_model() -> TextEmbedding:
     global _model
     if _model is None:
-        _model = SentenceTransformer(MODEL_NAME)
+        # Downloads the ONNX model on first call (~45 MB), then caches locally.
+        _model = TextEmbedding(_FASTEMBED_MODEL)
     return _model
 
 
@@ -49,8 +55,8 @@ def _domain_text(domain: dict) -> str:
 def _encode(texts: list[str]) -> list[list[float]]:
     if not texts:
         return []
-    vectors = _get_model().encode(texts, normalize_embeddings=True, show_progress_bar=True)
-    return [v.tolist() for v in vectors]
+    # fastembed.embed() returns a generator of numpy arrays, L2-normalised by default.
+    return [v.tolist() for v in _get_model().embed(texts)]
 
 
 def build_column_embeddings(schema: dict | None = None) -> dict[str, list[float]]:
@@ -92,7 +98,7 @@ def build_domain_embeddings(schema: dict | None = None) -> dict[str, list[float]
 
 def embed_query(question: str) -> list[float]:
     """Embed a natural-language question for vector similarity search."""
-    return _get_model().encode([question], normalize_embeddings=True)[0].tolist()
+    return next(_get_model().embed([question])).tolist()
 
 
 if __name__ == "__main__":
