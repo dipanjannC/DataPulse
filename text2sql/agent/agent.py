@@ -278,81 +278,74 @@ def _oai_tools_to_genai(tool_schemas: list):
     return [genai.protos.Tool(function_declarations=decls)]
 
 
-def _oai_messages_to_genai(messages: list[dict]):
-    """Convert OpenAI-style messages → (system_instruction, google_history).
-    Tracks tool_call_id → function_name so tool-result parts can name themselves."""
-    system: str | None = None
-    history: list = []
-    tc_id_to_name: dict[str, str] = {}
+def _gemini_llm(api_key: str | None = None, model: str = MODEL, *, sleep=time.sleep):
+    """google-generativeai client with a persistent chat session per agent run.
 
-    for msg in messages:
-        role = msg["role"]
-        if role == "system":
-            system = msg["content"]
-        elif role == "user":
-            history.append(genai.protos.Content(
-                role="user",
-                parts=[genai.protos.Part(text=msg.get("content") or "")],
-            ))
-        elif role == "assistant":
-            parts = []
-            if msg.get("content"):
-                parts.append(genai.protos.Part(text=msg["content"]))
-            for tc in (msg.get("tool_calls") or []):
-                name = tc["function"]["name"]
-                tc_id_to_name[tc["id"]] = name
+    Keeps chat.history alive across ReAct turns so Gemini's thought_signatures
+    (emitted by thinking-enabled models like gemini-flash-latest) are preserved
+    automatically — no manual round-trip conversion that would strip them out.
+    Free tier: 1,500 req/day, 1M tokens/day.
+    """
+    genai.configure(api_key=api_key)
+    # Mutable boxes so the inner function can update state across calls.
+    _chat: list     = [None]   # genai.ChatSession, created on first call
+    _sent:  list    = [0]      # count of non-system messages already in chat.history
+
+    def llm_fn(messages: list[dict], tool_schemas: list) -> LLMResponse:
+        non_sys = [m for m in messages if m["role"] != "system"]
+
+        # ── first call in this agent run: spin up a fresh session ──────────
+        if _chat[0] is None:
+            system = next((m["content"] for m in messages if m["role"] == "system"), None)
+            mdl = genai.GenerativeModel(
+                model_name=model,
+                system_instruction=system,
+                tools=_oai_tools_to_genai(tool_schemas),
+                generation_config=genai.GenerationConfig(temperature=0.1),
+            )
+            _chat[0] = mdl.start_chat()
+
+        # ── build tool_call_id → function_name map from all history ─────────
+        tc_id_to_name: dict[str, str] = {}
+        for msg in non_sys:
+            if msg["role"] == "assistant":
+                for tc in (msg.get("tool_calls") or []):
+                    tc_id_to_name[tc["id"]] = tc["function"]["name"]
+
+        # ── collect only the NEW messages since last call ────────────────────
+        # "assistant" turns are already live in chat.history — skip them.
+        new_msgs = non_sys[_sent[0]:]
+        user_text: str | None = None
+        fn_parts:  list       = []
+
+        for msg in new_msgs:
+            if msg["role"] == "user":
+                user_text = msg.get("content") or ""
+            elif msg["role"] == "tool":
+                name = tc_id_to_name.get(msg.get("tool_call_id", ""), "tool")
                 try:
-                    args = json.loads(tc["function"].get("arguments") or "{}")
+                    result = json.loads(msg.get("content") or "{}")
                 except json.JSONDecodeError:
-                    args = {}
-                parts.append(genai.protos.Part(
-                    function_call=genai.protos.FunctionCall(name=name, args=args),
-                ))
-            if parts:
-                history.append(genai.protos.Content(role="model", parts=parts))
-        elif role == "tool":
-            name = tc_id_to_name.get(msg.get("tool_call_id", ""), "tool")
-            try:
-                result = json.loads(msg.get("content") or "{}")
-            except json.JSONDecodeError:
-                result = {"text": msg.get("content", "")}
-            history.append(genai.protos.Content(
-                role="user",
-                parts=[genai.protos.Part(
+                    result = {"text": msg.get("content", "")}
+                fn_parts.append(genai.protos.Part(
                     function_response=genai.protos.FunctionResponse(
                         name=name, response=result,
                     ),
-                )],
-            ))
-    return system, history
+                ))
 
+        if fn_parts:
+            send = genai.protos.Content(role="user", parts=fn_parts)
+        elif user_text is not None:
+            send = user_text
+        else:
+            return LLMResponse(content=None, tool_calls=[])
 
-def _gemini_llm(api_key: str | None = None, model: str = MODEL, *, sleep=time.sleep):
-    """google-generativeai client for Gemini 2.0 Flash.
-    Free tier: 1,500 req/day, 1M tokens/day — no credit card needed."""
-    genai.configure(api_key=api_key)
-
-    def llm_fn(messages: list[dict], tool_schemas: list) -> LLMResponse:
-        system, history = _oai_messages_to_genai(messages)
-        tools = _oai_tools_to_genai(tool_schemas)
-
-        mdl = genai.GenerativeModel(
-            model_name=model,
-            system_instruction=system,
-            tools=tools,
-            generation_config=genai.GenerationConfig(temperature=0.1),
-        )
-        # All messages except the last go into history; last is sent as the new turn.
-        chat = mdl.start_chat(history=history[:-1] if len(history) > 1 else [])
-        last = history[-1] if history else genai.protos.Content(
-            role="user", parts=[genai.protos.Part(text="")]
-        )
-
+        # ── send and retry on transient quota errors ─────────────────────────
         waited = 0.0
-        resp = None
+        resp   = None
         while resp is None:
             try:
-                resp = chat.send_message(last)
+                resp = _chat[0].send_message(send)
             except Exception as exc:
                 s = str(exc)
                 if "429" in s or "RESOURCE_EXHAUSTED" in s or "quota" in s.lower():
@@ -362,6 +355,9 @@ def _gemini_llm(api_key: str | None = None, model: str = MODEL, *, sleep=time.sl
                 else:
                     raise
 
+        _sent[0] = len(non_sys)   # advance the cursor past all processed messages
+
+        # ── parse response ───────────────────────────────────────────────────
         calls: list[ToolCall] = []
         content_text: str | None = None
         for part in resp.parts:
