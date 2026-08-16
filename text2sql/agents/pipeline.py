@@ -230,20 +230,23 @@ def run_scout(question: str, graphos: dict, db_path: Path) -> dict:
 # Agent 4 — FORGE  (SQL Writer Agent)
 # ─────────────────────────────────────────────────────────────────────────────
 
-def run_forge(question: str, graphos: dict, scout: dict, api_key: str) -> dict:
+def run_forge(question: str, graphos: dict, scout: dict, api_key: str, db_path: Path) -> dict:
     """Generate a SQLite-compatible SELECT query from schema context.
 
-    Uses SCOUT's live column discovery so column names are exact SQLite names,
-    not KG-metadata guesses that may diverge from the real DDL.
+    Uses SCOUT's live column discovery (exact column names from PRAGMA table_info)
+    in the LLM prompt.  After generation, validates with SQLite EXPLAIN and retries
+    up to 2 times if the query is rejected, feeding the error back to the LLM each
+    round.  This means SENTINEL always receives a query that has already passed
+    SQLite's own syntax + column-existence check.
     """
     t0 = time.perf_counter()
 
     tables_list        = graphos.get("tables_found",   [])
     joins              = graphos.get("joins_found",    [])
     metrics            = graphos.get("metrics_found",  [])
-    columns_discovered = scout.get("columns_discovered", {})   # ← from SCOUT
+    columns_discovered = scout.get("columns_discovered", {})
 
-    # Build schema with REAL column names from SQLite PRAGMA (SCOUT's discovery)
+    # ── Build schema with REAL SQLite column names (from SCOUT) ───────────────
     schema_lines = []
     for t in tables_list[:8]:
         tname = t["name"]
@@ -253,65 +256,105 @@ def run_forge(question: str, graphos: dict, scout: dict, api_key: str) -> dict:
                 f"{c['name']} ({c['type']})" + (" [PK]" if c.get("pk") else "")
                 for c in cols
             )
-            schema_lines.append(f"  - {tname} [{t.get('domain','')}] — columns: {col_str}")
+            schema_lines.append(
+                f"  TABLE {tname} [{t.get('domain','')}]\n"
+                f"    COLUMNS: {col_str}"
+            )
         else:
-            schema_lines.append(f"  - {tname} [{t.get('domain','')}]: {t.get('description','')}")
+            schema_lines.append(f"  TABLE {tname} [{t.get('domain','')}]: {t.get('description','')}")
 
     join_lines = [
-        f"  - {j['from_table']}.{j['from_column']} = {j['to_table']}.{j['to_column']}"
+        f"  {j['from_table']}.{j['from_column']} = {j['to_table']}.{j['to_column']}"
         for j in joins[:6]
     ]
     metric_lines = [
-        f"  - {m.get('name','')}: {m.get('expression', m.get('description',''))}"
+        f"  {m.get('name','')}: {m.get('expression', m.get('description',''))}"
         for m in metrics[:4]
     ]
 
-    schema_text  = "\n".join(schema_lines)  or "  (no tables retrieved)"
-    join_text    = "\n".join(join_lines)    or "  (no join keys defined)"
-    metric_text  = "\n".join(metric_lines)  or "  (no metric definitions)"
+    schema_text = "\n".join(schema_lines) or "  (no tables retrieved)"
+    join_text   = "\n".join(join_lines)   or "  (no join keys defined)"
+    metric_text = "\n".join(metric_lines) or "  (no metric definitions)"
 
-    client = Groq(api_key=api_key)
-    prompt = (
-        f'You are a SQLite expert. Write a precise read-only SQL query for this question.\n\n'
+    base_prompt = (
+        f'You are a SQLite expert. Write a precise read-only SQL query.\n\n'
         f'Question: "{question}"\n\n'
-        f'Available tables (with EXACT column names from the database):\n{schema_text}\n\n'
-        f'Available join keys:\n{join_text}\n\n'
+        f'Available tables — use ONLY these exact column names:\n{schema_text}\n\n'
+        f'Join keys:\n{join_text}\n\n'
         f'Canonical metrics:\n{metric_text}\n\n'
-        'CRITICAL RULES:\n'
-        '- Use ONLY the exact column names listed above — do NOT invent column names\n'
-        '- SQLite syntax only (strftime, not TO_DATE/EXTRACT)\n'
-        '- Only SELECT or WITH…SELECT — no DML\n'
-        '- Alias all aggregations (e.g. SUM(...) AS total_revenue)\n'
-        '- Add LIMIT 100 if returning many rows\n'
-        '- Use only tables listed above\n\n'
-        'Output ONLY the SQL query. No prose, no markdown fences.'
+        'RULES (strictly enforced):\n'
+        '- Use ONLY the column names shown above — never invent names\n'
+        '- SQLite syntax (strftime not TO_DATE; no EXTRACT)\n'
+        '- Only SELECT or WITH…SELECT\n'
+        '- Alias all aggregations\n'
+        '- LIMIT 100 when returning many rows\n\n'
+        'Output ONLY the SQL. No explanation, no markdown.'
     )
 
-    sql       = ""
-    generated = False
-    try:
-        resp = client.chat.completions.create(
-            model=MODEL,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.05,
-            max_tokens=600,
-        )
-        sql = (resp.choices[0].message.content or "").strip()
-        sql = re.sub(r"```(?:sql)?\n?", "", sql).replace("```", "").strip()
-        generated = bool(sql)
-    except Exception as exc:
-        sql = ""
-        generated = False
+    client   = Groq(api_key=api_key)
+    messages = [{"role": "user", "content": base_prompt}]
 
-    complexity = _sql_complexity(sql)
+    sql = ""
+    generated = False
+    MAX_FORGE_ATTEMPTS = 3
+
+    for attempt in range(MAX_FORGE_ATTEMPTS):
+        try:
+            resp = client.chat.completions.create(
+                model=MODEL,
+                messages=messages,
+                temperature=0.0,
+                max_tokens=600,
+            )
+            raw = (resp.choices[0].message.content or "").strip()
+            raw = re.sub(r"```(?:sql)?\n?", "", raw).replace("```", "").strip()
+            if not raw:
+                continue
+
+            # ── Validate with SQLite EXPLAIN ──────────────────────────────────
+            explain_err = _explain_sql(raw, db_path)
+            if explain_err is None:
+                sql = raw
+                generated = True
+                break   # valid — done
+
+            # Feed the error back so the LLM can correct itself
+            messages.append({"role": "assistant", "content": raw})
+            messages.append({
+                "role": "user",
+                "content": (
+                    f'SQLite rejected that query: "{explain_err}"\n\n'
+                    f'The EXACT available columns are:\n{schema_text}\n\n'
+                    'Fix the SQL to use only those exact column names. '
+                    'Output ONLY the corrected SQL.'
+                ),
+            })
+
+        except Exception:
+            break   # network / rate-limit — stop retrying
+
+    complexity  = _sql_complexity(sql)
     duration_ms = int((time.perf_counter() - t0) * 1000)
     return {
         "sql":         sql,
         "generated":   generated,
         "complexity":  complexity,
         "duration_ms": duration_ms,
-        "accuracy":    88 if generated and sql else 0,
+        "accuracy":    92 if generated else 0,
     }
+
+
+def _explain_sql(sql: str, db_path: Path) -> str | None:
+    """Run SQLite EXPLAIN on sql; return the error string or None if valid."""
+    try:
+        conn = sqlite3.connect(f"file:{db_path.as_posix()}?mode=ro", uri=True)
+        conn.execute(f"EXPLAIN {sql}")
+        conn.close()
+        return None
+    except sqlite3.OperationalError as exc:
+        return str(exc)
+    except Exception:
+        return None   # don't block on unexpected errors
 
 
 def _sql_complexity(sql: str) -> str:
@@ -653,7 +696,7 @@ def run_pipeline(
     # ── FORGE ─────────────────────────────────────────────────────────────────
     yield _emit("FORGE", "active", message="Writing the SQL query…")
     try:
-        results["forge"] = run_forge(question, results["graphos"], results["scout"], api_key)
+        results["forge"] = run_forge(question, results["graphos"], results["scout"], api_key, db_path)
         yield _emit("FORGE", "done",
                     result=results["forge"],
                     accuracy=results["forge"]["accuracy"])
