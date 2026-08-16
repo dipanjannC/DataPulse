@@ -3,8 +3,8 @@
 The loop is deliberately dependency-injected: `run_agent` takes an `llm_fn`
 (messages, tool_schemas) -> LLMResponse and a `tool_fns` registry, so the
 iteration / trace / guard logic is unit-tested with a scripted fake model and
-fake tools — no live Groq/Neo4j/SQLite. `answer_question` wires the real Groq
-client and the KG-backed tools.
+fake tools — no live Gemini/Neo4j/SQLite. `answer_question` wires the real
+Gemini client (via OpenAI-compatible endpoint) and the KG-backed tools.
 
 The KG earns its keep here as the tool substrate: the model discovers schema,
 join paths, and canonical metrics by *calling tools*, so the reasoning is an
@@ -18,14 +18,17 @@ import time
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from groq import BadRequestError, Groq, RateLimitError
+from openai import APIConnectionError, APIStatusError, OpenAI, RateLimitError
 
 from text2sql.agent import tools as _tools
 from text2sql.agent.prompt import build_system_prompt
 from src.knowledge_graph.retriever import _get_graph
 from src.metadata.utils import get_domains, load_schema
 
-MODEL     = "llama-3.3-70b-versatile"
+# Gemini 2.0 Flash via Google's OpenAI-compatible endpoint.
+# Free tier: 1,500 req/day, 1M tokens/day — no credit card needed.
+MODEL     = "gemini-2.0-flash"
+_GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
 MAX_STEPS = 6
 
 # A transient per-minute limit clears in seconds; if honoring Retry-After would
@@ -205,7 +208,7 @@ def _summarize(tool: str, result: dict) -> str:
     return str(result)[:200]
 
 
-# ── real wiring (Groq + KG-backed tools) ────────────────────────────────────────
+# ── real wiring (Gemini + KG-backed tools) ──────────────────────────────────────
 
 def _build_tools(graph, db_path: str | Path) -> dict:
     return {
@@ -213,27 +216,6 @@ def _build_tools(graph, db_path: str | Path) -> dict:
         "sample_values":      lambda table, column, limit=20: _tools.sample_values(table, column, db_path, limit),
         "run_sql":            lambda sql: _tools.run_sql(sql, db_path),
     }
-
-
-# Llama on Groq intermittently emits its native tool-call token instead of a
-# structured call, which Groq rejects with `tool_use_failed`. The intended call
-# is still in `failed_generation`, so we recover it rather than crash the run.
-_FUNC_TOKEN = re.compile(r"<function=([A-Za-z_]\w*)\s*(\{.*?\})\s*</function>", re.DOTALL)
-
-
-def _recover_tool_calls(exc: BadRequestError) -> list[ToolCall]:
-    body = getattr(exc, "body", None)
-    failed = ""
-    if isinstance(body, dict):
-        failed = (body.get("error") or {}).get("failed_generation") or ""
-    calls: list[ToolCall] = []
-    for i, (name, raw_args) in enumerate(_FUNC_TOKEN.findall(failed)):
-        try:
-            args = json.loads(raw_args)
-        except json.JSONDecodeError:
-            continue
-        calls.append(ToolCall(id=f"recovered-{i}", name=name, arguments=args))
-    return calls
 
 
 _RETRY_AFTER_MSG = re.compile(r"try again in\s+([0-9.]+)\s*s", re.IGNORECASE)
@@ -271,8 +253,10 @@ def _next_wait(waited: float, retry_after: float | None,
     return wait
 
 
-def _groq_llm(api_key: str | None = None, model: str = MODEL, *, client=None, sleep=time.sleep):
-    client = client or Groq(api_key=api_key)
+def _gemini_llm(api_key: str | None = None, model: str = MODEL, *, client=None, sleep=time.sleep):
+    """OpenAI-compatible client pointed at Google's Gemini endpoint.
+    Free tier: gemini-2.0-flash @ 1,500 req/day, 1M tokens/day."""
+    client = client or OpenAI(api_key=api_key, base_url=_GEMINI_BASE_URL)
 
     def llm_fn(messages: list[dict], tool_schemas: list) -> LLMResponse:
         resp = None
@@ -284,14 +268,9 @@ def _groq_llm(api_key: str | None = None, model: str = MODEL, *, client=None, sl
                     tool_choice="auto", temperature=0.1,
                 )
             except RateLimitError as exc:
-                wait = _next_wait(waited, _retry_after_seconds(exc))  # raises on daily quota
+                wait = _next_wait(waited, _retry_after_seconds(exc))
                 sleep(wait)
                 waited += wait
-            except BadRequestError as exc:
-                recovered = _recover_tool_calls(exc)
-                if recovered:
-                    return LLMResponse(content=None, tool_calls=recovered)
-                raise
 
         msg = resp.choices[0].message
         calls: list[ToolCall] = []
@@ -309,7 +288,7 @@ def _groq_llm(api_key: str | None = None, model: str = MODEL, *, client=None, sl
 def answer_question(
     question: str,
     *,
-    groq_key: str,
+    api_key: str,
     uri: str,
     user: str,
     password: str,
@@ -324,7 +303,7 @@ def answer_question(
     system_prompt = system_prompt if system_prompt is not None else build_system_prompt(domains)
     graph         = _get_graph(uri, user, password)
     tool_fns      = _build_tools(graph, db_path)
-    llm_fn        = _groq_llm(groq_key, model)
+    llm_fn        = _gemini_llm(api_key, model)
     return run_agent(
         question, llm_fn=llm_fn, tool_fns=tool_fns,
         system_prompt=system_prompt, max_steps=max_steps,
