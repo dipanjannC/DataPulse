@@ -406,6 +406,63 @@ def run_sentinel(sql: str, db_path: Path, tables_in_context: list[str]) -> dict:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+# SQL auto-correction helper (used by ORACLE on first-attempt failure)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _get_actual_schema(db_path: Path, tables: list[str]) -> str:
+    """Return a compact DDL-like schema string for the given tables."""
+    lines: list[str] = []
+    try:
+        conn = sqlite3.connect(f"file:{db_path.as_posix()}?mode=ro", uri=True)
+        conn.row_factory = sqlite3.Row
+        for tname in tables:
+            try:
+                cols = conn.execute(f'PRAGMA table_info("{tname}")').fetchall()
+                col_str = ", ".join(
+                    c["name"] + " " + c["type"] + (" PK" if c["pk"] else "")
+                    for c in cols
+                )
+                lines.append(f"  {tname}({col_str})")
+            except Exception:
+                pass
+        conn.close()
+    except Exception:
+        pass
+    return "\n".join(lines) or "  (schema unavailable)"
+
+
+def _fix_sql(sql: str, error: str, db_path: Path, api_key: str, question: str) -> str:
+    """Ask Groq to repair a failing SQL query given the SQLite error and real schema."""
+    # Extract table names mentioned in the SQL to fetch their real schema
+    mentioned = re.findall(r"\b(?:FROM|JOIN)\s+(\w+)", sql, re.IGNORECASE)
+    real_schema = _get_actual_schema(db_path, list(dict.fromkeys(mentioned)))
+
+    try:
+        client = Groq(api_key=api_key)
+        resp = client.chat.completions.create(
+            model=MODEL,
+            messages=[{
+                "role": "user",
+                "content": (
+                    f'The following SQLite query failed with error: "{error}"\n\n'
+                    f'Failing SQL:\n{sql}\n\n'
+                    f'Actual table schemas (exact column names):\n{real_schema}\n\n'
+                    f'Original question: "{question}"\n\n'
+                    'Fix the SQL so it uses only the exact column names listed above. '
+                    'Output ONLY the corrected SQL query. No prose, no markdown fences.'
+                ),
+            }],
+            temperature=0.0,
+            max_tokens=500,
+        )
+        fixed = (resp.choices[0].message.content or "").strip()
+        fixed = re.sub(r"```(?:sql)?\n?", "", fixed).replace("```", "").strip()
+        return fixed
+    except Exception:
+        return ""
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # Agent 6 — ORACLE  (Executor & Natural-Language Response Agent)
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -437,12 +494,20 @@ def run_oracle(
             "accuracy":    0,
         }
 
-    # ── Execute ────────────────────────────────────────────────────────────────
+    # ── Execute (with one auto-correction retry) ──────────────────────────────
     exec_result = _run_sql(sql, db_path)
-    rows       = exec_result.get("rows",     [])
-    columns    = exec_result.get("columns",  [])
-    row_count  = exec_result.get("row_count", len(rows))
-    sql_error  = exec_result.get("error")
+    sql_error   = exec_result.get("error")
+
+    # If SQLite raised an error (e.g. bad column name from FORGE), ask the LLM
+    # to fix the SQL using the real schema and retry once.
+    if sql_error:
+        fixed = _fix_sql(sql, sql_error, db_path, api_key, question)
+        if fixed and fixed != sql:
+            retry = _run_sql(fixed, db_path)
+            if not retry.get("error"):
+                sql        = fixed        # show the corrected SQL downstream
+                exec_result = retry
+                sql_error   = None
 
     if sql_error:
         duration_ms = int((time.perf_counter() - t0) * 1000)
@@ -457,6 +522,10 @@ def run_oracle(
             "duration_ms": duration_ms,
             "accuracy":    15,
         }
+
+    rows      = exec_result.get("rows",     [])
+    columns   = exec_result.get("columns",  [])
+    row_count = exec_result.get("row_count", len(rows))
 
     # ── Translate to natural language ─────────────────────────────────────────
     preview  = rows[:5]
