@@ -18,18 +18,15 @@ import time
 from dataclasses import dataclass, field
 from pathlib import Path
 
-import os
-
-import google.generativeai as genai
+from groq import BadRequestError, Groq, RateLimitError
 
 from text2sql.agent import tools as _tools
 from text2sql.agent.prompt import build_system_prompt
 from src.knowledge_graph.retriever import _get_graph
 from src.metadata.utils import get_domains, load_schema
 
-# Gemini 2.0 Flash via google-generativeai SDK (official, not beta endpoint).
-# Free tier: 1,500 req/day, 1M tokens/day — no credit card needed.
-MODEL     = os.getenv("GEMINI_MODEL", "gemini-flash-latest")
+# Groq LPU inference — free tier: 14,400 req/day, fastest available.
+MODEL     = "llama-3.3-70b-versatile"
 MAX_STEPS = 6
 
 # A transient per-minute limit clears in seconds; if honoring Retry-After would
@@ -254,121 +251,58 @@ def _next_wait(waited: float, retry_after: float | None,
     return wait
 
 
-def _oai_tools_to_genai(tool_schemas: list):
-    """Convert OpenAI-style tool schemas to google.generativeai FunctionDeclarations."""
-    decls = []
-    for s in tool_schemas:
-        fn = s["function"]
-        props = {
-            k: genai.protos.Schema(
-                type_=genai.protos.Type.STRING,
-                description=v.get("description", ""),
-            )
-            for k, v in fn["parameters"].get("properties", {}).items()
-        }
-        decls.append(genai.protos.FunctionDeclaration(
-            name=fn["name"],
-            description=fn["description"],
-            parameters=genai.protos.Schema(
-                type_=genai.protos.Type.OBJECT,
-                properties=props,
-                required=fn["parameters"].get("required", []),
-            ),
-        ))
-    return [genai.protos.Tool(function_declarations=decls)]
+# LLaMA on Groq intermittently emits its native tool-call token instead of a
+# structured call, which Groq rejects with `tool_use_failed`. The intended call
+# is still in `failed_generation`, so we recover it rather than crash the run.
+_FUNC_TOKEN = re.compile(r"<function=([A-Za-z_]\w*)\s*(\{.*?\})\s*</function>", re.DOTALL)
 
 
-def _gemini_llm(api_key: str | None = None, model: str = MODEL, *, sleep=time.sleep):
-    """google-generativeai client with a persistent chat session per agent run.
+def _recover_tool_calls(exc: BadRequestError) -> list[ToolCall]:
+    body = getattr(exc, "body", None)
+    failed = ""
+    if isinstance(body, dict):
+        failed = (body.get("error") or {}).get("failed_generation") or ""
+    calls: list[ToolCall] = []
+    for i, (name, raw_args) in enumerate(_FUNC_TOKEN.findall(failed)):
+        try:
+            args = json.loads(raw_args)
+        except json.JSONDecodeError:
+            continue
+        calls.append(ToolCall(id=f"recovered-{i}", name=name, arguments=args))
+    return calls
 
-    Keeps chat.history alive across ReAct turns so Gemini's thought_signatures
-    (emitted by thinking-enabled models like gemini-flash-latest) are preserved
-    automatically — no manual round-trip conversion that would strip them out.
-    Free tier: 1,500 req/day, 1M tokens/day.
-    """
-    genai.configure(api_key=api_key)
-    # Mutable boxes so the inner function can update state across calls.
-    _chat: list     = [None]   # genai.ChatSession, created on first call
-    _sent:  list    = [0]      # count of non-system messages already in chat.history
+
+def _groq_llm(api_key: str | None = None, model: str = MODEL, *, client=None, sleep=time.sleep):
+    client = client or Groq(api_key=api_key)
 
     def llm_fn(messages: list[dict], tool_schemas: list) -> LLMResponse:
-        non_sys = [m for m in messages if m["role"] != "system"]
-
-        # ── first call in this agent run: spin up a fresh session ──────────
-        if _chat[0] is None:
-            system = next((m["content"] for m in messages if m["role"] == "system"), None)
-            mdl = genai.GenerativeModel(
-                model_name=model,
-                system_instruction=system,
-                tools=_oai_tools_to_genai(tool_schemas),
-                generation_config=genai.GenerationConfig(temperature=0.1),
-            )
-            _chat[0] = mdl.start_chat()
-
-        # ── build tool_call_id → function_name map from all history ─────────
-        tc_id_to_name: dict[str, str] = {}
-        for msg in non_sys:
-            if msg["role"] == "assistant":
-                for tc in (msg.get("tool_calls") or []):
-                    tc_id_to_name[tc["id"]] = tc["function"]["name"]
-
-        # ── collect only the NEW messages since last call ────────────────────
-        # "assistant" turns are already live in chat.history — skip them.
-        new_msgs = non_sys[_sent[0]:]
-        user_text: str | None = None
-        fn_parts:  list       = []
-
-        for msg in new_msgs:
-            if msg["role"] == "user":
-                user_text = msg.get("content") or ""
-            elif msg["role"] == "tool":
-                name = tc_id_to_name.get(msg.get("tool_call_id", ""), "tool")
-                try:
-                    result = json.loads(msg.get("content") or "{}")
-                except json.JSONDecodeError:
-                    result = {"text": msg.get("content", "")}
-                fn_parts.append(genai.protos.Part(
-                    function_response=genai.protos.FunctionResponse(
-                        name=name, response=result,
-                    ),
-                ))
-
-        if fn_parts:
-            send = genai.protos.Content(role="user", parts=fn_parts)
-        elif user_text is not None:
-            send = user_text
-        else:
-            return LLMResponse(content=None, tool_calls=[])
-
-        # ── send and retry on transient quota errors ─────────────────────────
+        resp = None
         waited = 0.0
-        resp   = None
         while resp is None:
             try:
-                resp = _chat[0].send_message(send)
-            except Exception as exc:
-                s = str(exc)
-                if "429" in s or "RESOURCE_EXHAUSTED" in s or "quota" in s.lower():
-                    wait = _next_wait(waited, _retry_after_seconds(exc))
-                    sleep(wait)
-                    waited += wait
-                else:
-                    raise
+                resp = client.chat.completions.create(
+                    model=model, messages=messages, tools=tool_schemas,
+                    tool_choice="auto", temperature=0.1,
+                )
+            except RateLimitError as exc:
+                wait = _next_wait(waited, _retry_after_seconds(exc))
+                sleep(wait)
+                waited += wait
+            except BadRequestError as exc:
+                recovered = _recover_tool_calls(exc)
+                if recovered:
+                    return LLMResponse(content=None, tool_calls=recovered)
+                raise
 
-        _sent[0] = len(non_sys)   # advance the cursor past all processed messages
-
-        # ── parse response ───────────────────────────────────────────────────
+        msg = resp.choices[0].message
         calls: list[ToolCall] = []
-        content_text: str | None = None
-        for part in resp.parts:
-            fc = getattr(part, "function_call", None)
-            if fc and getattr(fc, "name", None):
-                calls.append(ToolCall(
-                    id=f"call_{len(calls)}", name=fc.name, arguments=dict(fc.args),
-                ))
-            elif getattr(part, "text", None):
-                content_text = (content_text or "") + part.text
-        return LLMResponse(content=content_text, tool_calls=calls)
+        for tc in (msg.tool_calls or []):
+            try:
+                args = json.loads(tc.function.arguments or "{}")
+            except json.JSONDecodeError:
+                args = {}
+            calls.append(ToolCall(id=tc.id, name=tc.function.name, arguments=args))
+        return LLMResponse(content=msg.content, tool_calls=calls)
 
     return llm_fn
 
@@ -391,7 +325,7 @@ def answer_question(
     system_prompt = system_prompt if system_prompt is not None else build_system_prompt(domains)
     graph         = _get_graph(uri, user, password)
     tool_fns      = _build_tools(graph, db_path)
-    llm_fn        = _gemini_llm(api_key, model)
+    llm_fn        = _groq_llm(api_key, model)
     return run_agent(
         question, llm_fn=llm_fn, tool_fns=tool_fns,
         system_prompt=system_prompt, max_steps=max_steps,

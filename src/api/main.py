@@ -17,7 +17,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from google.api_core.exceptions import GoogleAPIError as APIConnectionError, GoogleAPIError as APIStatusError
+from groq import APIConnectionError, APIStatusError
 from neo4j import GraphDatabase
 from neo4j.exceptions import AuthError, ConfigurationError, ServiceUnavailable, SessionExpired
 from pydantic import BaseModel
@@ -225,10 +225,10 @@ _KG_DOWN  = (ServiceUnavailable, SessionExpired, AuthError, ConfigurationError)
 _LLM_DOWN = (APIConnectionError, APIStatusError)
 
 _FRIENDLY = {
-    "config":          "DataPulse isn't fully configured on the server. The Neo4j or Gemini credentials are missing. Add them to the server's .env and restart.",
+    "config":          "DataPulse isn't fully configured on the server. The Neo4j or Groq credentials are missing. Add them to the server's .env and restart.",
     "kg_unavailable":  "Can't reach the knowledge graph (Neo4j) right now. It may be paused or unreachable. Check the connection and try again in a moment.",
-    "llm_unavailable": "Can't reach the language model (Gemini) right now. It may be down, timing out, or the API key may be invalid. Please try again shortly.",
-    "rate_limited":    "The language model (Gemini free tier) is rate-limited right now. Wait for the quota window to reset and try again. This is a usage limit, not a bug.",
+    "llm_unavailable": "Can't reach the language model (Groq) right now. It may be down, timing out, or the API key may be invalid. Please try again shortly.",
+    "rate_limited":    "The language model (Groq free tier) is rate-limited right now. Wait a minute and try again.",
     "internal":        "Something went wrong while answering your question. Please try again.",
 }
 
@@ -251,7 +251,7 @@ def query(req: QueryRequest) -> dict[str, Any]:
     uri      = os.getenv("NEO4J_URI")
     user     = os.getenv("NEO4J_USERNAME")
     pwd      = os.getenv("NEO4J_PASSWORD")
-    api_key = os.getenv("GOOGLE_API_KEY")
+    api_key = os.getenv("GROQ_API_KEY")
 
     if not all([uri, user, pwd, api_key]):
         return _error_response("config")
