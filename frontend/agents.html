@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DataPulse — Agent Pipeline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/agents.css" />
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Nav ─────────────────────────────────────────────────────────────── -->
+  <nav class="nav">
+    <a class="nav-logo" href="/">
+      <svg class="nav-logo-icon" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+        <path d="M8 5 L20 15 L8 25" stroke="#A100FF" stroke-width="4" stroke-linecap="square" stroke-linejoin="miter"/>
+      </svg>
+      <span class="nav-logo-name">DataPulse</span>
+    </a>
+    <span class="nav-sep">/</span>
+    <span class="nav-title">Agent Pipeline</span>
+    <a class="nav-back" href="/">← Chat interface</a>
+  </nav>
+
+  <!-- ── Page header ─────────────────────────────────────────────────────── -->
+  <div class="page-header">
+    <span class="page-eyebrow">Multi-Agent API Framework</span>
+    <h1 class="page-title">Six-Agent <em>Reasoning Pipeline</em></h1>
+    <p class="page-desc">
+      Each question passes through six named agents in sequence — from intent parsing
+      all the way to a verified natural-language answer — with live accuracy scores
+      and full transparency at every step.
+    </p>
+  </div>
+
+  <!-- ── Flow diagram ─────────────────────────────────────────────────────── -->
+  <div class="pipeline-flow" role="presentation" aria-hidden="true">
+
+    <!-- LEXIS -->
+    <div class="flow-agent">
+      <div class="flow-node">
+        <div class="flow-dot" id="flow-dot-LEXIS"></div>
+        <span class="flow-name">LEXIS</span>
+      </div>
+      <div class="flow-arrow" id="flow-arrow-0"></div>
+    </div>
+
+    <!-- GRAPHOS -->
+    <div class="flow-agent">
+      <div class="flow-node">
+        <div class="flow-dot" id="flow-dot-GRAPHOS"></div>
+        <span class="flow-name">GRAPHOS</span>
+      </div>
+      <div class="flow-arrow" id="flow-arrow-1"></div>
+    </div>
+
+    <!-- SCOUT -->
+    <div class="flow-agent">
+      <div class="flow-node">
+        <div class="flow-dot" id="flow-dot-SCOUT"></div>
+        <span class="flow-name">SCOUT</span>
+      </div>
+      <div class="flow-arrow" id="flow-arrow-2"></div>
+    </div>
+
+    <!-- FORGE -->
+    <div class="flow-agent">
+      <div class="flow-node">
+        <div class="flow-dot" id="flow-dot-FORGE"></div>
+        <span class="flow-name">FORGE</span>
+      </div>
+      <div class="flow-arrow" id="flow-arrow-3"></div>
+    </div>
+
+    <!-- SENTINEL -->
+    <div class="flow-agent">
+      <div class="flow-node">
+        <div class="flow-dot" id="flow-dot-SENTINEL"></div>
+        <span class="flow-name">SENTINEL</span>
+      </div>
+      <div class="flow-arrow" id="flow-arrow-4"></div>
+    </div>
+
+    <!-- ORACLE -->
+    <div class="flow-agent" style="flex:0">
+      <div class="flow-node">
+        <div class="flow-dot" id="flow-dot-ORACLE"></div>
+        <span class="flow-name">ORACLE</span>
+      </div>
+    </div>
+
+  </div><!-- /.pipeline-flow -->
+
+  <!-- ── Query input ──────────────────────────────────────────────────────── -->
+  <div class="query-panel">
+    <label class="query-label" for="question-input">Natural Language Question</label>
+    <div class="query-row">
+      <textarea
+        id="question-input"
+        class="query-input"
+        rows="2"
+        placeholder="Ask anything about your enterprise data — sales, HR, IT, marketing, security…"
+        autocomplete="off"
+        spellcheck="false"
+      ></textarea>
+      <button id="run-btn" class="run-btn">
+        <span class="run-btn-spinner"></span>
+        <span class="run-btn-label">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0">
+            <polygon points="3,1 13,7 3,13" fill="currentColor"/>
+          </svg>
+          Run Agents
+        </span>
+      </button>
+    </div>
+    <div id="chips" class="query-chips"></div>
+  </div>
+
+  <!-- ── Agent cards grid ─────────────────────────────────────────────────── -->
+  <div class="pipeline-section">
+    <div class="pipeline-section-title">Agent Status</div>
+    <div class="pipeline-grid">
+
+      <!-- ── LEXIS ──────────────────────────────────────────────────────── -->
+      <div class="agent-card pending" id="card-LEXIS" style="--card-color:#A100FF">
+        <div class="card-header">
+          <div class="card-icon" style="color:#A100FF">◈</div>
+          <div class="card-title-block">
+            <div class="card-name">LEXIS</div>
+            <div class="card-role">NL Interpreter</div>
+          </div>
+          <div id="card-spin-LEXIS" class="card-spinner"></div>
+          <span class="card-status" id="card-status-LEXIS">WAITING</span>
+        </div>
+        <div class="card-accuracy">
+          <div class="accuracy-row">
+            <span class="accuracy-label">Accuracy</span>
+            <span class="accuracy-value" id="accuracy-val-LEXIS">—</span>
+          </div>
+          <div class="accuracy-bar-bg">
+            <div class="accuracy-bar-fill" id="accuracy-bar-LEXIS" style="--card-color:#A100FF"></div>
+          </div>
+        </div>
+        <div class="card-metrics" id="card-metrics-LEXIS">
+          <div class="metric-row"><span class="metric-key">Parses intent, entities &amp; filters from plain English</span></div>
+        </div>
+        <div class="card-message" id="card-msg-LEXIS"></div>
+        <div class="card-error"   id="card-err-LEXIS"></div>
+      </div>
+
+      <!-- ── GRAPHOS ────────────────────────────────────────────────────── -->
+      <div class="agent-card pending" id="card-GRAPHOS" style="--card-color:#7EC8FF">
+        <div class="card-header">
+          <div class="card-icon" style="color:#7EC8FF">◉</div>
+          <div class="card-title-block">
+            <div class="card-name">GRAPHOS</div>
+            <div class="card-role">KG Search Agent</div>
+          </div>
+          <div id="card-spin-GRAPHOS" class="card-spinner"></div>
+          <span class="card-status" id="card-status-GRAPHOS">WAITING</span>
+        </div>
+        <div class="card-accuracy">
+          <div class="accuracy-row">
+            <span class="accuracy-label">Relevance</span>
+            <span class="accuracy-value" id="accuracy-val-GRAPHOS">—</span>
+          </div>
+          <div class="accuracy-bar-bg">
+            <div class="accuracy-bar-fill" id="accuracy-bar-GRAPHOS" style="--card-color:#7EC8FF"></div>
+          </div>
+        </div>
+        <div class="card-metrics" id="card-metrics-GRAPHOS">
+          <div class="metric-row"><span class="metric-key">Vector-searches Neo4j for tables, joins &amp; metrics</span></div>
+        </div>
+        <div class="card-message" id="card-msg-GRAPHOS"></div>
+        <div class="card-error"   id="card-err-GRAPHOS"></div>
+      </div>
+
+      <!-- ── SCOUT ──────────────────────────────────────────────────────── -->
+      <div class="agent-card pending" id="card-SCOUT" style="--card-color:#BE82FF">
+        <div class="card-header">
+          <div class="card-icon" style="color:#BE82FF">◎</div>
+          <div class="card-title-block">
+            <div class="card-name">SCOUT</div>
+            <div class="card-role">Schema Discovery</div>
+          </div>
+          <div id="card-spin-SCOUT" class="card-spinner"></div>
+          <span class="card-status" id="card-status-SCOUT">WAITING</span>
+        </div>
+        <div class="card-accuracy">
+          <div class="accuracy-row">
+            <span class="accuracy-label">Coverage</span>
+            <span class="accuracy-value" id="accuracy-val-SCOUT">—</span>
+          </div>
+          <div class="accuracy-bar-bg">
+            <div class="accuracy-bar-fill" id="accuracy-bar-SCOUT" style="--card-color:#BE82FF"></div>
+          </div>
+        </div>
+        <div class="card-metrics" id="card-metrics-SCOUT">
+          <div class="metric-row"><span class="metric-key">Maps tables/columns/domains with confidence scores</span></div>
+        </div>
+        <div class="card-message" id="card-msg-SCOUT"></div>
+        <div class="card-error"   id="card-err-SCOUT"></div>
+      </div>
+
+      <!-- ── FORGE ──────────────────────────────────────────────────────── -->
+      <div class="agent-card pending" id="card-FORGE" style="--card-color:#7DD6C0">
+        <div class="card-header">
+          <div class="card-icon" style="color:#7DD6C0">◆</div>
+          <div class="card-title-block">
+            <div class="card-name">FORGE</div>
+            <div class="card-role">SQL Writer</div>
+          </div>
+          <div id="card-spin-FORGE" class="card-spinner"></div>
+          <span class="card-status" id="card-status-FORGE">WAITING</span>
+        </div>
+        <div class="card-accuracy">
+          <div class="accuracy-row">
+            <span class="accuracy-label">Confidence</span>
+            <span class="accuracy-value" id="accuracy-val-FORGE">—</span>
+          </div>
+          <div class="accuracy-bar-bg">
+            <div class="accuracy-bar-fill" id="accuracy-bar-FORGE" style="--card-color:#7DD6C0"></div>
+          </div>
+        </div>
+        <div class="card-metrics" id="card-metrics-FORGE">
+          <div class="metric-row"><span class="metric-key">Drafts a SQLite-compatible SELECT from schema context</span></div>
+        </div>
+        <div class="card-message" id="card-msg-FORGE"></div>
+        <div class="card-error"   id="card-err-FORGE"></div>
+      </div>
+
+      <!-- ── SENTINEL ───────────────────────────────────────────────────── -->
+      <div class="agent-card pending" id="card-SENTINEL" style="--card-color:#F0A868">
+        <div class="card-header">
+          <div class="card-icon" style="color:#F0A868">◈</div>
+          <div class="card-title-block">
+            <div class="card-name">SENTINEL</div>
+            <div class="card-role">SQL Validator</div>
+          </div>
+          <div id="card-spin-SENTINEL" class="card-spinner"></div>
+          <span class="card-status" id="card-status-SENTINEL">WAITING</span>
+        </div>
+        <div class="card-accuracy">
+          <div class="accuracy-row">
+            <span class="accuracy-label">Validation Score</span>
+            <span class="accuracy-value" id="accuracy-val-SENTINEL">—</span>
+          </div>
+          <div class="accuracy-bar-bg">
+            <div class="accuracy-bar-fill" id="accuracy-bar-SENTINEL" style="--card-color:#F0A868"></div>
+          </div>
+        </div>
+        <div class="card-metrics" id="card-metrics-SENTINEL">
+          <div class="metric-row"><span class="metric-key">Checks safety, syntax, table existence before execution</span></div>
+        </div>
+        <div class="card-message" id="card-msg-SENTINEL"></div>
+        <div class="card-error"   id="card-err-SENTINEL"></div>
+      </div>
+
+      <!-- ── ORACLE ────────────────────────────────────────────────────── -->
+      <div class="agent-card pending" id="card-ORACLE" style="--card-color:#FF82C0">
+        <div class="card-header">
+          <div class="card-icon" style="color:#FF82C0">◉</div>
+          <div class="card-title-block">
+            <div class="card-name">ORACLE</div>
+            <div class="card-role">Executor &amp; NL Agent</div>
+          </div>
+          <div id="card-spin-ORACLE" class="card-spinner"></div>
+          <span class="card-status" id="card-status-ORACLE">WAITING</span>
+        </div>
+        <div class="card-accuracy">
+          <div class="accuracy-row">
+            <span class="accuracy-label">Grounding</span>
+            <span class="accuracy-value" id="accuracy-val-ORACLE">—</span>
+          </div>
+          <div class="accuracy-bar-bg">
+            <div class="accuracy-bar-fill" id="accuracy-bar-ORACLE" style="--card-color:#FF82C0"></div>
+          </div>
+        </div>
+        <div class="card-metrics" id="card-metrics-ORACLE">
+          <div class="metric-row"><span class="metric-key">Executes SQL and translates result to plain English</span></div>
+        </div>
+        <div class="card-message" id="card-msg-ORACLE"></div>
+        <div class="card-error"   id="card-err-ORACLE"></div>
+      </div>
+
+    </div><!-- /.pipeline-grid -->
+  </div><!-- /.pipeline-section -->
+
+  <!-- ── Summary bar (appears after complete) ────────────────────────────── -->
+  <div class="summary-bar" id="summary-bar">
+    <div class="summary-stat">
+      <div class="summary-stat-val" id="sum-avg-acc">—</div>
+      <div class="summary-stat-label">Avg Accuracy</div>
+    </div>
+    <div class="summary-sep"></div>
+    <div class="summary-stat">
+      <div class="summary-stat-val" id="sum-total-ms">—</div>
+      <div class="summary-stat-label">Total Time</div>
+    </div>
+    <div class="summary-sep"></div>
+    <div class="summary-stat">
+      <div class="summary-stat-val" id="sum-rows">—</div>
+      <div class="summary-stat-label">Rows Returned</div>
+    </div>
+    <div class="summary-sep"></div>
+    <div class="summary-stat" style="margin-left:auto;flex-direction:row;align-items:center;gap:8px">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="color:#A100FF">
+        <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M4.5 7l2 2 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span style="font-size:12px;font-weight:600;color:var(--accent-soft)">Pipeline complete</span>
+    </div>
+  </div>
+
+  <!-- ── Result panel ─────────────────────────────────────────────────────── -->
+  <div class="result-panel" id="result-panel">
+
+    <!-- Answer -->
+    <div class="result-block">
+      <div class="result-block-header">
+        <span class="result-block-title">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" style="display:inline;vertical-align:middle;margin-right:5px"><circle cx="5.5" cy="5.5" r="4.5" stroke="#FF82C0" stroke-width="1.3"/><path d="M5.5 3v2.5l1.5 1.5" stroke="#FF82C0" stroke-width="1.3" stroke-linecap="round"/></svg>
+          ORACLE — Natural Language Answer
+        </span>
+      </div>
+      <div class="result-block-body">
+        <p class="answer-text" id="answer-text">—</p>
+      </div>
+    </div>
+
+    <!-- SQL -->
+    <div class="result-block">
+      <div class="result-block-header">
+        <span class="result-block-title">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" style="display:inline;vertical-align:middle;margin-right:5px"><rect x="1" y="1" width="9" height="9" rx="1" stroke="#7DD6C0" stroke-width="1.3"/><path d="M3 4l2 2-2 2M6 8h2" stroke="#7DD6C0" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          FORGE → SENTINEL — Generated SQL
+        </span>
+      </div>
+      <pre class="sql-block" id="sql-code"></pre>
+    </div>
+
+    <!-- Data table -->
+    <div class="result-block">
+      <div class="result-block-header">
+        <span class="result-block-title">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" style="display:inline;vertical-align:middle;margin-right:5px"><rect x="1" y="1" width="9" height="9" rx="1" stroke="#7EC8FF" stroke-width="1.3"/><path d="M1 4h9M4 1v9" stroke="#7EC8FF" stroke-width="1.3"/></svg>
+          Query Results
+        </span>
+        <span class="result-block-badge" id="row-count-badge">0 rows</span>
+      </div>
+      <div class="result-block-body" style="padding:0">
+        <div class="data-table-wrap" id="table-wrap">
+          <p style="color:var(--muted);padding:16px;font-size:12px;">No data yet.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.result-panel -->
+
+</div><!-- /.page -->
+
+<script src="/static/agents.js"></script>
+</body>
+</html>

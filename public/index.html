@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/style.css?v=7" />
-  <link rel="stylesheet" href="/quality.css?v=1" />
+  <link rel="stylesheet" href="/static/style.css?v=7" />
+  <link rel="stylesheet" href="/static/quality.css?v=1" />
 </head>
 <body>
 
@@ -27,9 +27,19 @@
       </div>
       <div class="tech-badges">
         <span class="badge">Neo4j</span>
-        <span class="badge">Gemini 1.5 Flash</span>
-        <span class="badge">Google AI</span>
+        <span class="badge">LLaMA-3.3-70b</span>
+        <span class="badge">Groq</span>
       </div>
+      <a href="/agents" class="agent-pipeline-link" title="Open the multi-agent pipeline visualisation">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+          <circle cx="2" cy="6.5" r="1.5" fill="#A100FF"/>
+          <circle cx="6.5" cy="6.5" r="1.5" fill="#BE82FF"/>
+          <circle cx="11" cy="6.5" r="1.5" fill="#7EC8FF"/>
+          <line x1="3.5" y1="6.5" x2="5" y2="6.5" stroke="#A100FF" stroke-width="1"/>
+          <line x1="8" y1="6.5" x2="9.5" y2="6.5" stroke="#7EC8FF" stroke-width="1"/>
+        </svg>
+        Agent Pipeline →
+      </a>
       <div class="kg-status">
         <span id="kg-dot" class="kg-dot connecting"></span>
         <span id="kg-label" class="kg-label">Connecting…</span>
@@ -122,7 +132,7 @@
     </div>
   </main>
 
-  <script src="/app.js?v=6"></script>
-  <script src="/quality.js?v=1"></script>
+  <script src="/static/app.js?v=6"></script>
+  <script src="/static/quality.js?v=1"></script>
 </body>
 </html>

@@ -1,13 +1,15 @@
 """FastAPI backend for DataPulse Text2SQL.
 
-The `/api/query` endpoint routes through the multi-step tool-calling agent
-(`text2sql.agent.agent.answer_question`): the model discovers schema, resolves
-categorical filters, and runs read-only SQL by *calling tools* over the
-knowledge graph, so the response carries an explicit reasoning `trace` and a
-natural-language `answer` alongside the SQL and rows.
+Two query paths:
+
+  POST /api/query       — original single-agent tool-calling loop (Groq + Neo4j).
+  POST /api/agents/query — new six-agent pipeline (LEXIS → GRAPHOS → SCOUT →
+                           FORGE → SENTINEL → ORACLE) streamed as SSE events.
+  GET  /agents          — serves the agent-pipeline UI page.
 """
 from __future__ import annotations
 
+import asyncio
 import logging
 import os
 from pathlib import Path
@@ -15,7 +17,7 @@ from typing import Any
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from groq import APIConnectionError, APIStatusError
 from neo4j import GraphDatabase
@@ -27,6 +29,7 @@ load_dotenv()
 
 from text2sql.agent.agent import RateLimitExhausted, answer_question
 from text2sql.agent.grounding import check_grounding
+from text2sql.agents.pipeline import run_pipeline
 from src.knowledge_graph.retriever import retrieve_schema_context
 from src.knowledge_graph.freshness import is_kg_fresh
 from src.embeddings.embed import MODEL_NAME
@@ -311,7 +314,64 @@ def query(req: QueryRequest) -> dict[str, Any]:
     }
 
 
-# Serve vanilla JS frontend
+# ── multi-agent SSE endpoint ───────────────────────────────────────────────
+# POST /api/agents/query
+# Streams Server-Sent Events: one "active" + one "done/error" event per agent,
+# then a final "complete" event.  The browser reads these via EventSource /
+# fetch with a ReadableStream and animates each agent card in real time.
+
+class AgentQueryRequest(BaseModel):
+    question: str
+    top_k: int = 10
+
+
+@app.post("/api/agents/query")
+async def agents_query(req: AgentQueryRequest):
+    uri      = os.getenv("NEO4J_URI")
+    user     = os.getenv("NEO4J_USERNAME")
+    pwd      = os.getenv("NEO4J_PASSWORD")
+    api_key  = os.getenv("GROQ_API_KEY")
+
+    if not all([uri, user, pwd, api_key]):
+        import json
+        error_event = f'data: {json.dumps({"status": "error", "error": "Server not fully configured (missing Neo4j or Groq credentials)."})}\n\n'
+        return StreamingResponse(
+            iter([error_event]),
+            media_type="text/event-stream",
+            headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+        )
+
+    # Run the synchronous pipeline in a thread so we don't block the event loop,
+    # then stream each SSE chunk as it arrives.
+    def _sync_gen():
+        yield from run_pipeline(
+            req.question,
+            api_key=api_key,
+            neo4j_uri=uri,
+            neo4j_user=user,
+            neo4j_pwd=pwd,
+            db_path=DB_PATH,
+            top_k=req.top_k,
+        )
+
+    async def _async_gen():
+        loop = asyncio.get_event_loop()
+        gen  = _sync_gen()
+        while True:
+            try:
+                chunk = await loop.run_in_executor(None, next, gen)
+                yield chunk
+            except StopIteration:
+                break
+
+    return StreamingResponse(
+        _async_gen(),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
+
+
+# ── Serve vanilla JS frontend ──────────────────────────────────────────────
 STATIC_PATH = Path(__file__).parent.parent.parent / "frontend"
 if STATIC_PATH.exists():
     app.mount("/static", StaticFiles(directory=str(STATIC_PATH)), name="static")
@@ -319,3 +379,7 @@ if STATIC_PATH.exists():
     @app.get("/")
     def root():
         return FileResponse(str(STATIC_PATH / "index.html"))
+
+    @app.get("/agents")
+    def agents_page():
+        return FileResponse(str(STATIC_PATH / "agents.html"))

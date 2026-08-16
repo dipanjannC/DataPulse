@@ -104,12 +104,28 @@ textarea::placeholder { color: var(--muted); }
   letter-spacing: 2.4px; text-transform: uppercase;
 }
 
-.tech-badges { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.tech-badges { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
 .badge {
   font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: .2px;
   padding: 3px 8px; border-radius: var(--radius);
   border: 1px solid rgba(161,0,255,.3); color: var(--text-dim); background: transparent;
 }
+
+/* Agent pipeline link in sidebar logo block */
+.agent-pipeline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-soft);
+  text-decoration: none;
+  letter-spacing: 0.2px;
+  opacity: 0.8;
+  transition: opacity 0.15s, color 0.15s;
+}
+.agent-pipeline-link:hover { opacity: 1; color: var(--accent); }
 
 .kg-status { display: flex; align-items: center; gap: 8px; }
 .kg-dot {
